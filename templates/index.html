@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap');
+    </style>
+    <link rel="stylesheet" href="{% static '/styles/styles.css' %}">
+</head>
+<body>
+    <header class="cabecalho">
+        <img src="{% static '/assets/icons/eventia-logo.png' %}" alt="" class="logo">
+        <div class="sub-cabecalho">
+            <h1 class="titulo">Eventia</h1>
+            <p class="texto">Os melhores eventos de Rio Preto estão aqui!</p>
+            <a class="link">EVENTOS</a>
+            <a class="link">MINHA AREA</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="destaques">
+            <ul class="lista-destaques">
+                {% if cards %}
+                {% for evento in cards %}
+                <li class="lista-destaques-item">
+                    <div>
+                        <img src="{{ evento.imagem.url }}" class="imagem">
+                        <h2 class="subtitulo">{{ evento.nome }}</h2>
+                        <p class="imagem-descricao">{{ evento.descricao }}</p>
+                    </div>
+                </li>
+                {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+
+        <section class="eventos">
+            <h2 class="titulo">Eventos</h2>
+            <ul class="eventos-lista">
+                {% if cards %}
+                {% for evento in cards %}
+                <li class="eventos-lista-item">
+                    <a class="evento-link">
+                        <img src="{{ evento.imagem.url }}" class="imagem">
+                    </a>
+                    <h3 class="evento-titulo">{{ evento.nome }}</h3>
+                    <p class="evento-legenda">Buteco do patrão</p>
+                    <p class="evento-descricao">{{ evento.descricao }}</p>
+                </li>
+                {% endfor %}
+                {% endif %}
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
