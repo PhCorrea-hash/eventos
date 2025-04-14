@@ -5,7 +5,7 @@ services:
     buildCommand: |
       pip install -r requirements.txt
       python manage.py collectstatic --noinput  # Coleta os arquivos estáticos
-    startCommand: gunicorn setup.wsgi:application
+    startCommand: gunicorn setup.wsgi:application --chdir /opt/render/project/src
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: setup.settings
