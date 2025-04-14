@@ -15,3 +15,5 @@ services:
         value: false
       - key: ALLOWED_HOSTS
         value: setup.onrender.com
+    staticPublishPath: "/static"
+    staticWebDirectory: "staticfiles"
