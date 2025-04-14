@@ -25,8 +25,8 @@
     <main>
         <div class="destaques">
             <ul class="lista-destaques">
-                {% if cards %}
-                {% for evento in cards %}
+                {% if cards_destaque %}
+                {% for evento in cards_destaque %}
                 <li class="lista-destaques-item">
                     <div>
                         <img src="{{ evento.imagem.url }}" class="imagem">

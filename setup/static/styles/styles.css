@@ -58,14 +58,15 @@ body {
     display: flex;
     flex-direction: row;
     gap: 2rem;
-    overflow: scroll;
+    overflow: hidden;
 }
 
 .lista-destaques-item {
     border: 5px solid var(--corDoTextoPrincipal);
     padding: 2rem;
     border-radius: 16px;
-    width: 100%;
+    width: 50%;
+    max-height: 500px;
 }
 
 .imagem {

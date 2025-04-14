@@ -6,7 +6,7 @@ class Eventos(models.Model):
     descricao = models.TextField()
     data = models.DateTimeField()
     local = models.CharField(max_length=150)
-    imagem = models.ImageField(upload_to='fotos/%Y/%m/%d/', blank=True, null=True)
+    imagem = models.ImageField(upload_to='media/fotos/%Y/%m/%d/', blank=True, null=True)
     publicada = models.BooleanField(default=False)
 
     def __str__(self):
