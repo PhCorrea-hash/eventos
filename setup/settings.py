@@ -26,7 +26,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'chave-secreta-padrao-segura')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost").split(",")
+ALLOWED_HOSTS = ALLOWED_HOSTS = [
+    'eventos-j4qj.onrender.com',  # Adicione o domínio aqui
+    'localhost',
+    '127.0.0.1',
+    # Outros domínios se necessário
+]
 
 
 # Application definition
