@@ -1,0 +1,94 @@
+@import url("index/header.css");
+
+:root {
+    --corDeFundo: #000;
+    --fonte: "Winky Rough", sans-serif;
+    --corDoTextoPrincipal: #fff;
+}
+
+body {
+    background: #020024;
+    background: linear-gradient(164deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+    padding: 0;
+    margin: 0;
+    font-family: var(--fonte);
+}
+
+.logo {
+    width: 7.5%;
+    height: auto;
+}
+
+.cabecalho {
+    display: flex;
+}
+
+.sub-cabecalho {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: 4rem;
+}
+
+.titulo {
+    color: white;
+    font-size: 3rem;
+    margin: 0;
+    font-family: var(--fonte)
+}
+
+.texto {
+    color: white;
+    font-size: 2rem;
+    margin: 0;
+    font-weight: 400;
+}
+
+.link{
+    color: var(--corDoTextoPrincipal);
+    font-size: 1.5rem;
+    margin: 0;
+    font-weight: 400;
+}
+
+.lista-destaques {
+    list-style-type: none;
+    color: var(--corDoTextoPrincipal);
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    overflow: hidden;
+}
+
+.lista-destaques-item {
+    border: 5px solid var(--corDoTextoPrincipal);
+    padding: 2rem;
+    border-radius: 16px;
+    width: 50%;
+    max-height: 500px;
+}
+
+.imagem {
+    width: 100%;
+}
+
+.eventos {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+}
+
+.eventos-lista {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style-type: none;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.eventos-lista-item {
+    width: 30%;
+}
