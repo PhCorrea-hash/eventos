@@ -14,6 +14,11 @@ body {
     font-family: var(--fonte);
 }
 
+header {
+    display: flex;
+    flex-direction: column;
+}
+
 .logo {
     width: 7.5%;
     height: auto;
@@ -21,6 +26,11 @@ body {
 
 .cabecalho {
     display: flex;
+}
+
+.container-cabecalho {
+    display: flex;
+    flex-direction: row;
 }
 
 .sub-cabecalho {
@@ -55,6 +65,23 @@ body {
     font-size: 1.5rem;
     margin: 0;
     font-weight: 400;
+}
+
+form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.busca__input {
+    width: 750px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    padding: 1rem;
+    border: 5px solid var(--corDoTextoPrincipal);
+    border-radius: 16px;
+    color: var(--corDoTextoPrincipal);
 }
 
 .destaques {

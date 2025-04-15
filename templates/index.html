@@ -13,15 +13,26 @@
 </head>
 <body>
     <header class="cabecalho">
-        <img src="{% static 'assets/icons/eventia-logo.png' %}" alt="" class="logo">
-        <div class="sub-cabecalho">
-            <h1 class="titulo">Eventia</h1>
-            <p class="texto">Os melhores eventos de Rio Preto e região estão aqui!</p>
-            <div class="botoes">
-                <a class="link">EVENTOS</a>
-                <a class="link">MINHA AREA</a>
+        <div class="container-cabecalho">
+            <img src="{% static 'assets/icons/eventia-logo.png' %}" alt="" class="logo">
+            <div class="sub-cabecalho">
+                <h1 class="titulo">Eventia</h1>
+                <p class="texto">Os melhores eventos de Rio Preto e região estão aqui!</p>
+                <div class="botoes">
+                    <a class="link">EVENTOS</a>
+                    <a class="link">MINHA AREA</a>
+                </div>
             </div>
-            
+        </div>
+        <div class="cabecalho__busca">
+            <div class="busca__fundo">
+                <form action="">
+                    <input class="busca__input" type="text" name="buscar" placeholder="O que você procura?">
+                    <!-- <button type="submit">
+                        <img class="busca__icone" src="{% static '/assets/ícones/1x/search.png' %}" alt="ícone de search">
+                    </button> -->
+                </form>
+            </div>
         </div>
     </header>
 
