@@ -31,6 +31,11 @@ body {
     gap: 4rem;
 }
 
+.botoes {
+    display: flex;
+    gap: 3rem;
+}
+
 .titulo {
     color: white;
     font-size: 3rem;
@@ -50,6 +55,10 @@ body {
     font-size: 1.5rem;
     margin: 0;
     font-weight: 400;
+}
+
+.destaques {
+    margin-top: 3rem;
 }
 
 .lista-destaques {
@@ -87,6 +96,7 @@ body {
     flex-direction: column;
     text-align: center;
     gap: 1rem;
+    margin-top: 3rem;
 }
 
 .eventos-lista {
@@ -165,6 +175,11 @@ body {
       flex-direction: column;
       gap: 0.5rem;
     }
+
+    .botoes {
+        display: flex;
+        gap: 3rem;
+    }
   
     .titulo {
       font-size: 2rem;
@@ -178,16 +193,21 @@ body {
     .link {
       font-size: 1.2rem;
     }
+
+    .destaques {
+        overflow: scroll;
+        display: block;
+    }
   
     .lista-destaques {
-      flex-direction: column;
-      margin: 0 1rem;
+      display: flex;
+      background: transparent;
+      overflow: scroll;
+      width: 1500px;
     }
   
     .lista-destaques-item {
-      width: 100%;
-      max-height: none;
-      padding: 1rem 0.5rem;
+      width: 500px;
     }
   
     .eventos-lista {
@@ -199,7 +219,7 @@ body {
     }
   
     .eventos-lista-item {
-      width: 100%;
+      width: 80%;
       height: auto;
       padding: 1rem;
     }
