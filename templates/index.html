@@ -41,7 +41,7 @@
 
         <section class="eventos">
             <h2 class="titulo">Eventos</h2>
-            <ul class="eventos-lista">
+            <ul class="eventos-lista" id="eventos-container">
                 {% if cards %}
                 {% for evento in cards %}
                 <li class="eventos-lista-item">
@@ -57,5 +57,31 @@
             </ul>
         </section>
     </main>
+
+    <script>
+        async function carregarEventos() {
+            const resposta = await fetch('/api/eventos/');
+            const eventos = await resposta.json();
+    
+            const container = document.getElementById('eventos-container');
+            container.innerHTML = '';
+    
+            eventos.forEach(evento => {
+                container.innerHTML += `
+                    <li class="eventos-lista-item">
+                        <a class="evento-link">
+                            <img src="${evento.imagem}" class="imagem">
+                        </a>
+                        <h3 class="evento-titulo">${evento.nome}</h3>
+                        <p class="evento-legenda">Buteco do patrão</p>
+                        <p class="evento-descricao">${evento.descricao}</p>
+                    </li>
+                `;
+            });
+        }
+    
+        setInterval(carregarEventos, 10000); // atualiza a cada 10 segundos
+        carregarEventos(); // carrega na primeira vez
+    </script>
 </body>
 </html>

@@ -156,15 +156,19 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 import os
+from celery import Celery
+import ssl
+import certifi
 
 print("Cloud Name:", os.getenv('CLOUDINARY_CLOUD_NAME'))
 print("API Key:", os.getenv('CLOUDINARY_API_KEY'))
 print("API Secret:", os.getenv('CLOUDINARY_API_SECRET'))
 
-#celery
-
-CELERY_BROKER_URL = str(os.getenv('REDIS_URL'))
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-
-print("Celery URL:", CELERY_BROKER_URL)
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('localhost', 6379)],  # Ou a URL do seu Redis se estiver usando um serviço externo
+        },
+    },
+}
