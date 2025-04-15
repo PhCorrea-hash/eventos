@@ -28,10 +28,16 @@
                 {% if cards_destaque %}
                 {% for evento in cards_destaque %}
                 <li class="lista-destaques-item">
-                    <div>
-                        <img src="{{ evento.imagem.url }}" class="imagem">
+                    <div class="imagem-container">
+                        <a class="destaque-link" href=" {{ evento.link }}">
+                            <img src="{{ evento.imagem.url }}" class="imagem-destaque">
+                            <div class="descricao-overlay">
+                                <p>{{ evento.descricao }}</p>
+                            </div>
+                        </a>
                         <h2 class="subtitulo">{{ evento.nome }}</h2>
-                        <p class="imagem-descricao">{{ evento.descricao }}</p>
+                        <p class="legenda">{{ evento.legenda }}</p>
+                        <p class="data">{{ evento.data }}</p>
                     </div>
                 </li>
                 {% endfor %}
@@ -45,12 +51,17 @@
                 {% if cards %}
                 {% for evento in cards %}
                 <li class="eventos-lista-item">
-                    <a class="evento-link">
-                        <img src="{{ evento.imagem.url }}" class="imagem">
+                    <a class="evento-link" href="{{ evento.link }}">
+                        <div class="imagem-container">
+                            <img src="{{ evento.imagem.url }}" class="imagem">
+                            <div class="descricao-overlay">
+                                <p>{{ evento.descricao }}</p>
+                            </div>
+                        </div>
                     </a>
                     <h3 class="evento-titulo">{{ evento.nome }}</h3>
-                    <p class="evento-legenda">Buteco do patrão</p>
-                    <p class="evento-descricao">{{ evento.descricao }}</p>
+                    <p class="evento-legenda">{{ evento.legenda }}</p>
+                    <p class="evento-data">{{ evento.data }}</p>
                 </li>
                 {% endfor %}
                 {% endif %}

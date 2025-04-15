@@ -7,7 +7,7 @@ import json
 def index(request):
 
     eventos = Eventos.objects.order_by("data").filter(publicada=True)
-    eventos_destaque = Eventos.objects.filter(publicada=True).order_by('data')[:3]
+    eventos_destaque = Eventos.objects.filter(publicada=True, destaque=True).order_by('data')[:3]
     return render(request, 'index.html', {
         "cards": eventos, 
         "cards_destaque": eventos_destaque

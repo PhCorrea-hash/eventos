@@ -8,7 +8,9 @@ class Eventos(models.Model):
     data = models.DateTimeField()
     local = models.CharField(max_length=150)
     imagem = CloudinaryField('image', null=True, blank=True)
+    link = models.URLField(blank=True, null=True, default='')
     publicada = models.BooleanField(default=False)
+    destaque = models.BooleanField(default=False)
 
     def __str__(self):
         return self.nome
