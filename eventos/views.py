@@ -3,6 +3,8 @@ from eventos.models import Eventos
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django.db.models import Q
+from django.utils.timezone import localtime
 
 def index(request):
 
@@ -38,3 +40,23 @@ def eventos_api(request):
         for e in eventos
     ]
     return JsonResponse(data, safe=False)
+
+def buscar_eventos(request):
+    termo = request.GET.get('q', '')
+    resultados = Eventos.objects.filter(
+        Q(nome__icontains=termo) | Q(descricao__icontains=termo)
+    ) if termo else Eventos.objects.filter(publicada=True)
+
+    data = []
+    for evento in resultados:
+        data.append({
+            'nome': evento.nome,
+            'descricao': evento.descricao,
+            'legenda': evento.legenda,
+            'data': localtime(evento.data).strftime('%d/%m/%Y'),  # formata a data
+            'link': evento.link,
+            'imagem': evento.imagem.url if evento.imagem else '',
+        })
+
+    return JsonResponse(data, safe=False)
+

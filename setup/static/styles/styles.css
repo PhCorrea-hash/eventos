@@ -197,6 +197,12 @@ form {
     .logo {
       width: 50%;
     }
+
+    .container-cabecalho {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
   
     .sub-cabecalho {
       flex-direction: column;
@@ -206,6 +212,10 @@ form {
     .botoes {
         display: flex;
         gap: 3rem;
+    }
+
+    .busca__input {
+        width: 250px;
     }
   
     .titulo {

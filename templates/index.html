@@ -24,16 +24,6 @@
                 </div>
             </div>
         </div>
-        <div class="cabecalho__busca">
-            <div class="busca__fundo">
-                <form action="">
-                    <input class="busca__input" type="text" name="buscar" placeholder="O que você procura?">
-                    <!-- <button type="submit">
-                        <img class="busca__icone" src="{% static '/assets/ícones/1x/search.png' %}" alt="ícone de search">
-                    </button> -->
-                </form>
-            </div>
-        </div>
     </header>
 
     <main>
@@ -61,6 +51,12 @@
 
         <section class="eventos">
             <h2 class="titulo">Eventos</h2>
+            <div class="cabecalho__busca">
+                <div class="busca__fundo">
+                    <input class="busca__input" type="text" id="busca" name="buscar" placeholder="Buscar eventos...">
+                    <ul id="resultados"></ul>
+                </div>
+            </div>
             <ul class="eventos-lista" id="eventos-container">
                 {% if cards %}
                 {% for evento in cards %}
@@ -83,30 +79,42 @@
         </section>
     </main>
 
-    <!-- <script>
-        async function carregarEventos() {
-            const resposta = await fetch('/api/eventos/');
-            const eventos = await resposta.json();
+    <script>
+        const inputBusca = document.getElementById('busca');
+        const container = document.getElementById('eventos-container');
     
-            const container = document.getElementById('eventos-container');
-            container.innerHTML = '';
+        inputBusca.addEventListener('input', function () {
+            const query = inputBusca.value;
     
-            eventos.forEach(evento => {
-                container.innerHTML += `
-                    <li class="eventos-lista-item">
-                        <a class="evento-link">
-                            <img src="${evento.imagem}" class="imagem">
-                        </a>
-                        <h3 class="evento-titulo">${evento.nome}</h3>
-                        <p class="evento-legenda">Buteco do patrão</p>
-                        <p class="evento-descricao">${evento.descricao}</p>
-                    </li>
-                `;
-            });
-        }
+            fetch(`/buscar/?q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    container.innerHTML = ''; // Limpa os eventos
     
-        setInterval(carregarEventos, 10000); // atualiza a cada 10 segundos
-        carregarEventos(); // carrega na primeira vez
-    </script> -->
+                    if (data.length === 0) {
+                        container.innerHTML = '<p>Nenhum evento encontrado.</p>';
+                        return;
+                    }
+    
+                    data.forEach(evento => {
+                        const li = document.createElement('li');
+                        li.classList.add('eventos-lista-item');
+                        li.innerHTML = `
+                            <a class="evento-link" href="${evento.link}">
+                                <div class="imagem-container">
+                                    <img src="${evento.imagem}" class="imagem">
+                                    <div class="descricao-overlay">${evento.descricao}</div>
+                                </div>
+                            </a>
+                            <h3 class="evento-titulo">${evento.nome}</h3>
+                            <p class="evento-legenda">${evento.legenda}</p>
+                            <p class="evento-data">${evento.data}</p>
+                        `;
+                        container.appendChild(li);
+                    });
+                });
+        });
+    </script>
+    
 </body>
 </html>
