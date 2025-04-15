@@ -1,4 +1,5 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 class Eventos(models.Model):
     nome = models.CharField(max_length=150)
@@ -6,7 +7,7 @@ class Eventos(models.Model):
     descricao = models.TextField()
     data = models.DateTimeField()
     local = models.CharField(max_length=150)
-    imagem = models.ImageField(upload_to='media/fotos/%Y/%m/%d/', blank=True, null=True)
+    imagem = CloudinaryField('image', null=True, blank=True)
     publicada = models.BooleanField(default=False)
 
     def __str__(self):

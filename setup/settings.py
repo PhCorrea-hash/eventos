@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+# Inicialize o ambiente
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -139,9 +143,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+    'CLOUD_NAME': str(os.getenv('CLOUDINARY_CLOUD_NAME')),
+    'API_KEY': str(os.getenv('CLOUDINARY_API_KEY')),
+    'API_SECRET': str(os.getenv('CLOUDINARY_API_SECRET')),
 }
 
 MEDIA_URL = '/media/'
@@ -150,3 +154,17 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import os
+
+print("Cloud Name:", os.getenv('CLOUDINARY_CLOUD_NAME'))
+print("API Key:", os.getenv('CLOUDINARY_API_KEY'))
+print("API Secret:", os.getenv('CLOUDINARY_API_SECRET'))
+
+#celery
+
+CELERY_BROKER_URL = str(os.getenv('REDIS_URL'))
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
+print("Celery URL:", CELERY_BROKER_URL)
