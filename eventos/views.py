@@ -65,9 +65,13 @@ def buscar_eventos(request):
 
 @csrf_exempt
 def webhook_importar_eventos(request):
-    token = request.headers.get("Authorization")
+    token_recebido = request.headers.get("Authorization")
+    token_esperado = f"Token {settings.IMPORT_TOKEN}"
+    
+    print("Token recebido:", token_recebido)
+    print("Token esperado:", token_esperado)
 
-    if token != f"Token {settings.IMPORT_TOKEN}":
+    if token_recebido != token_esperado:
         return JsonResponse({"error": "Unauthorized"}, status=401)
 
     importar_eventos_ticketmaster.delay()
