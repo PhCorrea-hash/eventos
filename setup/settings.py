@@ -183,3 +183,13 @@ CHANNEL_LAYERS = {
 
 IMPORT_TOKEN = os.getenv("IMPORT_TOKEN", "meu_token_supersecreto")
 
+#celery
+
+# Arquivo: settings.py
+
+# Celery Configuração
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")  # Ou o serviço Redis que você está usando, como o Upstash
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
+
