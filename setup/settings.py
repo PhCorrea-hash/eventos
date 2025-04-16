@@ -188,8 +188,8 @@ IMPORT_TOKEN = os.getenv("IMPORT_TOKEN", "meu_token_supersecreto")
 # Arquivo: settings.py
 
 # Celery Configuração
-CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")  # Ou o serviço Redis que você está usando, como o Upstash
-CELERY_RESULT_BACKEND = os.getenv("CELERY_BROKER_URL")
+CELERY_BROKER_URL = 'redis://default:AVK3AAIjcDFjYmE1ZDc5ZTVjYjA0N2EwODgyM2JlZTE2Y2E2MDU1ZnAxMA@true-crayfish-21175.upstash.io:6379'
+CELERY_RESULT_BACKEND = 'redis://default:AVK3AAIjcDFjYmE1ZDc5ZTVjYjA0N2EwODgyM2JlZTE2Y2E2MDU1ZnAxMA@true-crayfish-21175.upstash.io:6379'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
