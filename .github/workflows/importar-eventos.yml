@@ -1,0 +1,16 @@
+name: Importar eventos automaticamente
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # A cada 6 horas
+  workflow_dispatch:       # Permite acionar manualmente também
+
+jobs:
+  importar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Enviar requisição para importar eventos
+        run: |
+          curl -X POST https://https://eventos-j4qj.onrender.com/webhook/importar-eventos/ \
+          -H "Authorization: Token ${{ secrets.IMPORT_TOKEN }}"

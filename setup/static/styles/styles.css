@@ -88,6 +88,13 @@ form {
     margin-top: 3rem;
 }
 
+.destaques-titulo {
+    font-size: 3rem;
+    color: var(--corDoTextoPrincipal);
+    font-family: var(--fonte);
+    text-align: center;
+}
+
 .lista-destaques {
     list-style-type: none;
     color: var(--corDeFundo);
@@ -234,6 +241,10 @@ form {
     .destaques {
         overflow: scroll;
         display: block;
+    }
+
+    .destaques-titulo {
+        font-size: 2rem;
     }
   
     .lista-destaques {

@@ -179,5 +179,7 @@ CHANNEL_LAYERS = {
     },
 }
 
-#db
+#ticketmaster
+
+IMPORT_TOKEN = os.getenv("IMPORT_TOKEN", "meu_token_supersecreto")
 

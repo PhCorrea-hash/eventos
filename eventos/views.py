@@ -5,6 +5,9 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.db.models import Q
 from django.utils.timezone import localtime
+import requests
+from django.conf import settings
+from .tasks import importar_eventos_ticketmaster
 
 def index(request):
 
@@ -60,3 +63,12 @@ def buscar_eventos(request):
 
     return JsonResponse(data, safe=False)
 
+@csrf_exempt
+def webhook_importar_eventos(request):
+    token = request.headers.get("Authorization")
+
+    if token != f"Token {settings.IMPORT_TOKEN}":
+        return JsonResponse({"error": "Unauthorized"}, status=401)
+
+    importar_eventos_ticketmaster.delay()
+    return JsonResponse({"status": "Importação iniciada"})
