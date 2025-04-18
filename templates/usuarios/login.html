@@ -1,11 +1,66 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{% static 'styles/login.css' %}">
 </head>
 <body>
-    
+    <header class="cabecalho">
+        <div class="logo-nome">
+            <img class="logo" src="" alt="Logo da Eventia">
+            <h1 class="titulo">EVENTIA</h1>
+        </div>
+        <div class="cabecalho__busca">
+            <div class="busca__fundo">
+                <input class="busca__input" type="text" id="busca" name="buscar" placeholder="Buscar eventos...">
+                <ul id="resultados"></ul>
+            </div>
+        </div>
+    </header>
+
+    <section class="main">
+        <div class="menu-lateral">
+            <ul class="lista-botoes">
+                <li class="lista-botoes-item">
+                    <img class="icone" src="" alt="">
+                    <a class="link" href="">HOME</a>
+                </li>
+                <li class="lista-botoes-item">
+                    <img class="icone" src="" alt="">
+                    <a class="link" href="">EVENTOS</a>
+                </li>
+                <li class="lista-botoes-item">
+                    <img class="icone" src="" alt="">
+                    <a class="link" href="">CADASTRE-SE</a>
+                </li>
+                <li class="lista-botoes-item">
+                    <img class="icone" src="" alt="">
+                    <a class="link" href="">MINHA ÁREA</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="login">
+            <ul class="forms-login">
+                <li class="forms-login-item">
+                    <h3 class="subtitulo">Username</h3>
+                    <input class="username" type="text" id="username" placeholder="Digite seu nome de usuário">
+                </li>
+
+                <li class="forms-login-item">
+                    <h3 class="subtitulo">Password</h3>
+                    <input class="senha" type="text" id="senha" placeholder="Insira sua senha">
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <footer class="rodape">
+
+    </footer>
 </body>
 </html>

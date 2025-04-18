@@ -5,15 +5,24 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.db.models import Q
 from django.utils.timezone import localtime
+from django.utils import timezone
+import unicodedata
+
 
 def index(request):
+    agora = timezone.now()
+    limite = agora - timezone.timedelta(hours=4)
+
+    # Exclui eventos que passaram mais de 4 horas
+    Eventos.objects.filter(data__lt=limite).delete()
 
     eventos = Eventos.objects.order_by("data").filter(publicada=True)
     eventos_destaque = Eventos.objects.filter(publicada=True, destaque=True).order_by('data')[:3]
+
     return render(request, 'index.html', {
         "cards": eventos, 
         "cards_destaque": eventos_destaque
-                   })
+    })
 
 def cloudinary_webhook(request):
     if request.method == 'POST':
@@ -41,19 +50,35 @@ def eventos_api(request):
     ]
     return JsonResponse(data, safe=False)
 
+def remover_acentos(txt):
+    return ''.join(
+        c for c in unicodedata.normalize('NFD', txt)
+        if unicodedata.category(c) != 'Mn'
+    )
+
 def buscar_eventos(request):
-    termo = request.GET.get('q', '')
-    resultados = Eventos.objects.filter(
-        Q(nome__icontains=termo) | Q(descricao__icontains=termo)
-    ) if termo else Eventos.objects.filter(publicada=True)
+    termo = request.GET.get('q', '').strip()
+    termo_normalizado = remover_acentos(termo).lower()
+    
+    resultados = Eventos.objects.filter(publicada=True)
+
+    eventos_filtrados = []
+    for evento in resultados:
+        nome_normalizado = remover_acentos(evento.nome).lower()
+        descricao_normalizada = remover_acentos(evento.descricao).lower()
+        legenda_normalizada = remover_acentos(evento.legenda or '').lower()
+
+
+        if (termo_normalizado in nome_normalizado or termo_normalizado in descricao_normalizada or termo_normalizado in legenda_normalizada):
+            eventos_filtrados.append(evento)
 
     data = []
-    for evento in resultados:
+    for evento in eventos_filtrados:
         data.append({
             'nome': evento.nome,
             'descricao': evento.descricao,
             'legenda': evento.legenda,
-            'data': localtime(evento.data).strftime('%d/%m/%Y'),  # formata a data
+            'data': localtime(evento.data).strftime('%d/%m/%Y'),
             'link': evento.link,
             'imagem': evento.imagem.url if evento.imagem else '',
         })
