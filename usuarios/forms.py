@@ -32,7 +32,7 @@ class CadastroForms(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'placeholder': 'Digite seu nome completo'
+                'placeholder': 'Digite um nome de usuário'
             }
         )
     )

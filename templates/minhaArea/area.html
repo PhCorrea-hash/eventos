@@ -1,0 +1,112 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'styles/minhaArea/area.css' %}">
+</head>
+<body>
+    <header class="cabecalho">
+        <div class="logo-nome">
+            <img class="logo" src="{% static 'assets/icons/eventia-logo.png' %}" alt="Logo da Eventia">
+            <h1 class="titulo">EVENTIA</h1>
+        </div>
+        <div class="cabecalho__busca">
+            <div class="busca__fundo">
+                <input class="busca__input" type="text" id="busca" name="buscar" placeholder="Buscar eventos...">
+                <ul id="resultados"></ul>
+            </div>
+        </div>
+    </header>
+
+    <main class="area">
+        <section class="favoritos">
+            <div class="favoritos-header">
+                <h2 class="favoritos-titulo">EVENTOS FAVORITADOS</h2>
+                <p class="favoritos-texto">Mostrar Todos -></p>
+            </div>
+            <ul class="favoritos-lista">
+                <li class="favoritos-lista-item">
+
+                </li>
+                <li class="favoritos-lista-item">
+                    
+                </li>
+                <li class="favoritos-lista-item">
+                    
+                </li>
+                <li class="favoritos-lista-item">
+                    
+                </li>
+                <li class="favoritos-lista-item">
+                    
+                </li>
+            </ul>
+        </section>
+
+        <section class="grupos">
+            <div class="favoritos-header">
+                <h2 class="favoritos-titulo">GRUPOS</h2>
+                <p class="favoritos-texto">Mostrar Todos -></p>
+            </div>
+            <ul class="grupos-lista">
+                <li class="grupos-lista-item">
+
+                </li>
+                <li class="grupos-lista-item adicionar">
+                    <button class="grupos-botao" type="button" id="grupos-botao">
+                        <img class="botao-imagem" src="{% static 'assets/icons/adicionar-icon.png' %}" alt="">
+                    </button>
+                </li>
+            </ul>
+        </section>
+
+        <section class="mural">
+            <div class="mural-container">
+                <h2 class="mural-titulo">MURAL DE SUGESTÕES</h2>
+            </div>
+            <div class="sugestoes">
+                <ul class="sugestoes-lista">
+                    <li class="sugestoes-lista-item">
+                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
+                    </li>
+                    <li class="sugestoes-lista-item">
+                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
+                    </li>
+                    <li class="sugestoes-lista-item">
+                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
+                    </li>
+                    <li class="sugestoes-lista-item">
+                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
+                    </li>
+                    <li class="sugestoes-lista-item">
+                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
+                    </li>
+                    <li class="sugestoes-lista-item">
+                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
+                    </li>
+                    <li class="sugestoes-lista-item">
+                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
+                    </li>
+                    <li class="sugestoes-lista-item">
+                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
+                    </li>
+                    <li class="sugestoes-lista-item">
+                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
+                    </li>
+                    <li class="sugestoes-lista-item">
+                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="rodape">
+        
+    </footer>
+</body>
+</html>

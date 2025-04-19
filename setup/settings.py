@@ -49,7 +49,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'eventos',
     'cloudinary',
-    'cloudinary_storage'
+    'cloudinary_storage',
+    'usuarios',
+    'minhaArea',
 ]
 
 MIDDLEWARE = [

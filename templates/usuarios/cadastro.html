@@ -1,11 +1,78 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap');
+    </style>
+    <link rel="stylesheet" href="{% static 'styles/login/login.css' %}">
 </head>
 <body>
+    <header class="cabecalho">
+        <div class="logo-nome">
+            <img class="logo" src="{% static 'assets/icons/eventia-logo.png' %}" alt="Logo da Eventia">
+            <h1 class="titulo">EVENTIA</h1>
+        </div>
+        <div class="cabecalho__busca">
+            <div class="busca__fundo">
+                <input class="busca__input" type="text" id="busca" name="buscar" placeholder="Buscar eventos...">
+                <ul id="resultados"></ul>
+            </div>
+        </div>
+    </header>
+
+    <section class="main">
+        <div class="menu-lateral">
+            <ul class="lista-botoes">
+                <li class="lista-botoes-item">
+                    <img class="icone" src="{% static 'assets/icons/home-icon.png' %}" alt="Icone para a página principal">
+                    <a class="link" href="{% url 'index' %}">HOME</a>
+                </li>
+                <li class="lista-botoes-item">
+                    <img class="icone" src="{% static 'assets/icons/eventos-icon.png' %}" alt="">
+                    <a class="link" href="">EVENTOS</a>
+                </li>
+                <li class="lista-botoes-item">
+                    <img class="icone" src="{% static 'assets/icons/cadastro-icon.png' %}" alt="">
+                    <a class="link" href="{% url 'login' %}">LOGIN</a>
+                </li>
+                <li class="lista-botoes-item">
+                    <img class="icone" src="{% static 'assets/icons/usuario-icon.png' %}" alt="">
+                    <a class="link" href="">MINHA ÁREA</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="login">
+            <form action="{% url 'cadastro' %}" method="POST">
+                {% csrf_token %}
+                    <div class="forms-cadastro">
+                        {% for field in form.visible_fields %}
+                            <div class="text-area" style="margin-bottom: 10px;">
+                                <label for="{{form.id_for_label}}" style="color:#D9D9D9; margin-bottom: 5px;">{{field.label}}</label>
+                                {{field}}
+                            </div>
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">
+                                    {{error}}
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                    <div class="button">
+                        <button class="enviar" type="submit">Cadastrar</button>
+                    </div>
+            </form>
+        </div>
+    </section>
+
+    <footer class="rodape">
+
+    </footer>
     
 </body>
 </html>
