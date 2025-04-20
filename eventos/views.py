@@ -116,7 +116,7 @@ def eventos_view(request):
         favoritos_ids = []
 
     # Envia os eventos e os favoritos_ids para o template
-    return render(request, 'area.html', {
+    return render(request, 'minhaArea/area.html', {
         'eventos': eventos,
         'favoritos_ids': favoritos_ids,
     })
