@@ -19,6 +19,10 @@ class Eventos(models.Model):
 class Favorito(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     evento = models.ForeignKey(Eventos, on_delete=models.CASCADE)
+    # created_at = models.DateTimeField(auto_now_add=True, default='')
 
     class Meta:
         unique_together = ('user', 'evento')  # impede duplicação
+
+    def __str__(self):
+        return f'{self.user.username} - {self.evento.nome}'

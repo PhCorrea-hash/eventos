@@ -29,21 +29,20 @@
                 <p class="favoritos-texto">Mostrar Todos -></p>
             </div>
             <ul class="favoritos-lista">
-                <li class="favoritos-lista-item">
-
-                </li>
-                <li class="favoritos-lista-item">
-                    
-                </li>
-                <li class="favoritos-lista-item">
-                    
-                </li>
-                <li class="favoritos-lista-item">
-                    
-                </li>
-                <li class="favoritos-lista-item">
-                    
-                </li>
+                {% if eventos_favoritos %}
+                    {% for evento in eventos_favoritos %}
+                        <li class="favoritos-lista-item">
+                            <a href="{{ evento.link }}">
+                                <img src="{{ evento.imagem.url }}" alt="{{ evento.nome }}" class="evento-imagem">
+                                <h3>{{ evento.nome }}</h3>
+                                <p>{{ evento.descricao }}</p>
+                                <p>{{ evento.data }}</p>
+                            </a>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <p>Você ainda não favoritou nenhum evento.</p>
+                {% endif %}
             </ul>
         </section>
 

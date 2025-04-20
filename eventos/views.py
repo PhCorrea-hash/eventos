@@ -86,20 +86,37 @@ def buscar_eventos(request):
     return JsonResponse(data, safe=False)
 
 def favoritar_evento(request, evento_id):
-    if not request.user.is_authenticated:
-        return JsonResponse({'error': 'Você precisa estar logado para favoritar um evento.'}, status=401)
-
-    try:
+    if request.user.is_authenticated:
         evento = Eventos.objects.get(id=evento_id)
-    except Eventos.DoesNotExist:
-        return JsonResponse({'error': 'Evento não encontrado.'}, status=404)
+        favorito, created = Favorito.objects.get_or_create(user=request.user, evento=evento)
 
-    favorito, created = Favorito.objects.get_or_create(user=request.user, evento=evento)
+        # Caso o favorito já exista, remova-o (favoritar/desfavoritar)
+        if not created:
+            favorito.delete()
+            favorited = False
+        else:
+            favorited = True
 
-    if not created:
-        favorito.delete()
-        is_favorited = False
+        # Retorna uma resposta JSON indicando se o evento foi favoritado ou não
+        return JsonResponse({'favorited': favorited})
     else:
-        is_favorited = True
+        return JsonResponse({'error': 'Usuário não autenticado'}, status=401)
 
-    return JsonResponse({'favorited': is_favorited})
+def eventos_view(request):
+    # Pega todos os eventos
+    eventos = Eventos.objects.all()
+    
+    # Se o usuário estiver logado, pega os eventos favoritados por ele
+    
+    if request.user.is_authenticated:
+        favoritos = Favorito.objects.filter(user=request.user)
+        favoritos_ids = [favorito.evento.id for favorito in favoritos]
+
+    else:
+        favoritos_ids = []
+
+    # Envia os eventos e os favoritos_ids para o template
+    return render(request, 'area.html', {
+        'eventos': eventos,
+        'favoritos_ids': favoritos_ids,
+    })
