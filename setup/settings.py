@@ -187,7 +187,9 @@ IMPORT_TOKEN = os.getenv("IMPORT_TOKEN", "meu_token_supersecreto")
 
 #celery
 
-# Arquivo: settings.py
+#login
+
+LOGIN_URL = '/login/'
 
 
 

@@ -1,5 +1,6 @@
 from django.db import models
 from cloudinary.models import CloudinaryField
+from django.contrib.auth.models import User
 
 class Eventos(models.Model):
     nome = models.CharField(max_length=150)
@@ -14,3 +15,10 @@ class Eventos(models.Model):
 
     def __str__(self):
         return self.nome
+
+class Favorito(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    evento = models.ForeignKey(Eventos, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'evento')  # impede duplicação

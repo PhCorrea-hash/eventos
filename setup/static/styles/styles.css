@@ -121,8 +121,20 @@ form {
     transition: transform 0.3s ease;
   }
 
-.imagem-container:hover .imagem-destaque {
+.imagem-container-destaque {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    transition: transform 0.3s ease;
+    height: 300px;
+  }
+
+.imagem-container-destaque:hover .imagem-destaque {
     transform: scale(1.1);
+}
+
+.imagem-container-destaque:hover .descricao-overlay {
+  opacity: 1;
 }
 
 .eventos {
@@ -155,6 +167,7 @@ form {
     overflow: hidden;
     border-radius: 16px;
     transition: transform 0.3s ease;
+    height: 150px;
   }
 
   .imagem {
@@ -184,6 +197,37 @@ form {
   
   .imagem-container:hover .descricao-overlay {
     opacity: 1;
+  }
+
+  .evento-info {
+    display: flex;
+    align-items: center;
+    height: 150px;
+  }
+
+  .favorito-btn {
+    background: transparent;
+    border: none;
+    max-width: 50px;
+    max-height: 50px;
+    padding: 0;
+  }
+
+  .favorito-btn:hover {
+    cursor: pointer;
+  }
+
+  .icone-favorito {
+    width: 50px;
+    height: 50px;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
 
   .evento-legenda {

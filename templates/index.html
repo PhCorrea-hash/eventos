@@ -34,17 +34,17 @@
                 {% if cards_destaque %}
                 {% for evento in cards_destaque %}
                 <li class="lista-destaques-item">
-                    <div class="imagem-container">
+                    <div class="imagem-container-destaque">
                         <a class="destaque-link" href=" {{ evento.link }}">
                             <img src="{{ evento.imagem.url }}" class="imagem-destaque">
                             <div class="descricao-overlay">
                                 <p>{{ evento.descricao }}</p>
                             </div>
                         </a>
-                        <h2 class="subtitulo">{{ evento.nome }}</h2>
-                        <p class="legenda">{{ evento.legenda }}</p>
-                        <p class="data">{{ evento.data }}</p>
                     </div>
+                    <h2 class="subtitulo">{{ evento.nome }}</h2>
+                    <p class="legenda">{{ evento.legenda }}</p>
+                    <p class="data">{{ evento.data }}</p>
                 </li>
                 {% endfor %}
                 {% endif %}
@@ -65,15 +65,28 @@
                 <li class="eventos-lista-item">
                     <a class="evento-link" href="{{ evento.link }}">
                         <div class="imagem-container">
-                            <img src="{{ evento.imagem.url }}" class="imagem">
+                            <img src="{{ evento.imagem.url }}" class="imagem"> 
                             <div class="descricao-overlay">
                                 <p>{{ evento.descricao }}</p>
                             </div>
                         </div>
                     </a>
-                    <h3 class="evento-titulo">{{ evento.nome }}</h3>
-                    <p class="evento-legenda">{{ evento.legenda }}</p>
-                    <p class="evento-data">{{ evento.data }}</p>
+                    <div class="evento-info">
+                        <button 
+                            class="favorito-btn" 
+                            data-evento-id="{{ evento.id }}">
+                            {% if evento.id in favoritos_ids %}
+                            <img src="{% static 'assets/icons/favoritado-icon.png' %}" alt="" class="icone-favorito">
+                            {% else %}
+                            <img src="{% static 'assets/icons/favoritar-icon.png' %}" alt="" class="icone-favorito">
+                            {% endif %}
+                        </button>
+                        <div class="info">
+                            <h3 class="evento-titulo">{{ evento.nome }}</h3>
+                            <p class="evento-legenda">{{ evento.legenda }}</p>
+                            <p class="evento-data">{{ evento.data }}</p>
+                        </div>
+                    </div>
                 </li>
                 {% endfor %}
                 {% endif %}
@@ -81,42 +94,7 @@
         </section>
     </main>
 
-    <script>
-        const inputBusca = document.getElementById('busca');
-        const container = document.getElementById('eventos-container');
-    
-        inputBusca.addEventListener('input', function () {
-            const query = inputBusca.value;
-    
-            fetch(`/buscar/?q=${encodeURIComponent(query)}`)
-                .then(response => response.json())
-                .then(data => {
-                    container.innerHTML = ''; // Limpa os eventos
-    
-                    if (data.length === 0) {
-                        container.innerHTML = '<p>Nenhum evento encontrado.</p>';
-                        return;
-                    }
-    
-                    data.forEach(evento => {
-                        const li = document.createElement('li');
-                        li.classList.add('eventos-lista-item');
-                        li.innerHTML = `
-                            <a class="evento-link" href="${evento.link}">
-                                <div class="imagem-container">
-                                    <img src="${evento.imagem}" class="imagem">
-                                    <div class="descricao-overlay">${evento.descricao}</div>
-                                </div>
-                            </a>
-                            <h3 class="evento-titulo">${evento.nome}</h3>
-                            <p class="evento-legenda">${evento.legenda}</p>
-                            <p class="evento-data">${evento.data}</p>
-                        `;
-                        container.appendChild(li);
-                    });
-                });
-        });
-    </script>
+    <script src="{% static 'js/eventos.js' %}"></script>
     
 </body>
 </html>

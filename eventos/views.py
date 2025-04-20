@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from eventos.models import Eventos
+from eventos.models import Eventos, Favorito
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.utils.timezone import localtime
 from django.utils import timezone
 import unicodedata
-
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     agora = timezone.now()
@@ -85,4 +85,21 @@ def buscar_eventos(request):
 
     return JsonResponse(data, safe=False)
 
+def favoritar_evento(request, evento_id):
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Você precisa estar logado para favoritar um evento.'}, status=401)
 
+    try:
+        evento = Eventos.objects.get(id=evento_id)
+    except Eventos.DoesNotExist:
+        return JsonResponse({'error': 'Evento não encontrado.'}, status=404)
+
+    favorito, created = Favorito.objects.get_or_create(user=request.user, evento=evento)
+
+    if not created:
+        favorito.delete()
+        is_favorited = False
+    else:
+        is_favorited = True
+
+    return JsonResponse({'favorited': is_favorited})
