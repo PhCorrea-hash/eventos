@@ -20,8 +20,9 @@
                 <p class="texto">Os melhores eventos de Rio Preto e região estão aqui!</p>
                 <div class="botoes">
                     <a class="link">EVENTOS</a>
-                    <a class="link" href="{% url 'login' %}">MINHA AREA</a>
+                    <a class="link" href="{% url 'area' %}">MINHA AREA</a>
                     <a class="link" href="{% url 'cadastro' %}">CADASTRE-SE</a>
+                    <a class="link" href="{% url 'logout' %}">LOG-OUT</a>
                 </div>
             </div>
         </div>
@@ -63,7 +64,7 @@
                 {% if cards %}
                 {% for evento in cards %}
                 <li class="eventos-lista-item">
-                    <a class="evento-link" href="{{ evento.link }}">
+                    <a class="evento-link" href="{% url 'detalhes_eventos' evento.id %}">
                         <div class="imagem-container">
                             <img src="{{ evento.imagem.url }}" class="imagem"> 
                             <div class="descricao-overlay">
@@ -85,7 +86,32 @@
                             <h3 class="evento-titulo">{{ evento.nome }}</h3>
                             <p class="evento-legenda">{{ evento.legenda }}</p>
                             <p class="evento-data">{{ evento.data }}</p>
-                        </div>
+                            <button type="button"
+                                    class="adicionar-agenda-btn"
+                                    onclick="toggleOpcoesAgenda({{ evento.id }})">
+                                Adicionar à Agenda
+                            </button>
+
+                            <div id="opcoes-agenda-{{ evento.id }}"
+                                class="opcoes-agenda"
+                                style="display: none;">
+                                <form method="post" action="{% url 'adicionar_agenda' evento.id %}">
+                                    {% csrf_token %}
+                                    <label>
+                                        <input type="checkbox" name="adicionar_site" checked>
+                                        Adicionar à minha agenda personalizada
+                                    </label><br>
+                                    <label>
+                                        <input type="checkbox" name="adicionar_google">
+                                        Adicionar à agenda do Google
+                                    </label><br>
+                                    <label>
+                                        <input type="checkbox" name="adicionar_tudo">
+                                        Adicionar às duas agendas
+                                    </label><br>
+                                    <button type="submit">Confirmar</button>
+                                </form>
+                            </div>
                     </div>
                 </li>
                 {% endfor %}
@@ -95,6 +121,12 @@
     </main>
 
     <script src="{% static 'js/eventos.js' %}"></script>
-    
+    <script>
+        function adicionarAgenda(eventoId) {
+            fetch("{% url 'adicionar_agenda' 0 %}".replace("0", eventoId))
+                .then(response => response.json())
+                .then(data => alert(data.mensagem));
+        }
+    </script>
 </body>
 </html>

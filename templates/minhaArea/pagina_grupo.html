@@ -1,0 +1,85 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'styles/minhaArea/grupo.css' %}">
+</head>
+<body>
+    <header class="cabecalho">
+
+    </header>
+    <main class="principal">
+        <nav class="menu-lateral">
+            <div class="nav-header">
+                <h2 class="nome-perfil">NOME</h2>
+                <a href="{% url 'index' %}" class="home">HOME</a>
+            </div>
+            <div class="bate-papos">
+                <h3 class="bate-papos-titulo">Meus Grupos</h3>
+                <ul class="grupos-lista">
+                    <li class="grupos-lista-item">
+                        <h4 class="grupos-item-titulo">Grupo 1</h4>
+                        <p class="grupos-item-mensagem">Ultima Mensagem</p>
+                    </li>
+                </ul>
+            </div>
+            <a href="{% url 'logout' %}" class="logout">LOGOUT</a>
+            
+        </nav>
+        <section class="conversa">
+            <div class="grupo-info">
+                <img src="{% static 'assets/icons/grupo-icon.png' %}" alt="" class="grupo-imagem">
+                <h1>{{ grupo.nome }}</h1>
+                <p>{{ grupo.descricao }}</p>
+            </div>
+        <!-- Exibir as mensagens do grupo -->
+        <div class="mensagens">
+            {% for mensagem in mensagens %}
+                <div class="mensagem {% if mensagem.autor == request.user %}mensagem-usuario{% else %}mensagem-outro{% endif %}">
+                    <p class="usuario">{{ mensagem.autor }}:</p>
+                    {% if mensagem.evento %}
+                            <div class="evento-anexado">
+                                <p><strong>{{ mensagem.evento.nome }}</strong></p>
+                                <img src="{{ mensagem.evento.imagem.url }}">
+                                <p>{{ mensagem.evento.data|date:"d M Y H:i" }}</p>
+                                <a href="{{ mensagem.evento.link }}" target="_blank">Ver evento</a>
+                            </div>
+                        {% endif %}
+                    <div class="conteudo-data">
+                        <p class="conteudo">{{ mensagem.texto }}</p>
+
+
+
+                        <p class="data">{{ mensagem.data_envio|date:"H:i" }}</p>
+                    </div>
+                </div>
+            {% empty %}
+                <p>Não há mensagens ainda.</p>
+            {% endfor %}
+        </div>
+        <div class="enviar-mensagem">
+            <form class="form-mensagem" method="post" action="{% url 'adicionar_mensagem' grupo.id %}">
+                {% csrf_token %}
+                <label for="conteudo">Nova Mensagem:</label>
+                <textarea name="texto" id="conteudo" required></textarea>
+                <select name="evento_id">
+                    <option value="">-- Anexar evento (opcional) --</option>
+                    {% for evento in eventos %}
+                      <option value="{{ evento.id }}">{{ evento.nome }}</option>
+                    {% endfor %}
+                  </select>
+                <button class="btn-mensagem" type="submit">Enviar</button>
+            </form>
+        </div>
+        </section>
+    </main>
+
+    <footer class="rodape">
+
+    </footer>
+</body>
+</html>

@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'styles/index/evento.css' %}">
+</head>
+<body>
+    <header class="cabecalho">
+
+    </header>
+    <main class="principal">
+        <nav class="menu-lateral">
+            <div class="nav-header">
+                <h2 class="nome-perfil">NOME</h2>
+                <a href="{% url 'index' %}" class="home">HOME</a>
+            </div>
+            <div class="bate-papos">
+                <h3 class="bate-papos-titulo">Meus Grupos</h3>
+                <ul class="grupos-lista">
+                    <li class="grupos-lista-item">
+                        <h4 class="grupos-item-titulo">Grupo 1</h4>
+                        <p class="grupos-item-mensagem">Ultima Mensagem</p>
+                    </li>
+                </ul>
+            </div>
+            <a href="{% url 'logout' %}" class="logout">LOGOUT</a>
+        </nav>
+        <section class="evento">
+            <div class="evento-detalhes">
+                <img src="{{ evento.imagem.url }}" alt="{{ evento.nome }}" class="evento-imagem">
+                <div class="evento-container">
+                    <div class="evento-info">
+                        <h1>{{ evento.nome }}</h1>
+                        <div class="data-local">
+                            <p><strong>Data:</strong> {{ evento.data|date:"d/m/Y H:i" }}</p>
+                            <p><strong>Local:</strong> {{ evento.legenda }}</p>
+                            <a href="{{ evento.link }}" target="_blank">Compre aqui</a></p>
+                        </div>
+                        {% if evento.legenda %}
+                        
+                    {% endif %}
+                    </div>
+                    <div class="evento-valores">
+                        <p class="valores-titulo">Descrição do evento:</p>
+                        <p class="valores-monetario">{{ evento.descricao }}</p>
+                    </div>
+                </div>
+              </div>
+        </section>
+    </main>
+</body>
+</html>

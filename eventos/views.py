@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from eventos.models import Eventos, Favorito
+from django.shortcuts import render, get_object_or_404
+from eventos.models import Eventos
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -19,9 +19,14 @@ def index(request):
     eventos = Eventos.objects.order_by("data").filter(publicada=True)
     eventos_destaque = Eventos.objects.filter(publicada=True, destaque=True).order_by('data')[:3]
 
+    favoritos_ids = []
+    if request.user.is_authenticated:
+        favoritos_ids = request.user.eventos_favoritados.values_list('id', flat=True)
+
     return render(request, 'index.html', {
         "cards": eventos, 
-        "cards_destaque": eventos_destaque
+        "cards_destaque": eventos_destaque,
+        "favoritos_ids": favoritos_ids
     })
 
 def cloudinary_webhook(request):
@@ -85,38 +90,43 @@ def buscar_eventos(request):
 
     return JsonResponse(data, safe=False)
 
+@login_required
 def favoritar_evento(request, evento_id):
-    if request.user.is_authenticated:
-        evento = Eventos.objects.get(id=evento_id)
-        favorito, created = Favorito.objects.get_or_create(user=request.user, evento=evento)
+    evento = get_object_or_404(Eventos, id=evento_id)
+    user = request.user
 
-        # Caso o favorito já exista, remova-o (favoritar/desfavoritar)
-        if not created:
-            favorito.delete()
-            favorited = False
-        else:
-            favorited = True
-
-        # Retorna uma resposta JSON indicando se o evento foi favoritado ou não
-        return JsonResponse({'favorited': favorited})
+    if user in evento.favoritos.all():
+        evento.favoritos.remove(user)
+        favoritado = False
     else:
-        return JsonResponse({'error': 'Usuário não autenticado'}, status=401)
+        evento.favoritos.add(user)
+        favoritado = True
 
+    return JsonResponse({'favorited': favoritado})
+
+@login_required
 def eventos_view(request):
-    # Pega todos os eventos
     eventos = Eventos.objects.all()
     
-    # Se o usuário estiver logado, pega os eventos favoritados por ele
-    
-    if request.user.is_authenticated:
-        favoritos = Favorito.objects.filter(user=request.user)
-        favoritos_ids = [favorito.evento.id for favorito in favoritos]
+    # Aqui, pega os eventos marcados como favoritado
+    favoritos_ids = [evento.id for evento in eventos if evento.favoritado]
 
-    else:
-        favoritos_ids = []
-
-    # Envia os eventos e os favoritos_ids para o template
     return render(request, 'minhaArea/area.html', {
         'eventos': eventos,
         'favoritos_ids': favoritos_ids,
     })
+
+@login_required
+def eventos_view(request):
+    user = request.user
+
+    # Pega os eventos favoritados pelo usuário (via ManyToMany)
+    eventos_favoritos = user.eventos_favoritados.all()
+
+    return render(request, 'minhaArea/area.html', {
+        'eventos_favoritos': eventos_favoritos
+    })
+
+def detalhes_evento(request, evento_id):
+    evento = get_object_or_404(Eventos, id=evento_id)
+    return render(request, 'eventos/detalhes_eventos.html', {'evento': evento})

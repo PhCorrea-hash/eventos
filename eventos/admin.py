@@ -8,3 +8,7 @@ class ListandoEventos(admin.ModelAdmin):
     list_editable = ("publicada", "destaque")
 
 admin.site.register(Eventos, ListandoEventos)
+
+
+
+

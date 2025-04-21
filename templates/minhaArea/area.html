@@ -9,10 +9,26 @@
     <link rel="stylesheet" href="{% static 'styles/minhaArea/area.css' %}">
 </head>
 <body>
+    <!-- {% if messages %}
+        <ul class="mensagens">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %} -->
+    {% if messages %}
+        <div class="mensagens">
+            {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
     <header class="cabecalho">
         <div class="logo-nome">
             <img class="logo" src="{% static 'assets/icons/eventia-logo.png' %}" alt="Logo da Eventia">
-            <h1 class="titulo">EVENTIA</h1>
+            <a class="titulo-link" href="{% url 'index' %}">EVENTIA</a>
         </div>
         <div class="cabecalho__busca">
             <div class="busca__fundo">
@@ -32,11 +48,14 @@
                 {% if eventos_favoritos %}
                     {% for evento in eventos_favoritos %}
                         <li class="favoritos-lista-item">
-                            <a href="{{ evento.link }}">
+                            <a class="favorito-link" href="{{ evento.link }}">
                                 <img src="{{ evento.imagem.url }}" alt="{{ evento.nome }}" class="evento-imagem">
-                                <h3>{{ evento.nome }}</h3>
-                                <p>{{ evento.descricao }}</p>
-                                <p>{{ evento.data }}</p>
+                                <div class="favorito-info">
+                                    <h3 class="favorito-titulo">{{ evento.nome }}</h3>
+                                    <p class="favorito-legenda">{{ evento.legenda }}</p>
+                                    <p class="favorito-descricao">{{ evento.descricao }}</p>
+                                    <p class="favorito-data">{{ evento.data }}</p>
+                                </div>
                             </a>
                         </li>
                     {% endfor %}
@@ -52,13 +71,36 @@
                 <p class="favoritos-texto">Mostrar Todos -></p>
             </div>
             <ul class="grupos-lista">
-                <li class="grupos-lista-item">
+                {% for grupo in grupos %}
+                    <li class="grupos-lista-item">
+                        <div class="grupo-info">
+                            <a href="{% url 'pagina_grupo' grupo.id %}">
+                                {{ grupo.nome }}
+                            </a>
+                            <p>{{ grupo.descricao }}</p>
+                            <!-- <p>Membros:</p>
+                            <ul>
+                                {% for membro in grupo.membros.all %}
+                                    <li>{{ membro.username }}</li>
+                                {% endfor %}
+                            </ul> -->
+                            <!-- BOTÃO -->
+                            <img class="grupo-imagem" src="{% static 'assets/icons/grupo-icon.png' %}">
+                            <button onclick="mostrarFormulario({{ grupo.id }})" class="adicionar-membro">Adicionar Membro</button>
 
-                </li>
+                            <!-- FORMULÁRIO -->
+                            <form id="formulario-{{ grupo.id }}" action="{% url 'adicionar_membro' grupo.id %}" method="post" style="display:none;">
+                                {% csrf_token %}
+                                <input type="text" name="username" placeholder="Nome de usuário">
+                                <button type="submit">Adicionar</button>
+                            </form>
+                        </div>
+                    </li>
+                {% endfor %}
                 <li class="grupos-lista-item adicionar">
-                    <button class="grupos-botao" type="button" id="grupos-botao">
+                    <a class="grupos-botao" href="{% url 'criar_grupo' %}">
                         <img class="botao-imagem" src="{% static 'assets/icons/adicionar-icon.png' %}" alt="">
-                    </button>
+                    </a>
                 </li>
             </ul>
         </section>
@@ -102,10 +144,51 @@
                 </ul>
             </div>
         </section>
+
+        <section class="agenda">
+            <h1 class="agenda-titulo">Minha Agenda</h1>
+            <div class="calendario">
+                {% for month in calendario %}
+                  <div class="mes">
+                    <h3 class="titulo-mes">{{ month.name }}</h3>
+                    <div class="dias">
+                      {% for day in month.days %}
+                        <div class="dia">
+                          <strong class="numero-dia">{{ day.day }}</strong>
+                          {% if day.events %}
+                            <ul class="eventos-do-dia">
+                              {% for evento in day.events %}
+                              <li class="evento">
+                                <a href="{% url 'detalhes_eventos' evento.id %}" class="evento-link">
+                                  {{ evento.nome }}
+                                </a>
+                                <a href="{% url 'remover_agenda' evento.id %}" class="remover-evento">Remover</a>
+                              </li>
+                              {% endfor %}
+                            </ul>
+                          {% endif %}
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+        </section>
     </main>
 
     <footer class="rodape">
         
     </footer>
+
+    <script>
+        function mostrarFormulario(grupoId) {
+            const form = document.getElementById(`formulario-${grupoId}`);
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        }
+        </script>
 </body>
 </html>

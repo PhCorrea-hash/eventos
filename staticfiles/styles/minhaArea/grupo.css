@@ -1,0 +1,143 @@
+:root {
+    --corDeFundo: #000;
+    --fonte: "Winky Rough", sans-serif;
+    --corDoTextoPrincipal: #fff;
+}
+
+body {
+    background: #020024;
+    background: linear-gradient(164deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+    padding: 0;
+    margin: 0;
+    font-family: var(--fonte);
+}
+
+header {
+    width: 100%;
+    height: 50px;
+    background: var(--corDoTextoPrincipal);
+}
+
+main {
+    display: flex;
+}
+
+.menu-lateral {
+    background: var(--corDoTextoPrincipal);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.grupos-lista {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    padding: 0;
+}
+
+.conversa {
+    width: 100%;
+}
+
+.grupo-info {
+    display: flex;
+    background: #888686;
+    padding: 0.75rem;
+    gap: 1rem;
+    align-items: center;
+}
+
+.grupo-imagem {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.mensagens {
+    margin: 2rem 2rem 0 2rem;
+    color: var(--corDeFundo);
+    min-height: 650px;
+    max-height: 700px;
+    overflow-y: scroll;
+    padding-right: 2rem;
+}
+
+.mensagem {
+    display: flex;
+    flex-direction: column;
+    background: var(--corDoTextoPrincipal);
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    /* width: 35%; */
+    border-radius: 16px;
+    max-width: 35%;
+}
+
+.mensagem p {
+    margin: 0;
+    line-height: 1.2;
+}
+
+.usuario {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.evento-anexado {
+    margin: 0.5rem 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.evento-anexado p {
+    font-size: 1.5rem;
+}
+
+.evento-anexado img {
+    max-width: 100%;
+}
+
+.conteudo-data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.conteudo {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 0.25rem;
+}
+
+.data {
+    text-align: right;
+}
+
+.mensagem-usuario {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.enviar-mensagem {
+    display: flex;
+    background: #888686;
+    padding: 1rem;
+}
+
+.form-mensagem {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#conteudo {
+    min-width: 1000px;
+}
+
+.rodape {
+    height: 100px;
+    background: var(--corDoTextoPrincipal);
+}

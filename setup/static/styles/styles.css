@@ -19,6 +19,25 @@ header {
     flex-direction: column;
 }
 
+.opcoes-agenda {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  width: fit-content;
+}
+
+.adicionar-agenda-btn {
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 .logo {
     width: 7.5%;
     height: auto;
@@ -156,7 +175,7 @@ form {
 
 .eventos-lista-item {
     width: 20%;
-    height: 300px;
+    height: 325px;
     background: var(--corDoTextoPrincipal);
     border-radius: 16px;
     padding: 0.5rem;
@@ -167,18 +186,18 @@ form {
     overflow: hidden;
     border-radius: 16px;
     transition: transform 0.3s ease;
-    height: 150px;
+    height: 175px;
   }
 
-  .imagem {
+.imagem {
     width: 100%;
-    max-height: 175px;
+    max-height: 225px;
     height: auto;
     display: block;
     transition: transform 0.3s ease;
   }
 
-  .descricao-overlay {
+.descricao-overlay {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -191,21 +210,21 @@ form {
     font-size: 0.9rem;
   }
   
-  .imagem-container:hover .imagem {
+.imagem-container:hover .imagem {
     transform: scale(1.1);
   }
   
-  .imagem-container:hover .descricao-overlay {
+.imagem-container:hover .descricao-overlay {
     opacity: 1;
   }
 
-  .evento-info {
+.evento-info {
     display: flex;
     align-items: center;
     height: 150px;
   }
 
-  .favorito-btn {
+.favorito-btn {
     background: transparent;
     border: none;
     max-width: 50px;
@@ -213,11 +232,11 @@ form {
     padding: 0;
   }
 
-  .favorito-btn:hover {
+.favorito-btn:hover {
     cursor: pointer;
   }
 
-  .icone-favorito {
+.icone-favorito {
     width: 50px;
     height: 50px;
   }
@@ -230,11 +249,11 @@ form {
     width: 100%;
   }
 
-  .evento-legenda {
+.evento-legenda {
     margin: 0;
   }
 
-  .evento-data {
+.evento-data {
     margin: 0;
   }
 

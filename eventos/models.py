@@ -13,16 +13,7 @@ class Eventos(models.Model):
     publicada = models.BooleanField(default=False)
     destaque = models.BooleanField(default=False)
 
+    favoritos = models.ManyToManyField(User, related_name='eventos_favoritados', blank=True)
+
     def __str__(self):
         return self.nome
-
-class Favorito(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    evento = models.ForeignKey(Eventos, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True,)
-
-    class Meta:
-        unique_together = ('user', 'evento')  # impede duplicação
-
-    def __str__(self):
-        return f'{self.user.username} - {self.evento.nome}'
