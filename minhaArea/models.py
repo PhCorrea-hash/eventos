@@ -36,17 +36,3 @@ class Agenda(models.Model):
     def __str__(self):
         return f"{self.usuario.username} - {self.evento.nome}"
     
-class GoogleCredentials(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    client_id = models.CharField(max_length=255)
-    client_secret = models.CharField(max_length=255)
-    refresh_token = models.CharField(max_length=255)
-    access_token = models.CharField(max_length=255, blank=True, null=True)
-    expires_in = models.DateTimeField(blank=True, null=True)
-
-    def __str__(self):
-        return f"Google Credentials for {self.user.username}"
-
-    def save(self, *args, **kwargs):
-        # Lógica para atualizar ou criar as credenciais, se necessário.
-        super(GoogleCredentials, self).save(*args, **kwargs)

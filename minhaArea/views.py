@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from eventos.models import Eventos
-from minhaArea.models import Grupo, MensagemGrupo, Agenda, GoogleCredentials
+from minhaArea.models import Grupo, MensagemGrupo, Agenda
 from .forms import GrupoForm
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -10,13 +10,6 @@ import calendar
 from datetime import date, timedelta
 from collections import defaultdict
 from django.utils import timezone
-from googleapiclient.discovery import build
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import Flow
-import os
-import json
-from allauth.socialaccount.models import SocialToken, SocialAccount
-from django.conf import settings
 
 
 @login_required
@@ -69,16 +62,10 @@ def area(request):
             'days': dias
         })
 
-    google_connected = SocialAccount.objects.filter(
-        user=request.user,
-        provider='google'
-    ).exists()
-
     return render(request, 'minhaArea/area.html', {
         'eventos_favoritos': eventos_favoritos,
         'grupos': grupos,
         'calendario': calendario,
-        'google_connected': google_connected,
     })
 
 @login_required
@@ -158,53 +145,12 @@ def adicionar_agenda(request, evento_id):
 
     evento = get_object_or_404(Eventos, id=evento_id)
 
-    adicionar_site   = 'adicionar_site'   in request.POST
-    adicionar_google = 'adicionar_google' in request.POST
-    adicionar_tudo   = 'adicionar_tudo'   in request.POST
+    adicionar_site = 'adicionar_site' in request.POST or 'adicionar_tudo' in request.POST
 
     # 1) Agenda interna do site
-    if adicionar_site or adicionar_tudo:
+    if adicionar_site:
         Agenda.objects.get_or_create(usuario=request.user, evento=evento)
 
-    # 2) Agenda Google via allauth SocialToken
-    if adicionar_google or adicionar_tudo:
-        try:
-            # encontra a conta social do Google
-            social_account = SocialAccount.objects.get(
-                user=request.user,
-                provider='google'
-            )
-            # e o token associado
-            social_token = SocialToken.objects.get(account=social_account)
-        except (SocialAccount.DoesNotExist, SocialToken.DoesNotExist):
-            messages.error(request, "Você precisa primeiro conectar sua conta Google.")
-            return redirect('area')
-
-        # monta as credenciais a partir do token e do refresh_token
-        creds = Credentials(
-            token=social_token.token,                # access_token
-            refresh_token=social_token.token_secret, # refresh_token
-            token_uri='https://oauth2.googleapis.com/token',
-            client_id=settings.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY,
-            client_secret=settings.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET,
-            scopes=['https://www.googleapis.com/auth/calendar']
-        )
-
-        service = build('calendar', 'v3', credentials=creds)
-
-        start = evento.data.isoformat()
-        end   = (evento.data + timedelta(hours=1)).isoformat()
-
-        body = {
-            'summary':     evento.nome,
-            'location':    evento.local or '',
-            'description': evento.descricao,
-            'start':  {'dateTime': start, 'timeZone': 'America/Sao_Paulo'},
-            'end':    {'dateTime': end,   'timeZone': 'America/Sao_Paulo'},
-        }
-        service.events().insert(calendarId='primary', body=body).execute()
-        messages.success(request, "Evento adicionado ao Google Calendar!")
-    
     return redirect('area')
 
 @login_required
@@ -213,32 +159,4 @@ def remover_da_agenda(request, evento_id):
     Agenda.objects.filter(usuario=request.user, evento=evento).delete()
     return redirect('area')
 
-# Carrega seu credentials.json
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-with open(os.path.join(BASE_DIR, 'root/credentials.json')) as f:
-    CLIENT_SECRETS = json.load(f)
-
-SCOPES = ['https://www.googleapis.com/auth/calendar.events']
-REDIRECT_URI = 'http://localhost:8000/oauth2callback/'  # deve bater com o console
-
-def init_google_calendar(request):
-    flow = Flow.from_client_config(
-        CLIENT_SECRETS,
-        scopes=SCOPES,
-        redirect_uri=REDIRECT_URI
-    )
-    auth_url, _ = flow.authorization_url(prompt='consent', access_type='offline')
-    request.session['flow'] = flow
-    return redirect(auth_url)
-
-def oauth2callback(request):
-    flow = request.session.get('flow')
-    flow.fetch_token(authorization_response=request.build_absolute_uri())
-    credentials = flow.credentials
-    # Salve `credentials.to_json()` no seu modelo GoogleCredentials
-    GoogleCredentials.objects.update_or_create(
-        user=request.user,
-        defaults={'credentials': credentials.to_json()}
-    )
-    return redirect('area')
 
