@@ -1,5 +1,4 @@
 {% load static %}
-{% load socialaccount %}
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -33,12 +32,6 @@
         {% endif %}
 
     {% include 'partials/header.html' %}
-
-    {% if not google_connected %}
-    <a href="{% provider_login_url 'google' %}" class="btn btn-google">
-        Conectar com Google
-    </a>
-    {% endif %}
 
     <main class="area">
         <section class="favoritos">
