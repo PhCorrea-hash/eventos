@@ -1,0 +1,47 @@
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0.375rem 1rem;
+    padding: 0;
+}
+  
+.titulo {
+    font-family: var(--fonte);
+    font-size: 3rem;
+    font-weight: 400;
+    color: var(--corDoTextoPrincipal);
+    text-decoration: none
+}
+
+.titulo:hover {
+  color: #585555;
+}
+  
+.header-info {
+    display: flex;
+    gap: 2rem;
+}
+  
+.info-item {
+    text-decoration: none;
+    color: var(--corDoTextoPrincipal);
+    font-family: var(--fonte);
+    font-size: 1.5rem;
+}
+  
+.info-item:hover {
+    color: #585555;
+}
+  
+.login {
+    text-decoration: none;
+    font-family: var(--fonte);
+    color: var(--corDoTextoPrincipal);
+    font-size: 1.5rem;
+    margin-right: 2rem;
+}
+  
+.login:hover {
+    color: #585555;
+}

@@ -6,24 +6,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap');
-    </style>
-    <link rel="stylesheet" href="{% static 'styles/login/login.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'styles/header.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/login/cadastro.css' %}">
 </head>
 <body>
-    <header class="cabecalho">
-        <div class="logo-nome">
-            <img class="logo" src="{% static 'assets/icons/eventia-logo.png' %}" alt="Logo da Eventia">
-            <h1 class="titulo">EVENTIA</h1>
-        </div>
-        <div class="cabecalho__busca">
-            <div class="busca__fundo">
-                <input class="busca__input" type="text" id="busca" name="buscar" placeholder="Buscar eventos...">
-                <ul id="resultados"></ul>
-            </div>
-        </div>
-    </header>
+
+    {% include 'partials/header.html' %}
 
     <section class="main">
         <div class="menu-lateral">
@@ -47,7 +39,7 @@
             </ul>
         </div>
 
-        <div class="login">
+        <div class="login-container">
             <form action="{% url 'cadastro' %}" method="POST">
                 {% csrf_token %}
                     <div class="forms-cadastro">
@@ -70,9 +62,7 @@
         </div>
     </section>
 
-    <footer class="rodape">
-
-    </footer>
+    {% include 'partials/footer.html' %}
     
 </body>
 </html>

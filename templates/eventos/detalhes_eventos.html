@@ -6,51 +6,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="{% static 'styles/index/evento.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'styles/header.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/detalhesEventos/detalhes_eventos.css' %}">
 </head>
 <body>
-    <header class="cabecalho">
+    
+    {% include 'partials/header.html' %}
 
-    </header>
     <main class="principal">
-        <nav class="menu-lateral">
-            <div class="nav-header">
-                <h2 class="nome-perfil">NOME</h2>
-                <a href="{% url 'index' %}" class="home">HOME</a>
+        <img src="{{ evento.imagem.url }}" alt="Fundo do evento" class="fundo-main">
+        <section class="imagem-container">
+            <div class="imagem-titulo">
+                <h1 class="evento-nome">{{ evento.nome }}</h1>
+                <p class="evento-data">{{ evento.data|date:"d/m/Y H:i" }}</p>
             </div>
-            <div class="bate-papos">
-                <h3 class="bate-papos-titulo">Meus Grupos</h3>
-                <ul class="grupos-lista">
-                    <li class="grupos-lista-item">
-                        <h4 class="grupos-item-titulo">Grupo 1</h4>
-                        <p class="grupos-item-mensagem">Ultima Mensagem</p>
-                    </li>
-                </ul>
-            </div>
-            <a href="{% url 'logout' %}" class="logout">LOGOUT</a>
-        </nav>
-        <section class="evento">
-            <div class="evento-detalhes">
+            <div class="evento-container">
                 <img src="{{ evento.imagem.url }}" alt="{{ evento.nome }}" class="evento-imagem">
-                <div class="evento-container">
-                    <div class="evento-info">
-                        <h1>{{ evento.nome }}</h1>
-                        <div class="data-local">
-                            <p><strong>Data:</strong> {{ evento.data|date:"d/m/Y H:i" }}</p>
-                            <p><strong>Local:</strong> {{ evento.legenda }}</p>
-                            <a href="{{ evento.link }}" target="_blank">Compre aqui</a></p>
-                        </div>
-                        {% if evento.legenda %}
-                        
-                    {% endif %}
-                    </div>
-                    <div class="evento-valores">
-                        <p class="valores-titulo">Descrição do evento:</p>
-                        <p class="valores-monetario">{{ evento.descricao }}</p>
-                    </div>
-                </div>
-              </div>
+                <a href="{{ evento.link }}" class="evento-link">Compre aqui</a>
+            </div>
+        </section>
+        <section class="descricao">
+            <div class="local">
+                <img src="{% static 'assets/icons/local-icon.png' %}" alt="" class="local-icone">
+                <p class="evento-local">{{ evento.legenda }}</p>
+            </div>
+            <div class="descricao-texto">
+                <p class="paragrafo">{{ evento.descricao }}</p>
+            </div>
         </section>
     </main>
+
+    {% include 'partials/footer.html' %}
+
 </body>
 </html>

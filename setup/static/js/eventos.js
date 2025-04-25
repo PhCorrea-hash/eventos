@@ -20,15 +20,55 @@ if (inputBusca) {
                     const li = document.createElement('li');
                     li.classList.add('eventos-lista-item');
                     li.innerHTML = `
-                        <a class="evento-link" href="${evento.link}">
-                            <div class="imagem-container">
-                                <img src="${evento.imagem}" class="imagem">
-                                <div class="descricao-overlay">${evento.descricao}</div>
+                        <div class="imagem-btn">
+                            <div class="evento-imagem-container">
+                                <img src="${evento.imagem}" alt="" class="evento-img">
+                                <button 
+                                    class="favorito-btn" 
+                                    data-evento-id="${evento.id}">
+                                    <img src="${evento.favorito ? '/static/assets/icons/favoritado-icon.png' : '/static/assets/icons/favoritar-icon.png'}" alt="" class="favoritar-icone">
+                                </button>
                             </div>
-                        </a>
-                        <h3 class="evento-titulo">${evento.nome}</h3>
-                        <p class="evento-legenda">${evento.legenda}</p>
-                        <p class="evento-data">${evento.data}</p>
+                            <button type="button"
+                                    class="adicionar-agenda-btn"
+                                    data-evento-id="${evento.id}"
+                                    onclick="toggleOpcoesAgenda(${evento.id})">
+                                Adicionar à Agenda
+                            </button>
+                        </div>
+
+                        <div class="evento-detalhes">
+                            <h3 class="evento-detalhes-titulo">${evento.nome}</h3>
+                            <div class="evento-detalhes-local">
+                                <img src="/static/assets/icons/local-branco-icon.png" alt="" class="detalhes-icone">
+                                <p class="detalhes-texto">${evento.legenda}</p>
+                            </div>
+                            <div class="evento-detalhes-data">
+                                <img src="/static/assets/icons/calendario-branco-icon.png" alt="" class="detalhes-icone">
+                                <p class="detalhes-texto">${evento.data}</p>
+                            </div>
+                        </div>
+
+                        <div id="opcoes-agenda-${evento.id}"
+                            class="opcoes-agenda"
+                            style="display: none;">
+                            <form method="post" action="/adicionar_agenda/${evento.id}/">
+                                <input type="hidden" name="csrfmiddlewaretoken" value="${evento.csrf_token}">
+                                <label>
+                                    <input type="checkbox" name="adicionar_site" checked>
+                                    Adicionar à minha agenda personalizada
+                                </label><br>
+                                <label>
+                                    <input type="checkbox" name="adicionar_google">
+                                    Adicionar à agenda do Google
+                                </label><br>
+                                <label>
+                                    <input type="checkbox" name="adicionar_tudo">
+                                    Adicionar às duas agendas
+                                </label><br>
+                                <button type="submit">Confirmar</button>
+                            </form>
+                        </div>
                     `;
                     container.appendChild(li);
                 });
@@ -58,7 +98,7 @@ document.querySelectorAll('.favorito-btn').forEach(button => {
         .then(data => {
             if (!data) return;  // Se não houver dados, retorna
 
-            const icone = button.querySelector('.icone-favorito');
+            const icone = button.querySelector('.favoritar-icone');
             if (data.favorited) {
                 // Caso o evento seja favoritado, altera o ícone e a classe
                 icone.src = '/static/assets/icons/favoritado-icon.png';
@@ -75,34 +115,50 @@ document.querySelectorAll('.favorito-btn').forEach(button => {
 document.querySelectorAll('.adicionar-agenda-btn').forEach(button => {
     button.addEventListener('click', (e) => {
         const eventoId = e.target.getAttribute('data-evento-id');
-        const modal = document.getElementById('opcoes-agenda');
-        modal.style.display = 'block';
 
-        // Caso queira garantir que o formulário é enviado com o evento correto
-        modal.querySelector('form').action = `/adicionar-agenda/${eventoId}/`;
+        if (!eventoId) {
+            console.error('ID do evento não encontrado!');
+            return;
+        }
+
+        const modal = document.getElementById(`opcoes-agenda-${eventoId}`);
+
+        if (modal) {
+            console.log(eventoId);  // Mostra o ID do evento
+            console.log(modal);      // Mostra o modal encontrado
+
+            // Adiciona a classe "show" ao modal para exibi-lo
+            // modal.style.display = 'block';
+
+            // Ajusta a ação do formulário com o ID do evento
+            modal.querySelector('form').action = `/adicionar-agenda/${eventoId}/`;
+        } else {
+            console.error(`Modal com ID opcoes-agenda-${eventoId} não encontrado.`);
+        }
     });
 });
 
 function toggleOpcoesAgenda(id) {
     const dropdown = document.getElementById(`opcoes-agenda-${id}`);
-    const isVisible = dropdown.style.display === 'block';
+    if (!dropdown) return;
 
-    // Fecha todos os dropdowns antes
+    const isVisible = dropdown.classList.contains('visivel');
+
+    // Fecha todos e remove inline styles
     document.querySelectorAll('.opcoes-agenda').forEach(div => {
-        div.style.display = 'none';
+        div.classList.remove('visivel');
+        div.style.display = '';  // <- remove o inline style
     });
 
-    // Abre o atual se ele não estiver visível
     if (!isVisible) {
-        dropdown.style.display = 'block';
+        dropdown.style.display = ''; // limpa inline antes
+        dropdown.classList.add('visivel');
     }
-
-    console.log("Clicou no botão de evento ID:", id);
 }
 
 // Fecha se clicar fora
 document.addEventListener('click', function (event) {
-    const isClickInside = event.target.closest('.info');
+    const isClickInside = event.target.closest('.info, .opcoes-agenda, .adicionar-agenda-btn');
     if (!isClickInside) {
         document.querySelectorAll('.opcoes-agenda').forEach(div => {
             div.style.display = 'none';

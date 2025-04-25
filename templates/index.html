@@ -6,53 +6,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eventos</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap');
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
 </head>
 <body>
-    <header class="cabecalho">
-        <div class="container-cabecalho">
-            <img src="{% static 'assets/icons/eventia-logo.png' %}" alt="" class="logo">
-            <div class="sub-cabecalho">
-                <h1 class="titulo">Eventia</h1>
-                <p class="texto">Os melhores eventos de Rio Preto e região estão aqui!</p>
-                <div class="botoes">
-                    <a class="link">EVENTOS</a>
-                    <a class="link" href="{% url 'area' %}">MINHA AREA</a>
-                    <a class="link" href="{% url 'cadastro' %}">CADASTRE-SE</a>
-                    <a class="link" href="{% url 'logout' %}">LOG-OUT</a>
-                </div>
-            </div>
-        </div>
-    </header>
+
+    {% include 'partials/header.html' %}
 
     <main>
-        <h2 class="destaques-titulo">Eventos em destaque</h2>
-        <div class="destaques">
-            <ul class="lista-destaques">
+        <section class="destaques">
+            <h2 class="destaques-titulo">DESTAQUES</h2>
+            <ul class="eventos-destaque-lista">
                 {% if cards_destaque %}
                 {% for evento in cards_destaque %}
-                <li class="lista-destaques-item">
-                    <div class="imagem-container-destaque">
-                        <a class="destaque-link" href=" {{ evento.link }}">
-                            <img src="{{ evento.imagem.url }}" class="imagem-destaque">
-                            <div class="descricao-overlay">
-                                <p>{{ evento.descricao }}</p>
-                            </div>
-                        </a>
+                <li class="destaques-lista-item">
+                    <img src="{{ evento.imagem.url }}" alt="" class="imagem-fundo">
+                    <div class="imagem-container">
+                        <img src="{{ evento.imagem.url }}" alt="" class="evento-imagem">
+                        <button 
+                            class="favorito-btn" 
+                            data-evento-id="{{ evento.id }}">
+                            {% if evento.id in favoritos_ids %}
+                            <img src="{% static 'assets/icons/favoritado-icon.png' %}" alt="" class="favoritar-icone">
+                            {% else %}
+                            <img src="{% static 'assets/icons/favoritar-icon.png' %}" alt="" class="favoritar-icone">
+                            {% endif %}
+                        </button>
                     </div>
-                    <h2 class="subtitulo">{{ evento.nome }}</h2>
-                    <p class="legenda">{{ evento.legenda }}</p>
-                    <p class="data">{{ evento.data }}</p>
+                    <div class="evento-info">
+                        <div class="nome-agenda">
+                            <h3 class="evento-nome">{{ evento.nome }}</h3>
+                            <button type="button"
+                                    class="adicionar-agenda-btn"
+                                    data-evento-id="{{ evento.id }}"
+                                    onclick="toggleOpcoesAgenda({{ evento.id }})">
+                                Adicionar à Agenda
+                            </button>
+                        </div>
+                        <div class="local-data">
+                            <div class="evento-data">
+                                <p class="info-texto">{{ evento.data }}</p>
+                                <img src="{% static 'assets/icons/calendario-branco-icon.png' %}" alt="" class="info-icone">
+                            </div>
+                            <div class="evento-local">
+                                <p class="info-texto">{{ evento.legenda }}</p>
+                                <img src="{% static 'assets/icons/local-branco-icon.png' %}" alt="" class="info-icone">
+                            </div>
+                        </div>
+                    </div>
                 </li>
                 {% endfor %}
                 {% endif %}
             </ul>
-        </div>
+        </section>
 
-        <section class="eventos">
+        <!-- <section class="eventos">
             <h2 class="titulo">Eventos</h2>
             <div class="cabecalho__busca">
                 <div class="busca__fundo">
@@ -64,34 +74,37 @@
                 {% if cards %}
                 {% for evento in cards %}
                 <li class="eventos-lista-item">
-                    <a class="evento-link" href="{% url 'detalhes_eventos' evento.id %}">
                         <div class="imagem-container">
-                            <img src="{{ evento.imagem.url }}" class="imagem"> 
+                            <button 
+                                class="favorito-btn" 
+                                data-evento-id="{{ evento.id }}">
+                                {% if evento.id in favoritos_ids %}
+                                <img src="{% static 'assets/icons/favoritado-icon.png' %}" alt="" class="icone-favorito">
+                                {% else %}
+                                <img src="{% static 'assets/icons/favoritar-icon.png' %}" alt="" class="icone-favorito">
+                                {% endif %}
+                            </button>
+                    <a class="evento-link" href="{% url 'detalhes_eventos' evento.id %}">
+                            <img src="{{ evento.imagem.url }}" class="imagem">
                             <div class="descricao-overlay">
                                 <p>{{ evento.descricao }}</p>
                             </div>
                         </div>
                     </a>
                     <div class="evento-info">
-                        <button 
-                            class="favorito-btn" 
-                            data-evento-id="{{ evento.id }}">
-                            {% if evento.id in favoritos_ids %}
-                            <img src="{% static 'assets/icons/favoritado-icon.png' %}" alt="" class="icone-favorito">
-                            {% else %}
-                            <img src="{% static 'assets/icons/favoritar-icon.png' %}" alt="" class="icone-favorito">
-                            {% endif %}
-                        </button>
                         <div class="info">
-                            <h3 class="evento-titulo">{{ evento.nome }}</h3>
-                            <p class="evento-legenda">{{ evento.legenda }}</p>
-                            <p class="evento-data">{{ evento.data }}</p>
-                            <button type="button"
-                                    class="adicionar-agenda-btn"
-                                    onclick="toggleOpcoesAgenda({{ evento.id }})">
-                                Adicionar à Agenda
-                            </button>
-
+                            <div class="titulo-botao">
+                                <h3 class="evento-titulo">{{ evento.nome }}</h3>
+                                <button type="button"
+                                        class="adicionar-agenda-btn"
+                                        onclick="toggleOpcoesAgenda({{ evento.id }})">
+                                    Adicionar à Agenda
+                                </button>
+                            </div>
+                            <div class="local-data">
+                                <p class="evento-legenda">{{ evento.legenda }}</p>
+                                <p class="evento-data">{{ evento.data|date:"d/m/Y \\à\\s H:i" }}</p>
+                            </div>
                             <div id="opcoes-agenda-{{ evento.id }}"
                                 class="opcoes-agenda"
                                 style="display: none;">
@@ -117,8 +130,82 @@
                 {% endfor %}
                 {% endif %}
             </ul>
+        </section> -->
+
+        <section class="eventos">
+            <h2 class="eventos-titulo">EVENTOS</h2>
+            <div class="cabecalho__busca">
+                <div class="busca__fundo">
+                    <input class="busca__input" type="text" id="busca" name="buscar" placeholder="Buscar eventos...">
+                    <ul id="resultados"></ul>
+                </div>
+            </div>
+            <ul class="eventos-lista" id="eventos-container">
+                {% if cards %}
+                {% for evento in cards %}
+                <li class="eventos-lista-item">
+                    <div class="item-container">
+                        <div class="imagem-btn">
+                            <div class="evento-imagem-container">
+                                <img src="{{ evento.imagem.url }}" alt="" class="evento-img">
+                                <button 
+                                    class="favorito-btn" 
+                                    data-evento-id="{{ evento.id }}">
+                                    {% if evento.id in favoritos_ids %}
+                                    <img src="{% static 'assets/icons/favoritado-icon.png' %}" alt="" class="favoritar-icone">
+                                    {% else %}
+                                    <img src="{% static 'assets/icons/favoritar-icon.png' %}" alt="" class="favoritar-icone">
+                                    {% endif %}
+                                </button>
+                            </div>
+                            <button type="button"
+                                    class="adicionar-agenda-btn"
+                                    data-evento-id="{{ evento.id }}"
+                                    onclick="toggleOpcoesAgenda({{ evento.id }})">
+                                    Adicionar à Agenda
+                            </button>
+                        </div>
+                        <div class="evento-detalhes">
+                            <h3 class="evento-detalhes-titulo">{{ evento.nome }}</h3>
+                            <div class="evento-detalhes-local">
+                                <img src="{% static 'assets/icons/local-branco-icon.png' %}" alt="" class="detalhes-icone">
+                                <p class="detalhes-texto">{{ evento.legenda }}</p>
+                            </div>
+                            <div class="evento-detalhes-data">
+                                <img src="{% static 'assets/icons/calendario-branco-icon.png' %}" alt="" class="detalhes-icone">
+                                <p class="detalhes-texto">{{ evento.data }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="opcoes-agenda-{{ evento.id }}"
+                        class="opcoes-agenda">
+                        <form method="post" action="{% url 'adicionar_agenda' evento.id %}" class="agenda-form">
+                            {% csrf_token %}
+                            <div class="form-container">
+                                <label>
+                                    <input type="checkbox" name="adicionar_site" checked>
+                                        Adicionar à minha agenda personalizada
+                                    </label><br>
+                                    <label>
+                                        <input type="checkbox" name="adicionar_google">
+                                        Adicionar à agenda do Google
+                                    </label><br>
+                                    <label>
+                                        <input type="checkbox" name="adicionar_tudo">
+                                         Adicionar às duas agendas
+                                </label><br>
+                            </div>
+                            <button type="submit" class="agenda-submit">Confirmar</button>
+                        </form>
+                    </div>
+                </li>
+                {% endfor %}
+                {% endif %}
+            </ul>
         </section>
     </main>
+
+    {% include 'partials/footer.html' %}
 
     <script src="{% static 'js/eventos.js' %}"></script>
     <script>

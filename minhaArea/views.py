@@ -15,6 +15,8 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow
 import os
 import json
+from allauth.socialaccount.models import SocialToken, SocialAccount
+from django.conf import settings
 
 
 @login_required
@@ -67,10 +69,16 @@ def area(request):
             'days': dias
         })
 
+    google_connected = SocialAccount.objects.filter(
+        user=request.user,
+        provider='google'
+    ).exists()
+
     return render(request, 'minhaArea/area.html', {
         'eventos_favoritos': eventos_favoritos,
         'grupos': grupos,
         'calendario': calendario,
+        'google_connected': google_connected,
     })
 
 @login_required
@@ -150,45 +158,53 @@ def adicionar_agenda(request, evento_id):
 
     evento = get_object_or_404(Eventos, id=evento_id)
 
-    # lê os checkboxes
-    adicionar_site   = 'adicionar_site' in request.POST
+    adicionar_site   = 'adicionar_site'   in request.POST
     adicionar_google = 'adicionar_google' in request.POST
-    adicionar_tudo   = 'adicionar_tudo' in request.POST
+    adicionar_tudo   = 'adicionar_tudo'   in request.POST
 
-    # 1) agenda interna
+    # 1) Agenda interna do site
     if adicionar_site or adicionar_tudo:
         Agenda.objects.get_or_create(usuario=request.user, evento=evento)
 
-    # 2) agenda Google
+    # 2) Agenda Google via allauth SocialToken
     if adicionar_google or adicionar_tudo:
-
         try:
-            google_cred = GoogleCredentials.objects.get(user=request.user)
-        except GoogleCredentials.DoesNotExist:
-            messages.error(request, "Você ainda não conectou sua conta Google.")
+            # encontra a conta social do Google
+            social_account = SocialAccount.objects.get(
+                user=request.user,
+                provider='google'
+            )
+            # e o token associado
+            social_token = SocialToken.objects.get(account=social_account)
+        except (SocialAccount.DoesNotExist, SocialToken.DoesNotExist):
+            messages.error(request, "Você precisa primeiro conectar sua conta Google.")
             return redirect('area')
-        # busca suas credenciais salvas
-        cred_obj = get_object_or_404(GoogleCredentials, user=request.user)
-        info = json.loads(cred_obj.credentials)
-        creds = Credentials.from_authorized_user_info(info)
+
+        # monta as credenciais a partir do token e do refresh_token
+        creds = Credentials(
+            token=social_token.token,                # access_token
+            refresh_token=social_token.token_secret, # refresh_token
+            token_uri='https://oauth2.googleapis.com/token',
+            client_id=settings.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY,
+            client_secret=settings.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET,
+            scopes=['https://www.googleapis.com/auth/calendar']
+        )
 
         service = build('calendar', 'v3', credentials=creds)
 
-        # monta o corpo do evento
         start = evento.data.isoformat()
-        # se não tiver data de fim, vamos por +1h de duração fixa:
-        end_dt = evento.data + timedelta(hours=1)
-        end   = end_dt.isoformat()
+        end   = (evento.data + timedelta(hours=1)).isoformat()
 
         body = {
             'summary':     evento.nome,
-            'location':    getattr(evento, 'local', ''),
+            'location':    evento.local or '',
             'description': evento.descricao,
             'start':  {'dateTime': start, 'timeZone': 'America/Sao_Paulo'},
             'end':    {'dateTime': end,   'timeZone': 'America/Sao_Paulo'},
         }
         service.events().insert(calendarId='primary', body=body).execute()
-
+        messages.success(request, "Evento adicionado ao Google Calendar!")
+    
     return redirect('area')
 
 @login_required

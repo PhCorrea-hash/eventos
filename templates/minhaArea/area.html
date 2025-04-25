@@ -1,4 +1,5 @@
 {% load static %}
+{% load socialaccount %}
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -6,7 +7,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'styles/minhaArea/area.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/header.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/footer.css' %}">
 </head>
 <body>
     <!-- {% if messages %}
@@ -25,18 +31,14 @@
             {% endfor %}
         </div>
         {% endif %}
-    <header class="cabecalho">
-        <div class="logo-nome">
-            <img class="logo" src="{% static 'assets/icons/eventia-logo.png' %}" alt="Logo da Eventia">
-            <a class="titulo-link" href="{% url 'index' %}">EVENTIA</a>
-        </div>
-        <div class="cabecalho__busca">
-            <div class="busca__fundo">
-                <input class="busca__input" type="text" id="busca" name="buscar" placeholder="Buscar eventos...">
-                <ul id="resultados"></ul>
-            </div>
-        </div>
-    </header>
+
+    {% include 'partials/header.html' %}
+
+    {% if not google_connected %}
+    <a href="{% provider_login_url 'google' %}" class="btn btn-google">
+        Conectar com Google
+    </a>
+    {% endif %}
 
     <main class="area">
         <section class="favoritos">
@@ -71,37 +73,37 @@
                 <p class="favoritos-texto">Mostrar Todos -></p>
             </div>
             <ul class="grupos-lista">
-                {% for grupo in grupos %}
-                    <li class="grupos-lista-item">
-                        <div class="grupo-info">
-                            <a href="{% url 'pagina_grupo' grupo.id %}">
-                                {{ grupo.nome }}
-                            </a>
-                            <p>{{ grupo.descricao }}</p>
-                            <!-- <p>Membros:</p>
-                            <ul>
-                                {% for membro in grupo.membros.all %}
-                                    <li>{{ membro.username }}</li>
-                                {% endfor %}
-                            </ul> -->
-                            <!-- BOTÃO -->
-                            <img class="grupo-imagem" src="{% static 'assets/icons/grupo-icon.png' %}">
-                            <button onclick="mostrarFormulario({{ grupo.id }})" class="adicionar-membro">Adicionar Membro</button>
-
-                            <!-- FORMULÁRIO -->
-                            <form id="formulario-{{ grupo.id }}" action="{% url 'adicionar_membro' grupo.id %}" method="post" style="display:none;">
-                                {% csrf_token %}
-                                <input type="text" name="username" placeholder="Nome de usuário">
-                                <button type="submit">Adicionar</button>
-                            </form>
-                        </div>
-                    </li>
-                {% endfor %}
                 <li class="grupos-lista-item adicionar">
                     <a class="grupos-botao" href="{% url 'criar_grupo' %}">
                         <img class="botao-imagem" src="{% static 'assets/icons/adicionar-icon.png' %}" alt="">
                     </a>
                 </li>
+                {% for grupo in grupos %}
+                    <li class="grupos-lista-item">
+                        <a href="{% url 'pagina_grupo' grupo.id %}">
+                            <div class="grupo-info">
+                                <img class="grupo-imagem" src="{% static 'assets/icons/grupo-icon.png' %}">
+                                <p class="grupo-titulo">{{ grupo.nome }}</p>
+                                <p class="grupo-descricao">{{ grupo.descricao }}</p>
+                                <!-- <p>Membros:</p>
+                                <ul>
+                                    {% for membro in grupo.membros.all %}
+                                        <li>{{ membro.username }}</li>
+                                    {% endfor %}
+                                </ul> -->
+                                <!-- BOTÃO -->
+                                <!-- <button onclick="mostrarFormulario({{ grupo.id }})" class="adicionar-membro">Adicionar Membro</button> -->
+    
+                                <!-- FORMULÁRIO -->
+                                <form id="formulario-{{ grupo.id }}" action="{% url 'adicionar_membro' grupo.id %}" method="post" style="display:none;">
+                                    {% csrf_token %}
+                                    <input type="text" name="username" placeholder="Nome de usuário">
+                                    <button type="submit">Adicionar</button>
+                                </form>
+                            </div>
+                        </a>
+                    </li>
+                {% endfor %}
             </ul>
         </section>
 
@@ -176,9 +178,7 @@
         </section>
     </main>
 
-    <footer class="rodape">
-        
-    </footer>
+    {% include 'partials/footer.html' %}
 
     <script>
         function mostrarFormulario(grupoId) {

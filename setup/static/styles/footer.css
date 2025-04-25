@@ -1,0 +1,102 @@
+footer {
+    display: flex;
+    flex-direction: column;
+    background: var(--corDoTextoPrincipal);
+    padding-bottom: 1rem;
+    margin-top: 2rem;
+}
+
+footer section {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem 2rem;
+}
+
+.rodape-cadastro {
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 5px solid var(--corDeFundo);
+    width: 95%;
+    margin: 0 auto;
+    padding: 1rem 0;
+}
+
+.texto {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+.texto h3 {
+    font-size: 1.5rem;
+}
+
+.texto p {
+    font-size: 1rem;
+}
+
+.enviar-cadastro {
+    display: flex;
+    gap: 1rem;
+}
+
+.email {
+    background: var(--corDeFundo);
+    border: none;
+    text-align: center;
+    width: 20rem;
+    color: var(--corDoTextoPrincipal);
+}
+
+.enviar-cadastro-titulo {
+    border: 5px solid var(--corDeFundo);
+    padding: 1rem;
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--corDeFundo);
+}
+
+.enviar-cadastro-titulo:hover {
+    background: #ebeaea;
+}
+
+.rodape-info {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    margin: 0 auto;
+    padding: 1rem 0;
+}
+
+.suporte {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.contato {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.info-titulo {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.info-link {
+    text-decoration: none;
+    color: var(--corDeFundo);
+    font-size: 1rem;
+}
+
+.info-link:hover {
+    color: #585555;
+}
+
+.logo-nome {
+    text-align: right;
+    font-size: 2.25rem;
+    margin: 0;
+}

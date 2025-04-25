@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import environ
 
 # Inicialize o ambiente
 load_dotenv()
@@ -52,7 +53,47 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'usuarios',
     'minhaArea',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
+
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
+GOOGLE_REDIRECT_URI = os.getenv('GOOGLE_REDIRECT_URI')
+
+# Essas duas linhas dizem ao django-allauth qual é o seu Client ID/Secret do Google
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY    = GOOGLE_CLIENT_ID
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = GOOGLE_CLIENT_SECRET
+
+
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+LOGIN_REDIRECT_URL = 'area'  # ou outra view
+LOGOUT_REDIRECT_URL = 'index'
+
+# Configurar o provider do Google
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+            'https://www.googleapis.com/auth/calendar',
+            'https://www.googleapis.com/auth/calendar.events',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'offline',
+            'prompt': 'consent',
+        },
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -63,6 +104,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'setup.urls'

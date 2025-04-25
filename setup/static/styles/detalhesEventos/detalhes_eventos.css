@@ -1,0 +1,116 @@
+:root {
+    --corDeFundo: #000;
+    --fonte: "DM Serif Display", serif;
+    --corDoTextoPrincipal: #fff;
+}
+
+body {
+    background: #020024;
+    background: linear-gradient(164deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+    padding: 0;
+    margin: 0;
+    font-family: var(--fonte);
+}
+
+main {
+    display: flex;
+    border-top: 5px solid var(--corDoTextoPrincipal);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    min-height: 700px;
+}
+
+.fundo-main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ou 'cover', se quiser preencher o espaço */
+    opacity: 0.25;
+    z-index: -1;
+}
+
+.imagem-container {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+    margin-right: 0.5rem;
+    color: var(--corDoTextoPrincipal);
+}
+
+.imagem-titulo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: end;
+}
+
+.imagem-titulo h1, .imagem-titulo p {
+    margin: 0;
+}
+
+.imagem-titulo h1 {
+    font-size: 36px;
+}
+
+.imagem-titulo p {
+    text-align: end;
+    font-size: 20px;
+}
+
+.evento-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.evento-link {
+    background: var(--corDoTextoPrincipal);
+    width: auto;
+    margin-top: 1rem;
+    border-radius: 16px;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+    color: var(--corDeFundo);
+    font-size: 28px;
+}
+
+.evento-link:hover {
+    background: #c5c2c2;
+}
+
+.descricao {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+    margin-left: 0.5rem;
+    margin-top: 69px;
+    height: 100%;
+}
+
+.local {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.local-icone {
+    width: 50px;
+    height: 50px;
+}
+
+.evento-local {
+    font-size: 2rem;
+    color: var(--corDoTextoPrincipal);
+}
+
+.paragrafo {
+    font-size: 28px;
+    color: var(--corDoTextoPrincipal);
+}
+
+footer {
+    margin: 0;
+}
