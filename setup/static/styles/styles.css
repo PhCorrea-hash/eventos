@@ -1,11 +1,15 @@
-/* section destaques */
-@import url("./index/destaques.css");
+/* template header-footer */
+  /* header */
+  @import url("./header.css");
+  /* footer */
+  @import url("./footer.css");
 
-/* section eventos */
-@import url("./index/eventos.css");
+/* template index */
+  /* section destaques */
+  @import url("./index/destaques.css");
+  /* section eventos */
+  @import url("./index/eventos.css");
 
-/* footer */
-@import url("./index/footer.css");
 
 :root {
     --corDeFundo: #000;
@@ -21,33 +25,5 @@ body {
     font-family: var(--fonte);
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 1rem;
-}
-
-.titulo {
-  color: var(--corDoTextoPrincipal);
-  font-size: 1.5rem;
-}
-
-.info-item {
-  text-decoration: none;
-  color: var(--corDoTextoPrincipal);
-  font-size: 1rem;
-}
-
-.menu-perfil {
-  background: none;
-  border: none;
-  padding: 0;
-}
-
-.menu-perfil-img {
-  width: 40px;
-  height: 40px;
-}
 
 

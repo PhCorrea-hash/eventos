@@ -62,76 +62,6 @@
             </ul>
         </section>
 
-        <!-- <section class="eventos">
-            <h2 class="titulo">Eventos</h2>
-            <div class="cabecalho__busca">
-                <div class="busca__fundo">
-                    <input class="busca__input" type="text" id="busca" name="buscar" placeholder="Buscar eventos...">
-                    <ul id="resultados"></ul>
-                </div>
-            </div>
-            <ul class="eventos-lista" id="eventos-container">
-                {% if cards %}
-                {% for evento in cards %}
-                <li class="eventos-lista-item">
-                        <div class="imagem-container">
-                            <button 
-                                class="favorito-btn" 
-                                data-evento-id="{{ evento.id }}">
-                                {% if evento.id in favoritos_ids %}
-                                <img src="{% static 'assets/icons/favoritado-icon.png' %}" alt="" class="icone-favorito">
-                                {% else %}
-                                <img src="{% static 'assets/icons/favoritar-icon.png' %}" alt="" class="icone-favorito">
-                                {% endif %}
-                            </button>
-                    <a class="evento-link" href="{% url 'detalhes_eventos' evento.id %}">
-                            <img src="{{ evento.imagem.url }}" class="imagem">
-                            <div class="descricao-overlay">
-                                <p>{{ evento.descricao }}</p>
-                            </div>
-                        </div>
-                    </a>
-                    <div class="evento-info">
-                        <div class="info">
-                            <div class="titulo-botao">
-                                <h3 class="evento-titulo">{{ evento.nome }}</h3>
-                                <button type="button"
-                                        class="adicionar-agenda-btn"
-                                        onclick="toggleOpcoesAgenda({{ evento.id }})">
-                                    Adicionar à Agenda
-                                </button>
-                            </div>
-                            <div class="local-data">
-                                <p class="evento-legenda">{{ evento.legenda }}</p>
-                                <p class="evento-data">{{ evento.data|date:"d/m/Y \\à\\s H:i" }}</p>
-                            </div>
-                            <div id="opcoes-agenda-{{ evento.id }}"
-                                class="opcoes-agenda"
-                                style="display: none;">
-                                <form method="post" action="{% url 'adicionar_agenda' evento.id %}">
-                                    {% csrf_token %}
-                                    <label>
-                                        <input type="checkbox" name="adicionar_site" checked>
-                                        Adicionar à minha agenda personalizada
-                                    </label><br>
-                                    <label>
-                                        <input type="checkbox" name="adicionar_google">
-                                        Adicionar à agenda do Google
-                                    </label><br>
-                                    <label>
-                                        <input type="checkbox" name="adicionar_tudo">
-                                        Adicionar às duas agendas
-                                    </label><br>
-                                    <button type="submit">Confirmar</button>
-                                </form>
-                            </div>
-                    </div>
-                </li>
-                {% endfor %}
-                {% endif %}
-            </ul>
-        </section> -->
-
         <section class="eventos">
             <h2 class="eventos-titulo">EVENTOS</h2>
             <div class="cabecalho__busca">
@@ -145,19 +75,21 @@
                 {% for evento in cards %}
                 <li class="eventos-lista-item">
                     <div class="item-container">
-                        <div class="imagem-btn">
-                            <div class="evento-imagem-container">
-                                <img src="{{ evento.imagem.url }}" alt="" class="evento-img">
-                                <button 
-                                    class="favorito-btn" 
-                                    data-evento-id="{{ evento.id }}">
-                                    {% if evento.id in favoritos_ids %}
-                                    <img src="{% static 'assets/icons/favoritado-icon.png' %}" alt="" class="favoritar-icone">
-                                    {% else %}
-                                    <img src="{% static 'assets/icons/favoritar-icon.png' %}" alt="" class="favoritar-icone">
-                                    {% endif %}
-                                </button>
-                            </div>
+                        <div class="imagem-btn"> 
+                                <div class="evento-imagem-container">
+                                    <a href="{% url 'detalhes_eventos' evento.id %}" class="evento-link">
+                                        <img src="{{ evento.imagem.url }}" alt="" class="evento-img">
+                                    </a>
+                                    <button 
+                                        class="favorito-btn" 
+                                        data-evento-id="{{ evento.id }}">
+                                        {% if evento.id in favoritos_ids %}
+                                        <img src="{% static 'assets/icons/favoritado-icon.png' %}" alt="" class="favoritar-icone">
+                                        {% else %}
+                                        <img src="{% static 'assets/icons/favoritar-icon.png' %}" alt="" class="favoritar-icone">
+                                        {% endif %}
+                                    </button>
+                                </div>
                             <button type="button"
                                     class="adicionar-agenda-btn"
                                     data-evento-id="{{ evento.id }}"
@@ -186,14 +118,7 @@
                                     <input type="checkbox" name="adicionar_site" checked>
                                         Adicionar à minha agenda personalizada
                                     </label><br>
-                                    <label>
-                                        <input type="checkbox" name="adicionar_google">
-                                        Adicionar à agenda do Google
-                                    </label><br>
-                                    <label>
-                                        <input type="checkbox" name="adicionar_tudo">
-                                         Adicionar às duas agendas
-                                </label><br>
+                                    
                             </div>
                             <button type="submit" class="agenda-submit">Confirmar</button>
                         </form>

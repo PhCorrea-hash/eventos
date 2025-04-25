@@ -1,47 +1,71 @@
 header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    margin: 0.375rem 1rem;
-    padding: 0;
+    align-items: center;
+    padding: 0.5rem 1rem;
 }
   
 .titulo {
-    font-family: var(--fonte);
-    font-size: 3rem;
-    font-weight: 400;
     color: var(--corDoTextoPrincipal);
-    text-decoration: none
-}
-
-.titulo:hover {
-  color: #585555;
-}
-  
-.header-info {
-    display: flex;
-    gap: 2rem;
+    font-size: 1.5rem;
 }
   
 .info-item {
     text-decoration: none;
     color: var(--corDoTextoPrincipal);
-    font-family: var(--fonte);
-    font-size: 1.5rem;
+    font-size: 1rem;
+}
+
+.btn-menu-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    right: 0;
+    gap: 1rem;
 }
   
-.info-item:hover {
-    color: #585555;
+.menu-perfil {
+    background: transparent;
+    border: none;
+    padding: 0;
+    position: relative;
+    z-index: 10;
 }
-  
-.login {
+
+.menu-perfil-img {
+    width: 40px;
+    height: 40px;
+}
+
+.menu-lateral-perfil {
+    position: absolute;
+    top: 90%;
+    right: 0;
+    background: #d9d9d9;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: none;
+    z-index: 9;
+    width: max-content;
+}
+
+.menu-lateral-perfil.ativo {
+    display: block;
+}
+
+.ativo {
+    border: 2px solid #B4AEAE;
+    border-bottom: none;
+}
+
+.menu-lateral-perfil-item {
+    display: block;
+    color: #333;
+    padding: 0.25rem 0.5rem;
     text-decoration: none;
-    font-family: var(--fonte);
-    color: var(--corDoTextoPrincipal);
-    font-size: 1.5rem;
-    margin-right: 2rem;
+    border: 2px solid #B4AEAE;
 }
-  
-.login:hover {
-    color: #585555;
+
+.icone-fechar {
+    display: none;
+    background: #d9d9d9;
 }

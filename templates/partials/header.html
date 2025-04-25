@@ -3,7 +3,21 @@
 <header>
     <h1 class="titulo">EVENTIA</h1>
     <a href="" class="info-item">SOBRE</a>
-    <button class="menu-perfil">
-        <img src="{% static 'assets/icons/usuario-icon.png' %}" alt="" class="menu-perfil-img">
-    </button>
+    <div class="btn-menu-container">
+        <button class="menu-perfil"
+            type="button"
+            onclick="toggleMenuPerfil()"
+            id="botao-menu">
+        <img src="{% static 'assets/icons/usuario-icon.png' %}" alt="" class="menu-perfil-img icone-usuario">
+        <img src="{% static 'assets/icons/perfil-azul-icon.png' %}" alt="Fechar" class="menu-perfil-img icone-fechar">
+        </button>
+        <div class="menu-lateral-perfil">
+            {% if user.is_authenticated %}
+                <a href="{% url 'area' %}" class="menu-lateral-perfil-item">Minha área</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="menu-lateral-perfil-item">Login</a>
+            {% endif %}
+            <a href="{% url 'cadastro' %}" class="menu-lateral-perfil-item">Cadastre-se</a>
+        </div>
+    </div>
 </header>

@@ -14,11 +14,11 @@ body {
 
 main {
     display: flex;
+    justify-content: center;
     border-top: 5px solid var(--corDoTextoPrincipal);
     position: relative;
     z-index: 1;
     overflow: hidden;
-    min-height: 700px;
 }
 
 .fundo-main {
@@ -35,9 +35,9 @@ main {
 .imagem-container {
     display: flex;
     flex-direction: column;
-    margin: 2rem;
-    margin-right: 0.5rem;
+    margin: 0.5rem;
     color: var(--corDoTextoPrincipal);
+    width: 50%;
 }
 
 .imagem-titulo {
@@ -52,12 +52,13 @@ main {
 }
 
 .imagem-titulo h1 {
-    font-size: 36px;
+    font-size: 12px;
+    text-align: left;
 }
 
 .imagem-titulo p {
     text-align: end;
-    font-size: 20px;
+    font-size: 10px;
 }
 
 .evento-container {
@@ -66,15 +67,15 @@ main {
 }
 
 .evento-link {
-    background: var(--corDoTextoPrincipal);
+    background: #d9d9d9;
     width: auto;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     border-radius: 16px;
-    padding: 1rem;
+    padding: 0.5rem;
     text-align: center;
     text-decoration: none;
     color: var(--corDeFundo);
-    font-size: 28px;
+    font-size: 14px;
 }
 
 .evento-link:hover {
@@ -84,30 +85,27 @@ main {
 .descricao {
     display: flex;
     flex-direction: column;
-    margin: 2rem;
-    margin-left: 0.5rem;
-    margin-top: 69px;
-    height: 100%;
+    margin: 0.5rem;
+    width: 50%;
+    font-size: 8px;
 }
 
 .local {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.25rem;
 }
 
 .local-icone {
-    width: 50px;
-    height: 50px;
+    width: 20px;
+    height: 20px;
 }
 
 .evento-local {
-    font-size: 2rem;
     color: var(--corDoTextoPrincipal);
 }
 
 .paragrafo {
-    font-size: 28px;
     color: var(--corDoTextoPrincipal);
 }
 

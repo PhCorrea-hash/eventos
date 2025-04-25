@@ -165,3 +165,37 @@ document.addEventListener('click', function (event) {
         });
     }
 });
+
+function toggleMenuPerfil() {
+    const menu = document.querySelector('.menu-lateral-perfil');
+    const botao = document.getElementById('botao-menu');
+    const iconeUsuario = botao.querySelector('.icone-usuario');
+    const iconeFechar = botao.querySelector('.icone-fechar');
+
+    const isAtivo = menu.classList.toggle('ativo');
+    botao.classList.toggle('ativo');
+
+    if (isAtivo) {
+        iconeUsuario.style.display = 'none';
+        iconeFechar.style.display = 'inline';
+    } else {
+        iconeUsuario.style.display = 'inline';
+        iconeFechar.style.display = 'none';
+    }
+}
+
+// Fecha o menu clicando fora
+document.addEventListener('click', function(event) {
+    const menu = document.querySelector('.menu-lateral-perfil');
+    const botao = document.getElementById('botao-menu');
+
+    if (!menu.contains(event.target) && !botao.contains(event.target)) {
+        menu.classList.remove('ativo');
+        botao.classList.remove('ativo');
+
+        const iconeUsuario = botao.querySelector('.icone-usuario');
+        const iconeFechar = botao.querySelector('.icone-fechar');
+        iconeUsuario.style.display = 'inline';
+        iconeFechar.style.display = 'none';
+    }
+});

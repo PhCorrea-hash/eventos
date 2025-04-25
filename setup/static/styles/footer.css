@@ -1,102 +1,81 @@
 footer {
     display: flex;
     flex-direction: column;
-    background: var(--corDoTextoPrincipal);
-    padding-bottom: 1rem;
-    margin-top: 2rem;
+    background: #B9B9B9;
+    padding: 0.5rem 1rem;
 }
 
-footer section {
+/* section cadastro */
+
+.cadastro {
     display: flex;
-    flex-direction: row;
-    padding: 1rem 2rem;
+    gap: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #000;
 }
 
-.rodape-cadastro {
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 5px solid var(--corDeFundo);
-    width: 95%;
-    margin: 0 auto;
-    padding: 1rem 0;
-}
-
-.texto {
+.cadastro-descricao {
     display: flex;
     flex-direction: column;
-    width: 30%;
 }
 
-.texto h3 {
-    font-size: 1.5rem;
+.cadastro-descricao-titulo {
+    font-size: 0.875rem;
+    margin: 0;
 }
 
-.texto p {
-    font-size: 1rem;
+.cadastro-descricao-texto {
+    font-size: 0.625rem;
+    margin: 0;
 }
 
-.enviar-cadastro {
+.cadastro-enviar {
     display: flex;
-    gap: 1rem;
+    flex-direction: column;
+    align-items: end;
+    gap: 0.25rem;
 }
 
 .email {
-    background: var(--corDeFundo);
+    background: #000;
+    padding: 0.25rem;
     border: none;
-    text-align: center;
-    width: 20rem;
-    color: var(--corDoTextoPrincipal);
 }
 
-.enviar-cadastro-titulo {
-    border: 5px solid var(--corDeFundo);
-    padding: 1rem;
+.cadastrar {
+    width: 75%;
+    background: none;
+    border: 2px solid #000;
     border-radius: 16px;
-    text-decoration: none;
-    color: var(--corDeFundo);
 }
 
-.enviar-cadastro-titulo:hover {
-    background: #ebeaea;
-}
-
-.rodape-info {
-    display: flex;
-    justify-content: space-between;
-    width: 95%;
-    margin: 0 auto;
-    padding: 1rem 0;
-}
-
-.suporte {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
+/* section contato */
 
 .contato {
     display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+}
+
+.contato-div {
+    display: flex;
     flex-direction: column;
+    width: 33%;
     gap: 0.25rem;
 }
 
-.info-titulo {
+.contato-titulo {
     margin: 0;
-    font-size: 1.5rem;
-}
-
-.info-link {
-    text-decoration: none;
-    color: var(--corDeFundo);
     font-size: 1rem;
 }
 
-.info-link:hover {
-    color: #585555;
+.contato-item {
+    font-size: 0.625rem;
+    margin: 0;
+    word-wrap: break-word;
 }
 
-.logo-nome {
-    text-align: right;
-    font-size: 2.25rem;
+.site-titulo {
+    font-size: 1.25rem;
     margin: 0;
 }
