@@ -1,3 +1,9 @@
+/* header */
+@import url("../header.css");
+
+/* footer */
+@import url("../footer.css");
+
 :root {
     --corDeFundo: #000;
     --fonte: "DM Serif Display", serif;
@@ -12,8 +18,12 @@ body {
     font-family: var(--fonte);
 }
 
+
+/* main */
 main {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     border-top: 5px solid var(--corDoTextoPrincipal);
     position: relative;
@@ -32,12 +42,13 @@ main {
     z-index: -1;
 }
 
+/* section imagem-container */
 .imagem-container {
     display: flex;
     flex-direction: column;
     margin: 0.5rem;
     color: var(--corDoTextoPrincipal);
-    width: 50%;
+    width: 75%;
 }
 
 .imagem-titulo {
@@ -52,13 +63,13 @@ main {
 }
 
 .imagem-titulo h1 {
-    font-size: 12px;
+    font-size: 1rem;
     text-align: left;
 }
 
 .imagem-titulo p {
     text-align: end;
-    font-size: 10px;
+    font-size: 0.875rem;
 }
 
 .evento-container {
@@ -75,19 +86,20 @@ main {
     text-align: center;
     text-decoration: none;
     color: var(--corDeFundo);
-    font-size: 14px;
+    font-size: 0.875rem;
 }
 
 .evento-link:hover {
     background: #c5c2c2;
 }
 
+/* section descricao */
 .descricao {
     display: flex;
     flex-direction: column;
     margin: 0.5rem;
-    width: 50%;
-    font-size: 8px;
+    width: 75%;
+    font-size: 0.875rem;
 }
 
 .local {
@@ -102,13 +114,16 @@ main {
 }
 
 .evento-local {
+    margin: 0.25rem;
     color: var(--corDoTextoPrincipal);
 }
 
 .paragrafo {
+    margin: 0.25rem;
     color: var(--corDoTextoPrincipal);
 }
 
+/* footer */
 footer {
     margin: 0;
 }
