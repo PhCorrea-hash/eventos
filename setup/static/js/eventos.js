@@ -156,6 +156,12 @@ function toggleOpcoesAgenda(id) {
     }
 }
 
+function adicionarAgenda(eventoId) {
+    fetch("{% url 'adicionar_agenda' 0 %}".replace("0", eventoId))
+        .then(response => response.json())
+        .then(data => alert(data.mensagem));
+}
+
 // Fecha se clicar fora
 document.addEventListener('click', function (event) {
     const isClickInside = event.target.closest('.info, .opcoes-agenda, .adicionar-agenda-btn');
@@ -197,5 +203,46 @@ document.addEventListener('click', function(event) {
         const iconeFechar = botao.querySelector('.icone-fechar');
         iconeUsuario.style.display = 'inline';
         iconeFechar.style.display = 'none';
+    }
+});
+
+// Pegar todos os dias
+const dias = document.querySelectorAll('.dia');
+const modal = document.getElementById('modal-dia');
+const listaEventosDia = document.getElementById('lista-eventos-dia');
+const fecharModal = document.getElementById('fechar-modal');
+
+dias.forEach(dia => {
+    dia.addEventListener('click', function () {
+        const eventos = dia.querySelectorAll('.evento');
+        listaEventosDia.innerHTML = ''; // Limpa eventos antigos
+
+        eventos.forEach(evento => {
+            const eventoId = evento.getAttribute('data-id');
+            const eventoNome = evento.querySelector('.evento-nome').textContent;
+            const eventoUrl = evento.getAttribute('data-url'); // Pega o link do evento a partir do atributo data-url
+            const removerUrl = evento.querySelector('.remover-evento').getAttribute('href'); // Pega o link de remover
+
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <a href="${eventoUrl}">${eventoNome}</a>
+                <a href="${removerUrl}" class="remover-evento" style="display:block;">Remover</a>
+            `;
+            listaEventosDia.appendChild(li);
+        });
+
+        modal.classList.remove('hidden');
+    });
+});
+
+// Fechar modal
+fecharModal.addEventListener('click', function () {
+    modal.classList.add('hidden');
+});
+
+// Fechar modal clicando fora
+modal.addEventListener('click', function (e) {
+    if (e.target === modal) {
+        modal.classList.add('hidden');
     }
 });

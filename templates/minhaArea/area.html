@@ -35,23 +35,27 @@
 
     <main class="area">
         <section class="favoritos">
-            <div class="favoritos-header">
-                <h2 class="favoritos-titulo">EVENTOS FAVORITADOS</h2>
-                <p class="favoritos-texto">Mostrar Todos -></p>
+            <div class="favoritos-texto">
+                <h2>EVENTOS FAVORITADOS</h2>
+                <p>Mostrar todos -></p>
             </div>
             <ul class="favoritos-lista">
                 {% if eventos_favoritos %}
-                    {% for evento in eventos_favoritos %}
+                    {% for evento in eventos_favoritos|slice:":3" %}
                         <li class="favoritos-lista-item">
-                            <a class="favorito-link" href="{{ evento.link }}">
-                                <img src="{{ evento.imagem.url }}" alt="{{ evento.nome }}" class="evento-imagem">
-                                <div class="favorito-info">
-                                    <h3 class="favorito-titulo">{{ evento.nome }}</h3>
-                                    <p class="favorito-legenda">{{ evento.legenda }}</p>
-                                    <p class="favorito-descricao">{{ evento.descricao }}</p>
-                                    <p class="favorito-data">{{ evento.data }}</p>
-                                </div>
-                            </a>
+                            <div class="imagem-container">
+                                <a href="{{ evento.link }}" class="favoritos-redirecionar">
+                                    <img src="{{ evento.imagem.url }}" alt="{{ evento.nome }}" class="favoritos-item-img">
+                                </a>
+                                <button class="favorito-btn" data-evento-id="{{ evento.id }}">
+                                    <img src="{% static 'assets/icons/favoritado-icon.png' %}" alt="" class="favoritar-icone">
+                                </button>
+                            </div>
+                            <div class="favoritos-item-descricao">
+                                <h4>{{ evento.nome }}</h4>
+                                <p>{{  evento.data }}</p>
+                                <p>{{ evento.legenda }}</p>
+                            </div>
                         </li>
                     {% endfor %}
                 {% else %}
@@ -61,9 +65,9 @@
         </section>
 
         <section class="grupos">
-            <div class="favoritos-header">
-                <h2 class="favoritos-titulo">GRUPOS</h2>
-                <p class="favoritos-texto">Mostrar Todos -></p>
+            <div class="grupos-texto">
+                <h2>GRUPOS</h2>
+                <p>Mostarar Toods -></p>
             </div>
             <ul class="grupos-lista">
                 <li class="grupos-lista-item adicionar">
@@ -72,12 +76,12 @@
                     </a>
                 </li>
                 {% for grupo in grupos %}
-                    <li class="grupos-lista-item">
+                    <!-- <li class="grupos-lista-item">
                         <a href="{% url 'pagina_grupo' grupo.id %}">
                             <div class="grupo-info">
                                 <img class="grupo-imagem" src="{% static 'assets/icons/grupo-icon.png' %}">
                                 <p class="grupo-titulo">{{ grupo.nome }}</p>
-                                <p class="grupo-descricao">{{ grupo.descricao }}</p>
+                                <p class="grupo-descricao">{{ grupo.descricao }}</p> -->
                                 <!-- <p>Membros:</p>
                                 <ul>
                                     {% for membro in grupo.membros.all %}
@@ -88,12 +92,26 @@
                                 <!-- <button onclick="mostrarFormulario({{ grupo.id }})" class="adicionar-membro">Adicionar Membro</button> -->
     
                                 <!-- FORMULÁRIO -->
-                                <form id="formulario-{{ grupo.id }}" action="{% url 'adicionar_membro' grupo.id %}" method="post" style="display:none;">
+                                <!-- <form id="formulario-{{ grupo.id }}" action="{% url 'adicionar_membro' grupo.id %}" method="post" style="display:none;">
                                     {% csrf_token %}
                                     <input type="text" name="username" placeholder="Nome de usuário">
                                     <button type="submit">Adicionar</button>
                                 </form>
                             </div>
+                        </a>
+                    </li> -->
+                    <li class="grupos-lista-item">
+                        <a href="{% url 'pagina_grupo' grupo.id %}">
+                            <div class="grupo-info">
+                                <img src="{% static 'assets/icons/grupo-icon.png' %}" alt="" class="grupo-img">
+                                <p class="grupo-nome">{{ grupo.nome }}</p>
+                                <p class="grupo-descricao">{{ grupo.descricao }}</p>
+                            </div>
+                            <form id="formulario-{{ grupo.id }}" action="{% url 'adicionar_membro' grupo.id %}" method="post" style="display:none;">
+                                {% csrf_token %}
+                                <input type="text" name="username" placeholder="Nome de usuário">
+                                <button type="submit">Adicionar</button>
+                            </form>
                         </a>
                     </li>
                 {% endfor %}
@@ -101,43 +119,33 @@
         </section>
 
         <section class="mural">
-            <div class="mural-container">
-                <h2 class="mural-titulo">MURAL DE SUGESTÕES</h2>
-            </div>
-            <div class="sugestoes">
-                <ul class="sugestoes-lista">
-                    <li class="sugestoes-lista-item">
-                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
-                    </li>
-                    <li class="sugestoes-lista-item">
-                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
-                    </li>
-                    <li class="sugestoes-lista-item">
-                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
-                    </li>
-                    <li class="sugestoes-lista-item">
-                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
-                    </li>
-                    <li class="sugestoes-lista-item">
-                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
-                    </li>
-                    <li class="sugestoes-lista-item">
-                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
-                    </li>
-                    <li class="sugestoes-lista-item">
-                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
-                    </li>
-                    <li class="sugestoes-lista-item">
-                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
-                    </li>
-                    <li class="sugestoes-lista-item">
-                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
-                    </li>
-                    <li class="sugestoes-lista-item">
-                        <img class="sugestoes-postit" src="{% static 'assets/icons/postIt-icon.png' %}" alt="">
-                    </li>
-                </ul>
-            </div>
+            <h2>Mural de sugestões</h2>
+            <ul class="sugestoes-lista">
+                <li class="sugestoes-lista-item">
+                    <img src="{% static 'assets/icons/postIt-icon.png' %}" alt="" class="sugestoes-item-img">
+                    <p class="sugestoes-item-texto">Escreva aqui a sua sugestão, pipipiiipiippiipipipipippiipipipipipipipipipipipipipipipipipipip</p>
+                </li>
+                <li class="sugestoes-lista-item">
+                    <img src="{% static 'assets/icons/postIt-icon.png' %}" alt="" class="sugestoes-item-img">
+                    <p class="sugestoes-item-texto">Escreva aqui a sua sugestão, pipipiiipiippiipipipipippiipipipipipipipipipipipipipipipipipipip</p>
+                </li>
+                <li class="sugestoes-lista-item">
+                    <img src="{% static 'assets/icons/postIt-icon.png' %}" alt="" class="sugestoes-item-img">
+                    <p class="sugestoes-item-texto">Escreva aqui a sua sugestão, pipipiiipiippiipipipipippiipipipipipipipipipipipipipipipipipipip</p>
+                </li>
+                <li class="sugestoes-lista-item">
+                    <img src="{% static 'assets/icons/postIt-icon.png' %}" alt="" class="sugestoes-item-img">
+                    <p class="sugestoes-item-texto">Escreva aqui a sua sugestão, pipipiiipiippiipipipipippiipipipipipipipipipipipipipipipipipipip</p>
+                </li>
+                <li class="sugestoes-lista-item">
+                    <img src="{% static 'assets/icons/postIt-icon.png' %}" alt="" class="sugestoes-item-img">
+                    <p class="sugestoes-item-texto">Escreva aqui a sua sugestão, pipipiiipiippiipipipipippiipipipipipipipipipipipipipipipipipipip</p>
+                </li>
+                <li class="sugestoes-lista-item">
+                    <img src="{% static 'assets/icons/postIt-icon.png' %}" alt="" class="sugestoes-item-img">
+                    <p class="sugestoes-item-texto">Escreva aqui a sua sugestão, pipipiiipiippiipipipipippiipipipipipipipipipipipipipipipipipipip</p>
+                </li>
+            </ul>
         </section>
 
         <section class="agenda">
@@ -153,12 +161,10 @@
                           {% if day.events %}
                             <ul class="eventos-do-dia">
                               {% for evento in day.events %}
-                              <li class="evento">
-                                <a href="{% url 'detalhes_eventos' evento.id %}" class="evento-link">
-                                  {{ evento.nome }}
-                                </a>
-                                <a href="{% url 'remover_agenda' evento.id %}" class="remover-evento">Remover</a>
-                              </li>
+                                <li class="evento" data-id="{{ evento.id }}" data-url="{% url 'detalhes_eventos' evento.id %}">
+                                    <p class="evento-nome">{{ evento.nome }}</p>
+                                    <a href="{% url 'remover_agenda' evento.id %}" class="remover-evento">Remover</a>
+                                </li>
                               {% endfor %}
                             </ul>
                           {% endif %}
@@ -168,10 +174,19 @@
                   </div>
                 {% endfor %}
               </div>
+              <div id="modal-dia" class="modal hidden">
+                <div class="modal-content">
+                  <span id="fechar-modal" class="fechar">&times;</span>
+                  <h2>Eventos do dia</h2>
+                  <ul id="lista-eventos-dia"></ul>
+                </div>
+              </div>
         </section>
     </main>
 
     {% include 'partials/footer.html' %}
+
+    <script src="{% static 'js/eventos.js' %}"></script>
 
     <script>
         function mostrarFormulario(grupoId) {
@@ -182,6 +197,6 @@
                 form.style.display = 'none';
             }
         }
-        </script>
+    </script>
 </body>
 </html>
