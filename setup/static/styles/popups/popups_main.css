@@ -1,0 +1,34 @@
+@import url("./popup_fav.css");
+
+@import url("./popup_login.css");
+
+@import url("./popup_cadastro.css");
+
+@import url("./popup_favoritos.css");
+
+#popups-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 160px;
+}
+
+.popup {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background: var(--corDeFundoSecun);
+    margin: 1rem 1rem;
+    padding: 1rem 0;
+    position: fixed;
+    z-index: 999;
+    width: 95%;
+}
+
+.popup h2 {
+    color: var(--corDoTextoSecun);
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+}

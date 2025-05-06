@@ -63,6 +63,12 @@ header {
     padding: 0.25rem 0.5rem;
     text-decoration: none;
     border: 2px solid #B4AEAE;
+    background: none;
+    width: 100%;
+}
+
+.menu-lateral-perfil-item:hover {
+    background: #333;
 }
 
 .icone-fechar {

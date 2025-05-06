@@ -85,6 +85,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'usuarios.context_processors.login_form_processor',
+                'usuarios.context_processors.cadastro_form',
             ],
         },
     },
@@ -106,9 +108,6 @@ DATABASES = {
         conn_health_checks=True,
     )
 }
-
-print("DB key:", os.getenv('DATABASE_URL'))
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -175,10 +174,6 @@ import os
 from celery import Celery
 import ssl
 import certifi
-
-print("Cloud Name:", os.getenv('CLOUDINARY_CLOUD_NAME'))
-print("API Key:", os.getenv('CLOUDINARY_API_KEY'))
-print("API Secret:", os.getenv('CLOUDINARY_API_SECRET'))
 
 CHANNEL_LAYERS = {
     'default': {

@@ -15,21 +15,26 @@ def login(request):
             nome = form["nome_login"].value()
             senha = form["senha"].value()
 
-        usuario = auth.authenticate(
-            request,
-            username = nome,
-            password = senha
-        )
+            usuario = auth.authenticate(
+                request,
+                username=nome,
+                password=senha
+            )
 
-        if usuario is not None:
-             auth.login(request, usuario)
-             messages.success(request, f"Bem vindo(a) de volta {nome}")
-             return redirect('area')
+            if usuario is not None:
+                auth.login(request, usuario)
+                messages.success(request, f"Bem-vindo(a) de volta, {nome}!")
+            else:
+                messages.error(request, "Erro ao efetuar o login: usuário ou senha inválidos.")
         else:
-            messages.error(request, "Erro ao efetuar o login")
-            return redirect('login')
+            messages.error(request, "Preencha os campos corretamente.")
 
-    return render(request, 'usuarios/login.html', {"form": form})
+        # Redireciona para a página de onde veio o request
+        referer = request.META.get('HTTP_REFERER', '/')
+        return redirect(referer)
+
+    # Se for GET (alguém acessou diretamente a URL /login), redireciona para home
+    return redirect('index')  # ou qualquer página principal do site
 
 def cadastro(request):
 
@@ -57,7 +62,7 @@ def cadastro(request):
             messages.success(request, "Cadastro realizado com sucesso")
 
 
-    return render(request, 'usuarios/cadastro.html', {"form": form})
+    return redirect(request.META.get('HTTP_REFERER', '/'))
 
 def logout(request):
     auth.logout(request)

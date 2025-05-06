@@ -12,8 +12,11 @@
     <link rel="stylesheet" href="{% static 'styles/minhaArea/area.css' %}">
     <link rel="stylesheet" href="{% static 'styles/header.css' %}">
     <link rel="stylesheet" href="{% static 'styles/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/popups/popups_main.css' %}">
 </head>
 <body>
+
+    {% include 'popups.html' %}
     <!-- {% if messages %}
         <ul class="mensagens">
             {% for message in messages %}
@@ -37,7 +40,7 @@
         <section class="favoritos">
             <div class="favoritos-texto">
                 <h2>EVENTOS FAVORITADOS</h2>
-                <p>Mostrar todos -></p>
+                <button type="button" id="mostrar-todos-favoritos">Mostrar Todos -></button>
             </div>
             <ul class="favoritos-lista">
                 {% if eventos_favoritos %}
@@ -76,30 +79,6 @@
                     </a>
                 </li>
                 {% for grupo in grupos %}
-                    <!-- <li class="grupos-lista-item">
-                        <a href="{% url 'pagina_grupo' grupo.id %}">
-                            <div class="grupo-info">
-                                <img class="grupo-imagem" src="{% static 'assets/icons/grupo-icon.png' %}">
-                                <p class="grupo-titulo">{{ grupo.nome }}</p>
-                                <p class="grupo-descricao">{{ grupo.descricao }}</p> -->
-                                <!-- <p>Membros:</p>
-                                <ul>
-                                    {% for membro in grupo.membros.all %}
-                                        <li>{{ membro.username }}</li>
-                                    {% endfor %}
-                                </ul> -->
-                                <!-- BOTÃO -->
-                                <!-- <button onclick="mostrarFormulario({{ grupo.id }})" class="adicionar-membro">Adicionar Membro</button> -->
-    
-                                <!-- FORMULÁRIO -->
-                                <!-- <form id="formulario-{{ grupo.id }}" action="{% url 'adicionar_membro' grupo.id %}" method="post" style="display:none;">
-                                    {% csrf_token %}
-                                    <input type="text" name="username" placeholder="Nome de usuário">
-                                    <button type="submit">Adicionar</button>
-                                </form>
-                            </div>
-                        </a>
-                    </li> -->
                     <li class="grupos-lista-item">
                         <a href="{% url 'pagina_grupo' grupo.id %}">
                             <div class="grupo-info">
@@ -187,6 +166,7 @@
     {% include 'partials/footer.html' %}
 
     <script src="{% static 'js/eventos.js' %}"></script>
+    <script src="{% static 'js/popups.js' %}"></script>
 
     <script>
         function mostrarFormulario(grupoId) {

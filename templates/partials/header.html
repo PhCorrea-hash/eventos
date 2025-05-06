@@ -14,10 +14,11 @@
         <div class="menu-lateral-perfil">
             {% if user.is_authenticated %}
                 <a href="{% url 'area' %}" class="menu-lateral-perfil-item">Minha área</a>
+                <a href="{% url 'logout' %}" class="menu-lateral-perfil-item">Logout</a>
             {% else %}
-                <a href="{% url 'login' %}" class="menu-lateral-perfil-item">Login</a>
+                <button class="menu-lateral-perfil-item" id="popUpLogin-btn">Login</button>
+                <button class="menu-lateral-perfil-item" id="popUpCadastro-btn">Cadastre-se</button>
             {% endif %}
-            <a href="{% url 'cadastro' %}" class="menu-lateral-perfil-item">Cadastre-se</a>
         </div>
     </div>
 </header>
