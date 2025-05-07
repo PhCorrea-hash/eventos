@@ -2,6 +2,7 @@ from django.urls import path
 from eventos.views import index, buscar_eventos, favoritar_evento, detalhes_evento
 from . import views
 
+# Urls do app eventos
 urlpatterns = [
     path('', index, name='index'),
     path('webhook/cloudinary/', views.cloudinary_webhook, name='cloudinary-webhook'),

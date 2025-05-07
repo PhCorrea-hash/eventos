@@ -30,6 +30,7 @@
     border-radius: 10px;
     padding: 0.5rem;
     width: 75%;
+    color: var(--corDoTextoPrincipal);
 }
 
 .buscar-eventos {

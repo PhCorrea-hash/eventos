@@ -16,25 +16,9 @@
 </head>
 <body>
 
-    {% include 'popups.html' %}
-    <!-- {% if messages %}
-        <ul class="mensagens">
-            {% for message in messages %}
-                <li class="{{ message.tags }}">{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %} -->
-    {% if messages %}
-        <div class="mensagens">
-            {% for message in messages %}
-            <div class="alert {{ message.tags }}">
-                {{ message }}
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-
     {% include 'partials/header.html' %}
+
+    {% include 'popups.html' %}
 
     <main class="area">
         <section class="favoritos">
@@ -74,11 +58,11 @@
             </div>
             <ul class="grupos-lista">
                 <li class="grupos-lista-item adicionar">
-                    <a class="grupos-botao" href="{% url 'criar_grupo' %}">
+                    <button type="button" id="btn-criar-grupo">
                         <img class="botao-imagem" src="{% static 'assets/icons/adicionar-icon.png' %}" alt="">
-                    </a>
+                    </button>
                 </li>
-                {% for grupo in grupos %}
+                {% for grupo in grupos|slice:":2" %}
                     <li class="grupos-lista-item">
                         <a href="{% url 'pagina_grupo' grupo.id %}">
                             <div class="grupo-info">
@@ -94,36 +78,6 @@
                         </a>
                     </li>
                 {% endfor %}
-            </ul>
-        </section>
-
-        <section class="mural">
-            <h2>Mural de sugestões</h2>
-            <ul class="sugestoes-lista">
-                <li class="sugestoes-lista-item">
-                    <img src="{% static 'assets/icons/postIt-icon.png' %}" alt="" class="sugestoes-item-img">
-                    <p class="sugestoes-item-texto">Escreva aqui a sua sugestão, pipipiiipiippiipipipipippiipipipipipipipipipipipipipipipipipipip</p>
-                </li>
-                <li class="sugestoes-lista-item">
-                    <img src="{% static 'assets/icons/postIt-icon.png' %}" alt="" class="sugestoes-item-img">
-                    <p class="sugestoes-item-texto">Escreva aqui a sua sugestão, pipipiiipiippiipipipipippiipipipipipipipipipipipipipipipipipipip</p>
-                </li>
-                <li class="sugestoes-lista-item">
-                    <img src="{% static 'assets/icons/postIt-icon.png' %}" alt="" class="sugestoes-item-img">
-                    <p class="sugestoes-item-texto">Escreva aqui a sua sugestão, pipipiiipiippiipipipipippiipipipipipipipipipipipipipipipipipipip</p>
-                </li>
-                <li class="sugestoes-lista-item">
-                    <img src="{% static 'assets/icons/postIt-icon.png' %}" alt="" class="sugestoes-item-img">
-                    <p class="sugestoes-item-texto">Escreva aqui a sua sugestão, pipipiiipiippiipipipipippiipipipipipipipipipipipipipipipipipipip</p>
-                </li>
-                <li class="sugestoes-lista-item">
-                    <img src="{% static 'assets/icons/postIt-icon.png' %}" alt="" class="sugestoes-item-img">
-                    <p class="sugestoes-item-texto">Escreva aqui a sua sugestão, pipipiiipiippiipipipipippiipipipipipipipipipipipipipipipipipipip</p>
-                </li>
-                <li class="sugestoes-lista-item">
-                    <img src="{% static 'assets/icons/postIt-icon.png' %}" alt="" class="sugestoes-item-img">
-                    <p class="sugestoes-item-texto">Escreva aqui a sua sugestão, pipipiiipiippiipipipipippiipipipipipipipipipipipipipipipipipipip</p>
-                </li>
             </ul>
         </section>
 
@@ -167,6 +121,7 @@
 
     <script src="{% static 'js/eventos.js' %}"></script>
     <script src="{% static 'js/popups.js' %}"></script>
+    <script src="{% static 'js/adicionar_membros.js' %}"></script>
 
     <script>
         function mostrarFormulario(grupoId) {

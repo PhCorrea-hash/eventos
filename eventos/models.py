@@ -2,6 +2,7 @@ from django.db import models
 from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import User
 
+# Modelo de eventos para o db
 class Eventos(models.Model):
     nome = models.CharField(max_length=150)
     legenda = models.CharField(max_length=150, null=False, default='')

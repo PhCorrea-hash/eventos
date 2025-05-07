@@ -25,25 +25,28 @@
             </div>
             <div class="btns-cadastro">
                 <button type="submit" class="btns-cadastro-cadastrar-popup">Cadastrar</button>
-                <button type="button" class="btns-cadastro-login" id="popUpLoginDentroCadastro">Login</button>
+                <button type="button" class="btns-cadastro-login" id=".,popUpLoginDentroCadastro">Login</button>
             </div>
         </form>
     </div>
 
     <!-- Popup Criar Grupo -->
-    <div id="popup-criargrupo" class="popup" style="display: none;">
+    <div id="popup-criargrupo" class="popup">
         <h2>Criar Grupo</h2>
-        <div class="form-criargrupo">
-            <input type="text" class="inserir-nome" placeholder="Nome do grupo">
-            <input type="text" class="inserir-descricao" placeholder="Descrição do grupo">
+        <form id="form-criargrupo" method="post" action="{% url 'criar_grupo' %}">
+            {% csrf_token %}
+            <input type="text" name="nome" class="inserir-nome" placeholder="Nome do grupo" required>
+            <textarea name="descricao" class="inserir-descricao" placeholder="Descrição do grupo"></textarea>
             <div class="adicionar-membros-container">
-                <button class="adicionar-membros">Adicionar membros +</button>
-                <ul class="lista-membros-adicionar">
-                    {% comment %} Membros aqui {% endcomment %}
-                </ul>
+                <button type="button" class="adicionar-membros">Adicionar membros +</button>
+                <input type="text" id="pesquisa-membros" placeholder="Pesquisar usuários...">
+                <ul class="lista-membros-adicionar"></ul>
+
+                <h3>Membros adicionados</h3>
+                <ul id="lista-membros-temp"></ul>
             </div>
             <button class="criar-grupo" type="submit">Criar</button>
-        </div>
+        </form>
     </div>
 
     <!-- Popup Favoritos -->
@@ -79,9 +82,9 @@
         <h2>Meus Grupos</h2>
         <ul class="grupos-popup-lista">
             <li class="grupos-lista-item adicionar">
-                <a class="grupos-botao" href="{% url 'criar_grupo' %}">
+                <button class="grupos-botao" type="button" id="abrirPopupCriarGrupo">
                     <img class="botao-imagem" src="{% static 'assets/icons/adicionar-icon.png' %}" alt="">
-                </a>
+                </button>
             </li>
             {% for grupo in grupos %}
                     <li class="grupos-lista-item">

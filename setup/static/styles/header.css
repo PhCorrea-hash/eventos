@@ -8,6 +8,7 @@ header {
 .titulo {
     color: var(--corDoTextoPrincipal);
     font-size: 1.5rem;
+    text-decoration: none;
 }
   
 .info-item {
@@ -52,6 +53,10 @@ header {
     display: block;
 }
 
+.menu-lateral-perfil button {
+    width: 100%;
+}
+
 .ativo {
     border: 2px solid #B4AEAE;
     border-bottom: none;
@@ -64,7 +69,6 @@ header {
     text-decoration: none;
     border: 2px solid #B4AEAE;
     background: none;
-    width: 100%;
 }
 
 .menu-lateral-perfil-item:hover {

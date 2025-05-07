@@ -7,11 +7,11 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.http import JsonResponse
 import calendar
-from datetime import date, timedelta
+from datetime import date
 from collections import defaultdict
 from django.utils import timezone
 
-
+# Função para renderizar a página area.html
 @login_required
 def area(request):
     # Eventos favoritos e grupos
@@ -21,7 +21,7 @@ def area(request):
     # Agenda do usuário
     agenda_items = Agenda.objects.filter(usuario=request.user).select_related('evento')
 
-    # Agrupando eventos por data
+    # Eventos por data
     eventos_por_data = defaultdict(list)
     for item in agenda_items:
         d = item.evento.data.date()
@@ -38,9 +38,9 @@ def area(request):
     ano_atual = hoje.year
     mes_atual = hoje.month
 
-    # Monta calendário de 12 meses a partir do mês atual
+    # Montar calendário de 12 meses a partir do mês atual
     calendario = []
-    for i in range(13):  # De abril até abril do ano seguinte
+    for i in range(13):  
         mes = (mes_atual + i - 1) % 12 + 1
         ano = ano_atual + ((mes_atual + i - 1) // 12)
         nome = f"{meses_pt[mes]}-{ano}"
@@ -68,21 +68,45 @@ def area(request):
         'calendario': calendario,
     })
 
+# Função para riar um novo grupo
 @login_required
 def criar_grupo(request):
     if request.method == 'POST':
-        form = GrupoForm(request.POST)
-        if form.is_valid():
-            grupo = form.save(commit=False)
-            grupo.criador = request.user
-            grupo.save()
-            grupo.membros.add(request.user)
-            return redirect('area')  # ou para uma página do grupo
+        nome = request.POST.get('nome')
+        descricao = request.POST.get('descricao')
+
+        if nome:  
+            grupo = GrupoForm({
+                'nome': nome,
+                'descricao': descricao,
+                'criador': request.user
+            })
+            
+            if grupo.is_valid():
+                novo_grupo = grupo.save(commit=False)
+                novo_grupo.criador = request.user
+                novo_grupo.save()
+                novo_grupo.membros.add(request.user)
+                return redirect('area')
+            else:
+                return JsonResponse({'success': False, 'errors': grupo.errors})
+        else:
+            return JsonResponse({'success': False, 'errors': 'Nome do grupo é obrigatório'})
+
+    return JsonResponse({'success': False, 'errors': 'Método inválido'})
+
+# Função para listar os membros do grupo
+@login_required
+def listar_membros(request):
+    termo = request.GET.get('q', '').strip()
+    if termo:
+        membros = User.objects.filter(username__icontains=termo).exclude(id=request.user.id).values('id', 'username')
     else:
-        form = GrupoForm()
+        membros = User.objects.exclude(id=request.user.id).values('id', 'username')
+    
+    return JsonResponse({'success': True, 'membros': list(membros)})
 
-    return render(request, 'minhaArea/criar_grupo.html', {'form': form})
-
+# Função para adicionar membros ao grupo
 @login_required
 def adicionar_membro(request, grupo_id):
     grupo = get_object_or_404(Grupo, id=grupo_id)
@@ -98,6 +122,7 @@ def adicionar_membro(request, grupo_id):
 
     return redirect('area')  # redireciona para a área do usuário
 
+# Função para renderizar a página do chat do grupo
 def pagina_grupo(request, grupo_id):
     # Busca o grupo pelo ID
     grupo = get_object_or_404(Grupo, id=grupo_id)
@@ -118,6 +143,7 @@ def pagina_grupo(request, grupo_id):
         'eventos': eventos,
     })
 
+#Função para o tratamento de mensagens
 def adicionar_mensagem(request, grupo_id):
     grupo = get_object_or_404(Grupo, id=grupo_id)
 
@@ -138,6 +164,7 @@ def adicionar_mensagem(request, grupo_id):
     
     return redirect('pagina_grupo', grupo_id=grupo.id)
 
+# Função para adicionar um evento na agenda
 @login_required
 def adicionar_agenda(request, evento_id):
     if request.method != 'POST':
@@ -153,10 +180,9 @@ def adicionar_agenda(request, evento_id):
 
     return redirect('area')
 
+# Função para remover um evento da agenda
 @login_required
 def remover_da_agenda(request, evento_id):
     evento = get_object_or_404(Eventos, id=evento_id)
     Agenda.objects.filter(usuario=request.user, evento=evento).delete()
     return redirect('area')
-
-

@@ -1,0 +1,100 @@
+:root {
+    --corDeFundo: #000;
+    --corDeFundoSecun: #D9D9D9; 
+    --fonte: "DM Serif Display", serif;
+    --corDoTextoPrincipal: #fff;
+    --corDoTextoSecun: #0C007C;
+    --gradientePrincipal: linear-gradient(164deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+}
+
+#form-criargrupo {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.inserir-nome {
+    border: none;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+.inserir-descricao {
+    border: none;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+.adicionar-membros-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.adicionar-membros-container h3 {
+    color: var(--corDoTextoSecun);
+}
+
+.adicionar-membros {
+    background: var(--corDoTextoPrincipal);
+    width: 75%;
+    border-radius: 16px;
+    border: none;
+    height: 1.75rem;
+}
+
+#pesquisa-membros {
+    display: none;
+    width: 90%;
+    height: 1.5rem;
+    border: none;
+    padding: 0.25rem;
+}
+
+.lista-membros-adicionar {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+.lista-membros-adicionar li {
+    background: var(--corDoTextoPrincipal);
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+
+.membro-selecionado {
+    background-color: var(--gradientePrincipal); /* Verde claro para indicar seleção */
+    color: var(--corDoTextoPrincipal); /* Texto mais escuro para contraste */
+    font-weight: bold;
+}
+
+#lista-membros-temp {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+#lista-membros-temp li {
+    color: var(--corDoTextoPrincipal);
+    background: var(--gradientePrincipal);
+    padding: 0.25rem;
+    border-radius: 10px;
+    min-width: 60px;
+    text-align: center;
+}
+
+.criar-grupo {
+    width: 50%;
+    background: var(--gradientePrincipal);
+    color: var(--corDoTextoPrincipal);
+    height: 1.75rem;
+    border: none;
+    border-radius: 16px;
+}
+

@@ -9,4 +9,6 @@
 
 #popup-favoritos {
     top: 110px;
+    max-height: 600px;
+    overflow-y: scroll;
 }
