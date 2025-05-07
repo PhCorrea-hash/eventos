@@ -51,7 +51,7 @@
         <h2>Eventos favoritos</h2>
         <ul class="popup-favoritos-lista">
             {% if eventos_favoritos %}
-                    {% for evento in eventos_favoritos|slice:":3" %}
+                    {% for evento in eventos_favoritos %}
                         <li class="popup-favoritos-item">
                             <div class="imagem-container">
                                 <a href="{% url 'detalhes_eventos' evento.id %}" class="favoritos-redirecionar">
@@ -75,7 +75,7 @@
     </div>
 
     <!-- Popup Meus Grupos -->
-    <div id="popup-grupos" class="popup" style="display: none;">
+    <div id="popup-grupos" class="popup">
         <h2>Meus Grupos</h2>
         <ul class="grupos-popup-lista">
             <li class="grupos-lista-item adicionar">

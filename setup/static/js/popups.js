@@ -38,24 +38,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Botão do menu lateral: Login
-const btnLogin = document.getElementById("popUpLogin-btn");
-if (btnLogin) {
-    btnLogin.addEventListener("click", function(event) {
-        event.stopPropagation();
-        console.log("clicou no login");
-        abrirPopup(popups.login);
-    });
-}
+    const btnLogin = document.getElementById("popUpLogin-btn");
+    if (btnLogin) {
+        btnLogin.addEventListener("click", function(event) {
+            event.stopPropagation();
+            console.log("clicou no login");
+            abrirPopup(popups.login);
+        });
+    }
 
-// Botão de cadastro no menu lateral 
-const btnCadastro = document.getElementById("popUpCadastro-btn");
-if (btnCadastro) {
-    btnCadastro.addEventListener("click", function(event) {
-        event.stopPropagation();
-        console.log("clicou no cadastro");
-        abrirPopup(popups.cadastro);
-    });
-}
+    // Botão de cadastro no menu lateral 
+    const btnCadastro = document.getElementById("popUpCadastro-btn");
+    if (btnCadastro) {
+        btnCadastro.addEventListener("click", function(event) {
+            event.stopPropagation();
+            console.log("clicou no cadastro");
+            abrirPopup(popups.cadastro);
+        });
+    }
 
     // Alternar entre login e cadastro dentro dos popups
     document.querySelectorAll(".cadastrar-popup").forEach(btn =>
@@ -97,6 +97,15 @@ if (btnCadastro) {
             event.preventDefault();
             event.stopPropagation();
             abrirPopup(popups.favoritos);
+        });
+    }
+
+    const btnMostrarTodosGrupos = document.getElementById("mostrar-todos-grupos");
+    if (btnMostrarTodosGrupos) {
+        btnMostrarTodosGrupos.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            abrirPopup(popups.grupos);
         });
     }
 });
