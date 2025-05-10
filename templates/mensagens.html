@@ -1,0 +1,80 @@
+<div class="chat-container">
+    <!-- Mensagens de sucesso e erro -->
+    {% if messages %}
+        <div class="notificacoes">
+            {% for message in messages %}
+                <div class="notificacao {% if message.tags %}{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Lista de mensagens (se necessário no futuro) -->
+    <div class="mensagens-lista" id="mensagens-lista">
+        <!-- Aqui você pode adicionar mensagens do chat se precisar no futuro -->
+    </div>
+</div>
+
+<!-- Inclui o script de mensagens -->
+<script src="/static/js/mensagens.js"></script>
+
+<!-- Estilos para o chat e notificações -->
+<style>
+    .chat-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    
+    .notificacoes {
+        margin-bottom: 15px;
+    }
+    
+    .notificacao {
+        padding: 10px 15px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        color: #fff;
+        font-weight: bold;
+    }
+    
+    .notificacao.success {
+        background-color: #28a745;
+    }
+    
+    .notificacao.error {
+        background-color: #dc3545;
+    }
+    
+    .notificacao.info {
+        background-color: #17a2b8;
+    }
+    
+    .barra-de-mensagens {
+        display: flex;
+        padding: 10px;
+        border-top: 1px solid #ddd;
+    }
+    
+    .barra-de-mensagens input[type="text"] {
+        flex-grow: 1;
+        padding: 10px;
+        margin-right: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    
+    .barra-de-mensagens button {
+        padding: 10px 15px;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .barra-de-mensagens button:hover {
+        background-color: #0056b3;
+    }
+</style>

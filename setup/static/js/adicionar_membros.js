@@ -2,7 +2,8 @@
 const botaoAdicionarMembros = document.querySelector('.adicionar-membros');
 const listaMembrosAdicionar = document.querySelector('.lista-membros-adicionar');
 const campoPesquisa = document.getElementById('pesquisa-membros');
-let listaMembrosTemp = [];  // Lista de membros temporários
+const membrosIdsInput = document.getElementById('membros-ids');
+let listaMembrosTemp = [];  
 let debounceTimeout;
 
 // Função para buscar usuários disponíveis
@@ -21,7 +22,6 @@ async function buscarMembros(termo = '') {
 
             // Preenche a lista com os membros encontrados
             data.membros.forEach(membro => {
-                // Verifica se o membro já está na lista temporária, caso contrário, adiciona à lista
                 if (!listaMembrosTemp.some(tempMembro => tempMembro.id === membro.id)) {
                     const li = document.createElement('li');
                     li.textContent = membro.username;
@@ -31,7 +31,6 @@ async function buscarMembros(termo = '') {
                 }
             });
 
-            // Mostra a lista apenas se houver resultados
             listaMembrosAdicionar.style.display = data.membros.length > 0 ? 'block' : 'none';
         }
     } catch (error) {
@@ -41,21 +40,20 @@ async function buscarMembros(termo = '') {
 
 // Função para adicionar membro ao grupo (visualmente)
 function adicionarMembro(membro, event) {
-    
     event.stopPropagation();
 
-    // Se o membro já estiver na lista temporária, não faz nada
     if (!listaMembrosTemp.some(tempMembro => tempMembro.id === membro.id)) {
-        // Adiciona o membro à lista temporária
         listaMembrosTemp.push(membro);
         atualizarListaMembrosTemp();
     }
 
-    // Remove o membro da lista de busca ao ser clicado
     const membroLi = document.querySelector(`[data-id="${membro.id}"]`);
     if (membroLi) {
         membroLi.remove();
     }
+
+    // Atualiza o campo hidden com os IDs dos membros
+    membrosIdsInput.value = listaMembrosTemp.map(m => m.id).join(',');
 }
 
 // Função para atualizar a lista de membros temporários
@@ -63,37 +61,25 @@ function atualizarListaMembrosTemp() {
     const listaTempContainer = document.getElementById('lista-membros-temp');
     listaTempContainer.innerHTML = '';  
 
-    // Adiciona os membros da lista temporária
     listaMembrosTemp.forEach(membro => {
         const li = document.createElement('li');
         li.textContent = membro.username;
         li.setAttribute('data-id', membro.id);
         li.style.backgroundColor = '#D3F9D8';  
 
-        // Remove membro da lista temporária ao clicar
         li.addEventListener('click', (event) => removerMembroTemp(membro, event));
-
         listaTempContainer.appendChild(li);
     });
+
+    // Atualiza o campo hidden com os IDs dos membros
+    membrosIdsInput.value = listaMembrosTemp.map(m => m.id).join(',');
 }
 
-// Função para remover membro da lista temporária e re-adicionar à lista de pesquisa
+// Função para remover membro da lista temporária
 function removerMembroTemp(membro, event) {
-    // Previne a propagação do evento para o document, evitando que o popup feche
     event.stopPropagation();
-
-    // Remove o membro da lista temporária
     listaMembrosTemp = listaMembrosTemp.filter(tempMembro => tempMembro.id !== membro.id);
-
-    // Atualiza a lista de membros temporários
     atualizarListaMembrosTemp();
-
-    // Re-adiciona o membro de volta à lista de pesquisa
-    const li = document.createElement('li');
-    li.textContent = membro.username;
-    li.setAttribute('data-id', membro.id);
-    li.addEventListener('click', (event) => adicionarMembro(membro, event));
-    listaMembrosAdicionar.appendChild(li);
 }
 
 // Função de debounce para evitar múltiplas requisições rápidas

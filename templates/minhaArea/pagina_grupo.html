@@ -7,35 +7,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'styles/minhaArea/grupo.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/popups/popups_main.css' %}">
 </head>
 <body>
-    <header class="cabecalho">
-
+    <header class="chat-cabecalho">
+        <div class="chat-cabecalho-container">
+            <a href="{% url 'area' %}" class="link-voltar">
+                <img src="{% static 'assets/icons/seta-esquerda-preta-icon.png' %}" alt="Voltar" class="voltar">
+            </a>
+            <div class="chat-info">
+                <img src="{% static 'assets/icons/perfil-azul-icon.png' %}" alt="Detalhes do grupo" class="chat-img">
+                <div class="chat-info-container">
+                    <p class="chat-info-container-titulo">{{ grupo.nome }}</p>
+                    <p class="chat-info-container-texto">Criado por: {{ grupo.criador }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="btn-menu-container">
+            <button class="menu-perfil"
+                type="button"
+                onclick="toggleMenuPerfil()"
+                id="botao-menu">
+            <img src="{% static 'assets/icons/usuario-icon.png' %}" alt="" class="menu-perfil-img icone-usuario">
+            <img src="{% static 'assets/icons/perfil-azul-icon.png' %}" alt="Fechar" class="menu-perfil-img icone-fechar">
+            </button>
+            <div class="menu-lateral-perfil">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'area' %}" class="menu-lateral-perfil-item">Minha área</a>
+                    <a href="{% url 'logout' %}" class="menu-lateral-perfil-item">Logout</a>
+                {% else %}
+                    <button class="menu-lateral-perfil-item" id="popUpLogin-btn">Login</button>
+                    <button class="menu-lateral-perfil-item" id="popUpCadastro-btn">Cadastre-se</button>
+                {% endif %}
+            </div>
+        </div>
     </header>
+
+    {% include 'popups.html' %}
+
     <main class="principal">
-        <nav class="menu-lateral">
-            <div class="nav-header">
-                <h2 class="nome-perfil">NOME</h2>
-                <a href="{% url 'index' %}" class="home">HOME</a>
-            </div>
-            <div class="bate-papos">
-                <h3 class="bate-papos-titulo">Meus Grupos</h3>
-                <ul class="grupos-lista">
-                    <li class="grupos-lista-item">
-                        <h4 class="grupos-item-titulo">Grupo 1</h4>
-                        <p class="grupos-item-mensagem">Ultima Mensagem</p>
-                    </li>
-                </ul>
-            </div>
-            <a href="{% url 'logout' %}" class="logout">LOGOUT</a>
-            
-        </nav>
         <section class="conversa">
-            <div class="grupo-info">
-                <img src="{% static 'assets/icons/grupo-icon.png' %}" alt="" class="grupo-imagem">
-                <h1>{{ grupo.nome }}</h1>
-                <p>{{ grupo.descricao }}</p>
-            </div>
         <!-- Exibir as mensagens do grupo -->
         <div class="mensagens">
             {% for mensagem in mensagens %}
@@ -51,9 +63,6 @@
                         {% endif %}
                     <div class="conteudo-data">
                         <p class="conteudo">{{ mensagem.texto }}</p>
-
-
-
                         <p class="data">{{ mensagem.data_envio|date:"H:i" }}</p>
                     </div>
                 </div>
@@ -64,22 +73,30 @@
         <div class="enviar-mensagem">
             <form class="form-mensagem" method="post" action="{% url 'adicionar_mensagem' grupo.id %}">
                 {% csrf_token %}
-                <label for="conteudo">Nova Mensagem:</label>
-                <textarea name="texto" id="conteudo" required></textarea>
-                <select name="evento_id">
-                    <option value="">-- Anexar evento (opcional) --</option>
-                    {% for evento in eventos %}
-                      <option value="{{ evento.id }}">{{ evento.nome }}</option>
-                    {% endfor %}
-                  </select>
-                <button class="btn-mensagem" type="submit">Enviar</button>
+                <textarea name="texto" id="conteudo" placeholder="Digite uma mensagem..." required></textarea>
+                <div class="enviar-container">
+                    <div class="custom-select-container">
+                        <select name="evento_id" class="custom-select">
+                            <option value="" disabled selected hidden></option>
+                            {% for evento in eventos %}
+                                <option value="{{ evento.id }}">{{ evento.nome }}</option>
+                            {% endfor %}
+                        </select>
+                        <img src="{% static 'assets/icons/anexo-azul-icon.png' %}" alt="Anexar" class="select-icon">
+                    </div>
+                    <button class="btn-mensagem" type="submit">
+                        <img src="{% static 'assets/icons/enviar-brano-icon.png' %}" alt="Enviar mensagem" class="enviar-msg">
+                    </button>
+                </div>
             </form>
         </div>
         </section>
     </main>
 
-    <footer class="rodape">
+   {% include 'partials/footer.html' %}
 
-    </footer>
+    <script src="{% static 'js/eventos.js' %}"></script>
+    <script src="{% static 'js/popups.js' %}"></script>
+
 </body>
 </html>

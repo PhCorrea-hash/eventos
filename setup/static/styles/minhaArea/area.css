@@ -241,6 +241,10 @@ main {
 }
 
 /* section agenda */
+.agenda {
+    margin-top: 1rem;
+}
+
 .agenda-titulo {
     text-align: center;
     background: #f9f9f9;

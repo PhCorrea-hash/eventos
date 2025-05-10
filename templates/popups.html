@@ -37,14 +37,17 @@
             {% csrf_token %}
             <input type="text" name="nome" class="inserir-nome" placeholder="Nome do grupo" required>
             <textarea name="descricao" class="inserir-descricao" placeholder="Descrição do grupo"></textarea>
+            
             <div class="adicionar-membros-container">
                 <button type="button" class="adicionar-membros">Adicionar membros +</button>
                 <input type="text" id="pesquisa-membros" placeholder="Pesquisar usuários...">
                 <ul class="lista-membros-adicionar"></ul>
-
+    
                 <h3>Membros adicionados</h3>
                 <ul id="lista-membros-temp"></ul>
+                <input type="hidden" name="membros_ids" id="membros-ids">
             </div>
+            
             <button class="criar-grupo" type="submit">Criar</button>
         </form>
     </div>

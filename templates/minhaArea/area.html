@@ -1,4 +1,5 @@
 {% load static %}
+{% load tz %}
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -17,6 +18,8 @@
 <body>
 
     {% include 'partials/header.html' %}
+
+    {% include 'mensagens.html' %}
 
     {% include 'popups.html' %}
 
@@ -70,11 +73,6 @@
                                 <p class="grupo-nome">{{ grupo.nome }}</p>
                                 <p class="grupo-descricao">{{ grupo.descricao }}</p>
                             </div>
-                            <form id="formulario-{{ grupo.id }}" action="{% url 'adicionar_membro' grupo.id %}" method="post" style="display:none;">
-                                {% csrf_token %}
-                                <input type="text" name="username" placeholder="Nome de usuário">
-                                <button type="submit">Adicionar</button>
-                            </form>
                         </a>
                     </li>
                 {% endfor %}

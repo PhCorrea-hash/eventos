@@ -9,6 +9,7 @@ class Grupo(models.Model):
     membros = models.ManyToManyField(User, related_name='grupos')
     eventos = models.ManyToManyField('eventos.Eventos', blank=True)
     criado_em = models.DateTimeField(auto_now_add=True)
+    criador = models.ForeignKey(User, on_delete=models.CASCADE, related_name='grupos_criados', null=True)
 
     def __str__(self):
         return self.nome
@@ -32,11 +33,13 @@ class MensagemGrupo(models.Model):
         return f"Mensagem de {self.autor.username} no grupo {self.grupo.nome}"
 
 # Modelo da agenda de eventos do usuário
+
 class Agenda(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     evento = models.ForeignKey(Eventos, on_delete=models.CASCADE)
     data_adicao = models.DateTimeField(auto_now_add=True)
+    data_evento = models.DateField(null=True)
 
     def __str__(self):
-        return f"{self.usuario.username} - {self.evento.nome}"
+        return f"{self.usuario.username} - {self.evento.nome} ({self.data_evento})"
     

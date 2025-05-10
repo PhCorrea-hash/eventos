@@ -10,6 +10,7 @@ import calendar
 from datetime import date
 from collections import defaultdict
 from django.utils import timezone
+import pytz
 
 # Função para renderizar a página area.html
 @login_required
@@ -24,7 +25,7 @@ def area(request):
     # Eventos por data
     eventos_por_data = defaultdict(list)
     for item in agenda_items:
-        d = item.evento.data.date()
+        d = timezone.localtime(item.evento.data).date()  # Ajuste no fuso horário
         eventos_por_data[d].append(item.evento)
 
     # Meses em português
@@ -74,26 +75,28 @@ def criar_grupo(request):
     if request.method == 'POST':
         nome = request.POST.get('nome')
         descricao = request.POST.get('descricao')
+        membros_ids = request.POST.get('membros_ids', '').split(',')  # Agora os IDs estão sendo enviados corretamente
 
-        if nome:  
-            grupo = GrupoForm({
-                'nome': nome,
-                'descricao': descricao,
-                'criador': request.user
-            })
-            
-            if grupo.is_valid():
-                novo_grupo = grupo.save(commit=False)
-                novo_grupo.criador = request.user
-                novo_grupo.save()
-                novo_grupo.membros.add(request.user)
-                return redirect('area')
-            else:
-                return JsonResponse({'success': False, 'errors': grupo.errors})
+        if nome:
+            grupo = Grupo(nome=nome, descricao=descricao, criador=request.user)
+            grupo.save()
+            grupo.membros.add(request.user)
+
+            for membro_id in membros_ids:
+                try:
+                    membro = User.objects.get(id=membro_id)
+                    grupo.membros.add(membro)
+                except User.DoesNotExist:
+                    continue
+
+            messages.success(request, 'Grupo criado com sucesso!')
+            return redirect('area')
         else:
-            return JsonResponse({'success': False, 'errors': 'Nome do grupo é obrigatório'})
+            messages.error(request, 'O nome do grupo é obrigatório')
+            return redirect('area')
 
-    return JsonResponse({'success': False, 'errors': 'Método inválido'})
+    messages.error(request, 'Método inválido')
+    return redirect('area')
 
 # Função para listar os membros do grupo
 @login_required
@@ -168,15 +171,30 @@ def adicionar_mensagem(request, grupo_id):
 @login_required
 def adicionar_agenda(request, evento_id):
     if request.method != 'POST':
+        messages.error(request, "Método inválido. Use o botão para adicionar à agenda.")
         return redirect('area')
 
     evento = get_object_or_404(Eventos, id=evento_id)
 
-    adicionar_site = 'adicionar_site' in request.POST or 'adicionar_tudo' in request.POST
+    try:
+        # Converte para o fuso horário de São Paulo
+        fuso_sao_paulo = pytz.timezone("America/Sao_Paulo")
+        data_evento = evento.data.astimezone(fuso_sao_paulo).date()
 
-    # 1) Agenda interna do site
-    if adicionar_site:
-        Agenda.objects.get_or_create(usuario=request.user, evento=evento)
+        # Adicionar à agenda
+        agenda_item, created = Agenda.objects.get_or_create(
+            usuario=request.user,
+            evento=evento,
+            data_evento=data_evento
+        )
+        
+        if created:
+            messages.success(request, "Evento adicionado à agenda.")
+        else:
+            messages.info(request, "Evento já está na agenda.")
+    except Exception as e:
+        messages.error(request, "Não foi possível adicionar o evento na agenda.")
+        print(f"Erro ao adicionar evento à agenda: {e}")
 
     return redirect('area')
 
