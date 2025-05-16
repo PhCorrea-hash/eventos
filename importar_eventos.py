@@ -1,5 +1,13 @@
-import requests
 import os
+import django
+from dotenv import load_dotenv
+
+# Carregar as variáveis de ambiente
+load_dotenv()
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'setup.settings')
+django.setup()
+
+import requests
 from requests.auth import HTTPBasicAuth
 from django.utils import timezone
 from eventos.models import Eventos
@@ -60,3 +68,6 @@ def importar_eventos():
         )
 
     print(f"{len(eventos)} eventos importados com sucesso!")
+
+if __name__ == '__main__':
+    importar_eventos()
