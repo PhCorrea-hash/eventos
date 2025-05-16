@@ -10,6 +10,20 @@
 
 @import url("./popup_criarGrupo.css");
 
+@import url("./popup_imagem_perfil.css");
+
+:root {
+    --corDeFundo: #000;
+    --Background: #1B1A1A;
+    --itensFundo: #302C2C;
+    --fonte: "DM Serif Display", serif;
+    --corDoTextoPrincipal: #fff;
+    --fonteRoxa: #AC00FF;
+    --fonteCinza: #B7ADAD;
+    --gradientePrinci: linear-gradient(90deg, #2D21F3 0%, #AD00B6 100%);
+    --cinzaRodape: #8D8888;
+}
+
 #popups-container {
     display: flex;
     flex-direction: column;
@@ -23,16 +37,19 @@
     display: none;
     flex-direction: column;
     align-items: center;
-    background: var(--corDeFundoSecun);
+    background: var(--itensFundo);
     margin: 1rem 1rem;
     padding: 1rem 0;
     position: fixed;
     z-index: 999;
     width: 95%;
+    border-width: 3px;
+    border-style: solid;
+    border-image: var(--gradientePrinci) 1;
 }
 
 .popup h2 {
-    color: var(--corDoTextoSecun);
+    color: var(--corDoTextoPrincipal);
     font-size: 1.5rem;
     margin: 0.5rem 0;
 }

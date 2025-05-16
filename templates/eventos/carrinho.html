@@ -1,0 +1,43 @@
+{% load static %}
+{% include 'base.html' %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'styles/carrinho/carrinho.css' %}">
+{% endblock %}
+
+<body>
+    {% include 'partials/header.html' %}
+
+    <main class="carrinho-container">
+        <h2 class="titulo-carrinho">Seu Carrinho</h2>
+        {% if itens_carrinho %}
+            <ul class="lista-itens">
+                {% for item in itens_carrinho %}
+                    <li class="item-carrinho">
+                        <div class="detalhes-item">
+                            <h3>{{ item.ingresso.tipo }}</h3>
+                            <p>{{ item.ingresso.evento.nome }}</p>
+                            <p id="preco-total-{{ item.ingresso.id }}" data-preco-unitario="{{ item.ingresso.preco|floatformat:2 }}">
+                                R${{ item.ingresso.preco|floatformat:2 }} x <span id="quantidade-{{ item.ingresso.id }}">{{ item.quantidade }}</span>
+                            </p>
+                        </div>
+                        <div class="acoes-item">
+                            <button onclick="removerIngresso({{ item.ingresso.id }})">-</button>
+                            <span id="quantidade-{{ item.ingresso.id }}">{{ item.quantidade }}</span>
+                            <button onclick="adicionarIngresso({{ item.ingresso.id }})">+</button>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="total-container">
+                <h3 class="titulo-total">Total: R$<span id="total-carrinho">{{ total|floatformat:2 }}</span></h3>
+                <button class="btn-comprar" onclick="location.href='{% url "checkout" %}'">Finalizar Compra</button>
+            </div>
+        {% else %}
+            <p>Seu carrinho está vazio.</p>
+        {% endif %}
+    </main>
+
+    <script src="{% static 'js/carrinho.js' %}"></script>
+    {% include 'partials/footer.html' %}
+</body>

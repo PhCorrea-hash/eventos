@@ -1,0 +1,136 @@
+{% load static %}
+{% include 'base.html' %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'styles/checkout/checkout.css' %}">
+{% endblock %}
+
+<body>
+
+    {% include 'partials/header.html' %}
+
+    <main class="checkout-container">
+        <h1>Finalizar Compra</h1>
+    
+        <div class="checkout-resumo">
+            <h2>Resumo do Pedido</h2>
+            <ul id="resumo-itens"></ul>
+            <h3>Total: R$ <span id="checkout-total">{{ total|floatformat:2 }}</span></h3>
+        </div>
+    
+        <div class="checkout-pagamento">
+            <h2>Forma de Pagamento</h2>
+            <label>
+                <input type="radio" name="metodo_pagamento" value="debito"> Débito
+            </label><br>
+            <label>
+                <input type="radio" name="metodo_pagamento" value="credito"> Crédito
+            </label><br>
+            <label>
+                <input type="radio" name="metodo_pagamento" value="pix"> Pix
+            </label><br>
+            <button id="finalizarCompraBtn">Finalizar Compra</button>
+            <input type="hidden" name="csrfmiddlewaretoken" value="{% csrf_token %}">
+            <div class="dados-para-pagamento">
+                <div id="qrCodeContainer"></div>
+                <div id="payloadContainer"></div>
+                <div id="mensagemPagamento"></div>
+            </div>
+        </div>
+    
+        
+    
+    </main>
+
+    {% include 'partials/footer.html' %}
+
+    <script>
+        function atualizarTotal() {
+            fetch("/carrinho/detalhes/")
+                .then(response => response.json())
+                .then(data => {
+                    const totalElemento = document.getElementById("carrinho-total");
+                    if (totalElemento) {
+                        totalElemento.textContent = `R$${data.total.toFixed(2)}`;
+                    }
+
+                    const quantidadeElementos = document.querySelectorAll(".ingressos-qtd-1");
+                    quantidadeElementos.forEach(elemento => {
+                        const ingressoId = elemento.dataset.ingressoId;
+                        const quantidade = data.quantidades[ingressoId] || 0;
+                        elemento.textContent = quantidade;
+                    });
+                })
+                .catch(() => alert("Erro ao carregar o carrinho."));
+        }
+
+        // Carrega o resumo do pedido ao carregar a página
+        window.addEventListener("load", atualizarTotal);
+
+        document.getElementById('finalizarCompraBtn').addEventListener('click', function() {
+        const metodoSelecionado = document.querySelector('input[name="metodo_pagamento"]:checked');
+        if (!metodoSelecionado) {
+            alert('Por favor, selecione uma forma de pagamento.');
+            return;
+        }
+
+        const formaPagamento = metodoSelecionado.value;
+
+        fetch('/finalizar_compra/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: new URLSearchParams({
+                'forma_pagamento': formaPagamento
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('qrCodeContainer');
+            const msg = document.getElementById('mensagemPagamento');
+            const payloadContainer = document.getElementById('payloadContainer');
+
+            container.innerHTML = '';
+            msg.textContent = '';
+            payloadContainer.textContent = '';
+
+            if (data.sucesso) {
+                if (formaPagamento === 'pix') {
+                    const img = document.createElement('img');
+                    img.src = data.qr_code_url;
+                    img.alt = 'QR code para pagamento via PIX';
+                    container.appendChild(img);
+
+                    payloadContainer.textContent = data.payload || 'Código PIX não disponível.';
+                }
+                msg.textContent = data.mensagem || 'Pagamento iniciado com sucesso.';
+            } else {
+                msg.textContent = data.erro || 'Erro desconhecido.';
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            document.getElementById('mensagemPagamento').textContent = 'Erro na comunicação com o servidor.';
+        });
+    });
+
+    // Função para pegar o CSRF token do cookie (padrão Django)
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                cookie = cookie.trim();
+                if (cookie.startsWith(name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    </script>
+
+</body>

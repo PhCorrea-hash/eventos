@@ -1,0 +1,110 @@
+:root {
+    --corDeFundo: #000;
+    --Background: #1B1A1A;
+    --itensFundo: #302C2C;
+    --fonte: "DM Serif Display", serif;
+    --corDoTextoPrincipal: #fff;
+    --fonteRoxa: #AC00FF;
+    --fonteCinza: #B7ADAD;
+    --gradientePrinci: linear-gradient(90deg, #2D21F3 0%, #AD00B6 100%);
+    --cinzaRodape: #8D8888;
+}
+
+body {
+    background: var(--Background);
+}
+
+.checkout-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.checkout-container h1 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.checkout-resumo {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-resumo h2 {
+    margin-bottom: 15px;
+}
+
+.checkout-resumo ul {
+    list-style: none;
+    padding: 0;
+}
+
+.checkout-resumo ul li {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.checkout-pagamento {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-pagamento h2 {
+    margin-bottom: 15px;
+}
+
+.checkout-pagamento label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.btn-comprar {
+    width: 100%;
+    padding: 15px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.btn-comprar:hover {
+    background-color: #0056b3;
+}
+
+.dados-para-pagamento {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+}
+
+#qrCodeContainer {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+}
+
+#qrCodeContainer img {
+    width: 90%;
+    height: 90%;
+}
+
+#payloadContainer {
+    width: 90%;
+    word-wrap: break-word;
+}

@@ -1,26 +1,55 @@
+{% load static %}
+
 <footer>
+    <hr class="footer-linha">
+
     <section class="cadastro">
         <div class="cadastro-descricao">
-            <h3 class="cadastro-descricao-titulo">Fique por dentro</h3>
-            <p class="cadastro-descricao-texto">Cadastre-se e seja o primeiro a saber sobre novos eventos</p>
-        </div>
-        <div class="cadastro-enviar">
+            <p class="cadastro-descricao-texto">Fique por dentro dos eventos mais recentes</p>
             <input type="text" class="email" placeholder="E-mail">
             <button class="cadastrar" type="submit">Cadastrar</button>
+        </div>
+        <div class="sobre-div">
+            <h3 class="sobre-div-titulo">Sobre</h3>
+            <a href="#" class="sobre-div-link">Trabalhe conosco</a>
+            <a href="#" class="sobre-div-link">Conheça meu trabalho</a>
         </div>
     </section>
     <section class="contato">
         <div class="contato-div">
-            <h4 class="contato-titulo">SUPORTE</h4>
-            <p class="contato-item">Termos e Condições</p>
-            <p class="contato-item">Política de privacidade</p>
-            <p class="contato-item">Perguntas frequentes</p>
+            <hr>
+            <h3>Suporte</h3>
+            <a href="#">Perguntas frequentes</a>
+            <a href="#">Entre em contato</a>
         </div>
         <div class="contato-div">
-            <h4 class="contato-titulo">CONTATO</h4>
-            <p class="contato-item">pedrohenriquemartinscorrea@gmail.com</p>
-            <p class="contato-item">(17) 99712-1851</p>
+            <hr>
+            <h3>Minhas redes</h3>
+            <div class="redes-links">
+                <a href="#">
+                    <img src="{% static 'assets/icons/icons8-linkedin-96.png' %}" alt="Minha página do linkedin">
+                </a>
+                <a href="#">
+                    <img src="{% static 'assets/icons/icons8-github-96.png' %}" alt="Meu github">
+                </a>
+            </div>
         </div>
-        <h3 class="site-titulo">EVENTIA</h3>
+    </section>
+    <section class="footer-btm">
+        <div class="footer-btm-header">
+            <button class="linguagem">Português (Brasil) ></button>
+            <h2 class="footer-logo">Sonart</h2>
+        </div>
+        <div class="footer-btm-links">
+            <div class="btm-links-termos">
+                <a href="{% url 'termos' %}">Termos e condições de uso</a>
+                <a href="{% url 'info-ao-consumidor' %}">Informações para o consumidor</a>
+            </div>
+            <div class="btm-links-politicas">
+                <a href="{% url 'politica' %}">Política de privacidade</a>
+                <a href="{% url 'cookies' %}">Política de cookies</a>
+            </div>
+        </div>
+        <p>@2025 Sonart LTDA. Todos os direitos reservados</p>
     </section>
 </footer>

@@ -1,0 +1,118 @@
+{% load static %}
+
+{% include 'base.html' %}
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'styles/perfil/perfil.css' %}">
+{% endblock %}
+
+<body>
+    
+    {% include 'partials/header.html' %}
+
+    {% include 'mensagens.html' %}
+
+    {% include 'popups.html' %}
+
+    <main>
+        <nav>
+            <div class="foto-perfil">
+                {% if perfil.foto_perfil %}
+                <img src="{{ perfil.foto_perfil.url }}" alt="Foto de Perfil">
+                {% else %}
+                    <img src="{% static 'assets/icons/usuario-padrao-icon.png' %}" alt="Foto de Perfil Padrão">
+                {% endif %}
+                <a id="abrirPopupImagemPerfil" class="editar-foto">
+                    <img src="{% static 'assets/icons/editar-azul-icon.png' %}" alt="">
+                    <p>Editar foto</p>
+                </a>
+            </div>
+
+            <div class="nav-links">
+                <div class="nav-links-container">
+                    <img src="{% static 'assets/icons/ingresso-branco-icon.png' %}" alt="">
+                    <p>Ingressos</p>
+                </div>
+                <div class="nav-links-container">
+                    <img src="{% static 'assets/icons/pagamento-branco-icon.png' %}" alt="">
+                    <p>Pagamentos</p>
+                </div>
+                <a href="{% url 'logout' %}" class="nav-links-container">
+                    <img src="{% static 'assets/icons/logout-arredondado-branco-icon.png' %}" alt="">
+                    <p>Sair</p>
+                </a>
+            </div>
+
+            <button class="excluir-conta">
+                <img src="{% static 'assets/icons/lixeira-vermelha-icon.png' %}" alt="">
+                <p>Excluir conta</p>
+            </button>
+        </nav>
+
+        <section class="principal">
+            <form action="{% url 'perfil' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-perfil">
+                    <div class="info-pessoal">
+                        <h2>Informações pessoais</h2>
+            
+                    {% for field in user_form.visible_fields %}
+                        <div class="text-area">
+                            {{ field.label_tag }} 
+                            {{ field }}
+                        </div>
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+            
+                    {% for field in perfil_form.visible_fields %}
+                        <div class="text-area">
+                            {{ field.label_tag }}
+                            {{ field }}
+                        </div>
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    </div>
+
+                    <div class="alterar-senha">
+                        <h2>Alterar senha</h2>
+                        <div class="text-area">
+                            <label>Senha atual</label>
+                            <input type="password" name="senha_atual" placeholder="Senha atual">
+                        </div>
+                        <div class="text-area">
+                            <label>Nova senha</label>
+                            <input type="password" name="nova_senha" placeholder="Nova senha">
+                        </div>
+                        <div class="text-area">
+                            <label>Confirme a nova senha</label>
+                            <input type="password" name="confirmar_senha" placeholder="Confirme a nova senha">
+                        </div>
+                    </div>       
+                    <button type="submit" class="salvar-info">
+                        <p>Salvar informações</p>
+                        <img src="{% static 'assets/icons/salvar-branco-icon.png' %}" alt="">
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    {% include 'partials/footer.html' %}
+
+    <script src="{% static 'js/eventos.js' %}"></script>
+    <script src="{% static 'js/popups.js' %}"></script>
+    <script>
+        document.getElementById("id_foto").addEventListener("change", function() {
+            const fileName = this.files[0] ? this.files[0].name : "Nenhum arquivo selecionado";
+            document.getElementById("file-name").textContent = fileName;
+        });
+    </script>
+
+</body>

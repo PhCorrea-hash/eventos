@@ -14,10 +14,14 @@
     <header class="chat-cabecalho">
         <div class="chat-cabecalho-container">
             <a href="{% url 'area' %}" class="link-voltar">
-                <img src="{% static 'assets/icons/seta-esquerda-preta-icon.png' %}" alt="Voltar" class="voltar">
+                <img src="{% static 'assets/icons/flecha-esquerda-branca-icon.png' %}" alt="Voltar" class="voltar">
             </a>
             <div class="chat-info">
-                <img src="{% static 'assets/icons/perfil-azul-icon.png' %}" alt="Detalhes do grupo" class="chat-img">
+                {% if grupo.imagem %}
+                    <img src="{{ grupo.imagem.url }}" alt="" class="chat-img">
+                {% else %}
+                    <img src="{% static 'assets/icons/grupo-padrao-branco-icon.png' %}" alt="" class="chat-img">
+                {% endif %}
                 <div class="chat-info-container">
                     <p class="chat-info-container-titulo">{{ grupo.nome }}</p>
                     <p class="chat-info-container-texto">Criado por: {{ grupo.criador }}</p>
@@ -63,8 +67,8 @@
                         {% endif %}
                     <div class="conteudo-data">
                         <p class="conteudo">{{ mensagem.texto }}</p>
-                        <p class="data">{{ mensagem.data_envio|date:"H:i" }}</p>
                     </div>
+                    <p class="data">{{ mensagem.data_envio|date:"H:i" }}</p>
                 </div>
             {% empty %}
                 <p>Não há mensagens ainda.</p>

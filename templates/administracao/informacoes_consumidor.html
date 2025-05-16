@@ -1,0 +1,46 @@
+{% load static %}
+
+{% include 'base.html' %}
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'styles/sobre/termos.css' %}">
+{% endblock %}
+
+<body>
+    
+    {% include 'partials/header.html' %}
+
+    {% include 'mensagens.html' %}
+
+    {% include 'popups.html' %}
+
+    <hr>
+
+    <section class="termos">
+        <h1 class="termos-titulo">Informações para o consumidor - Sonart</h1>
+
+        <ul>
+        {% for politica in politicas %}
+        <div class="termo">
+            <ul class="lista-de-termos">
+                {% for item in politica.topicos.all %}
+                    <li>
+                        <h3>{{ item.titulo }}</h3>
+                        <ul class="termo-conteudo-lista">
+                            {% for descricao in item.descricoes.all %}
+                                <li class="termo-conteudo">{{ descricao.conteudo }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+        </ul>
+
+        {% if ultima_atualizacao %}
+            <p class="ultima-atualizacao">Última atualização: {{ ultima_atualizacao|date:"d/m/Y H:i" }}</p>
+        {% endif %}
+    </section>
+
+    {% include 'partials/footer.html' %}
+</body>

@@ -24,7 +24,9 @@
     {% include 'popups.html' %}
 
     <main class="area">
+        
         <section class="favoritos">
+            <hr>
             <div class="favoritos-texto">
                 <h2>EVENTOS FAVORITADOS</h2>
                 <button type="button" id="mostrar-todos-favoritos">Mostrar Todos -></button>
@@ -42,9 +44,9 @@
                                 </button>
                             </div>
                             <div class="favoritos-item-descricao">
-                                <h4>{{ evento.nome }}</h4>
-                                <p>{{  evento.data }}</p>
-                                <p>{{ evento.legenda }}</p>
+                                <h4 class="favoritos-item-descricao-nome">{{ evento.nome }}</h4>
+                                <p class="favoritos-item-descricao-data">{{ evento.data|date:"d M Y" }}</p>
+                                <p class="favoritos-item-descricao-local">{{ evento.legenda }}</p>
                             </div>
                         </li>
                     {% endfor %}
@@ -53,34 +55,38 @@
                 {% endif %}
             </ul>
         </section>
-
+        
         <section class="grupos">
             <div class="grupos-texto">
-                <h2>GRUPOS</h2>
-                <button type="button" id="mostrar-todos-grupos">Mostrar Todos -></button>
+                <h2>Meus Grupos</h2>
             </div>
             <ul class="grupos-lista">
                 <li class="grupos-lista-item adicionar">
                     <button type="button" id="btn-criar-grupo">
-                        <img class="botao-imagem" src="{% static 'assets/icons/adicionar-icon.png' %}" alt="">
+                        <img class="botao-imagem" src="{% static 'assets/icons/adicionar-branco-icon.png' %}" alt="">
                     </button>
                 </li>
                 {% for grupo in grupos|slice:":2" %}
                     <li class="grupos-lista-item">
                         <a href="{% url 'pagina_grupo' grupo.id %}">
                             <div class="grupo-info">
-                                <img src="{% static 'assets/icons/grupo-icon.png' %}" alt="" class="grupo-img">
+                                {% if grupo.imagem %}
+                                    <img src="{{ grupo.imagem.url }}" alt="" class="grupo-img">
+                                {% else %}
+                                    <img src="{% static 'assets/icons/grupo-padrao-branco-icon.png' %}" alt="" class="grupo-img">
+                                {% endif %}
                                 <p class="grupo-nome">{{ grupo.nome }}</p>
-                                <p class="grupo-descricao">{{ grupo.descricao }}</p>
                             </div>
                         </a>
                     </li>
                 {% endfor %}
             </ul>
+            <button type="button" id="mostrar-todos-grupos">Mostrar Todos -></button>
         </section>
-
+        
         <section class="agenda">
-            <h1 class="agenda-titulo">Minha Agenda</h1>
+            <hr>
+            <h1 class="agenda-titulo">MINHA AGENDA</h1>
             <div class="calendario">
                 {% for month in calendario %}
                   <div class="mes">

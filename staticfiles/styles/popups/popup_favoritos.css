@@ -1,0 +1,14 @@
+:root {
+    --corDeFundo: #000;
+    --corDeFundoSecun: #D9D9D9; 
+    --fonte: "DM Serif Display", serif;
+    --corDoTextoPrincipal: #fff;
+    --corDoTextoSecun: #0C007C;
+    --gradientePrincipal: linear-gradient(164deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+}
+
+#popup-favoritos {
+    top: 110px;
+    max-height: 600px;
+    overflow-y: scroll;
+}

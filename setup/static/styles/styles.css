@@ -12,17 +12,16 @@
 
 
 :root {
-    --corDeFundo: #000;
-    --fonte: "DM Serif Display", serif;
-    --corDoTextoPrincipal: #fff;
+  --corDeFundo: #000;
+  --fonte: "DM Serif Display", serif;
+  --corDoTextoPrincipal: #fff;
 }
 
 body {
-    background: #020024;
-    background: linear-gradient(164deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
-    padding: 0;
-    margin: 0;
-    font-family: var(--fonte);
+  background: #1B1A1A;
+  padding: 0;
+  margin: 0;
+  font-family: var(--fonte);
 }
 
 

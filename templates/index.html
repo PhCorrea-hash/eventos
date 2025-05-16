@@ -2,10 +2,11 @@
 
 {% include 'base.html' %}
 {% block custom_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
 {% endblock %}
 
-<body>
+<body class="{% if user.is_authenticated %}user-logged-in{% endif %}" id="body">
 
     {% include 'partials/header.html' %}
 
@@ -16,49 +17,48 @@
     <main>
         <section class="destaques">
             <h2 class="destaques-titulo">DESTAQUES</h2>
-            <ul class="eventos-destaque-lista">
-                {% if cards_destaque %}
-                {% for evento in cards_destaque %}
-                <li class="destaques-lista-item">
-                    <img src="{{ evento.imagem.url }}" alt="" class="imagem-fundo">
-                    <div class="imagem-container">
-                        <img src="{{ evento.imagem.url }}" alt="" class="evento-imagem">
-                        <button 
-                            class="favorito-btn" 
-                            data-evento-id="{{ evento.id }}">
-                            {% if evento.id in favoritos_ids %}
-                            <img src="{% static 'assets/icons/favoritado-icon.png' %}" alt="" class="favoritar-icone">
-                            {% else %}
-                            <img src="{% static 'assets/icons/favoritar-icon.png' %}" alt="" class="favoritar-icone">
-                            {% endif %}
-                        </button>
-                    </div>
-                    <div class="evento-info">
-                        <div class="nome-agenda">
-                            <h3 class="evento-nome">{{ evento.nome }}</h3>
-                            <button type="button"
-                                    class="adicionar-agenda-btn"
-                                    data-evento-id="{{ evento.id }}"
-                                    onclick="toggleOpcoesAgenda({{ evento.id }})">
-                                Adicionar à Agenda
-                            </button>
-                        </div>
-                        <div class="local-data">
-                            <div class="evento-data">
-                                <p class="info-texto">{{ evento.data }}</p>
-                                <img src="{% static 'assets/icons/calendario-branco-icon.png' %}" alt="" class="info-icone">
+            <div class="swiper-container eventos-destaque-swiper">
+                <div class="swiper-wrapper">
+                    {% if cards_destaque %}
+                    {% for evento in cards_destaque %}
+                    <div class="swiper-slide">
+                        <div class="destaque-item">
+                            <a href="{% url 'detalhes_eventos' evento.id %}" class="imagem-link">
+                                <img src="{{ evento.imagem.url }}" alt="" class="imagem-fundo">
+                            </a>
+                            <div class="imagem-container">
+                                <img src="{{ evento.imagem.url }}" alt="" class="evento-imagem">
                             </div>
-                            <div class="evento-local">
-                                <p class="info-texto">{{ evento.legenda }}</p>
-                                <img src="{% static 'assets/icons/local-branco-icon.png' %}" alt="" class="info-icone">
+                            <div class="evento-info">
+                                <div class="nome-agenda">
+                                    <h3 class="evento-nome">{{ evento.nome }}</h3>
+                                    <button type="button" class="adicionar-agenda-btn" data-evento-id="{{ evento.id }}" onclick="toggleOpcoesAgenda({{ evento.id }})">
+                                        Adicionar à Agenda
+                                    </button>
+                                </div>
+                                <div class="local-data">
+                                    <div class="evento-data">
+                                        <p class="info-texto">{{ evento.data }}</p>
+                                    </div>
+                                    <div class="evento-local">
+                                        <p class="info-texto">{{ evento.legenda }}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </li>
-                {% endfor %}
-                {% endif %}
-            </ul>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <!-- Botões de navegação -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <!-- Paginação -->
+                <div class="swiper-pagination"></div>
+            </div>
         </section>
+
+        <hr class="hr-linha">
 
         <section class="eventos">
             <h2 class="eventos-titulo">EVENTOS</h2>
@@ -78,33 +78,31 @@
                                     <a href="{% url 'detalhes_eventos' evento.id %}" class="evento-link">
                                         <img src="{{ evento.imagem.url }}" alt="" class="evento-img">
                                     </a>
-                                    <button 
-                                        class="favorito-btn" 
-                                        data-evento-id="{{ evento.id }}">
-                                        {% if evento.id in favoritos_ids %}
-                                        <img src="{% static 'assets/icons/favoritado-icon.png' %}" alt="" class="favoritar-icone">
-                                        {% else %}
-                                        <img src="{% static 'assets/icons/favoritar-icon.png' %}" alt="" class="favoritar-icone">
-                                        {% endif %}
-                                    </button>
+                                        <button 
+                                            class="favorito-btn" 
+                                            data-evento-id="{{ evento.id }}">
+                                            {% if evento.id in favoritos_ids %}
+                                            <img src="{% static 'assets/icons/favoritado-icon.png' %}" alt="" class="favoritar-icone">
+                                            {% else %}
+                                            <img src="{% static 'assets/icons/favoritar-icon.png' %}" alt="" class="favoritar-icone">
+                                            {% endif %}
+                                        </button>
                                 </div>
+                        </div>
+                        <div class="evento-detalhes">
+                            <h3 class="evento-detalhes-titulo">{{ evento.nome }}</h3>
+                            <div class="evento-detalhes-local">
+                                <p class="detalhes-texto-local">{{ evento.legenda }}</p>
+                            </div>
+                            <div class="evento-detalhes-data">
+                                <p class="detalhes-texto">{{ evento.data }}</p>
+                            </div>
                             <button type="button"
                                     class="adicionar-agenda-btn"
                                     data-evento-id="{{ evento.id }}"
                                     onclick="toggleOpcoesAgenda({{ evento.id }})">
                                     Adicionar à Agenda
                             </button>
-                        </div>
-                        <div class="evento-detalhes">
-                            <h3 class="evento-detalhes-titulo">{{ evento.nome }}</h3>
-                            <div class="evento-detalhes-local">
-                                <img src="{% static 'assets/icons/local-branco-icon.png' %}" alt="" class="detalhes-icone">
-                                <p class="detalhes-texto">{{ evento.legenda }}</p>
-                            </div>
-                            <div class="evento-detalhes-data">
-                                <img src="{% static 'assets/icons/calendario-branco-icon.png' %}" alt="" class="detalhes-icone">
-                                <p class="detalhes-texto">{{ evento.data }}</p>
-                            </div>
                         </div>
                     </div>
                     <div id="opcoes-agenda-{{ evento.id }}"
@@ -132,8 +130,40 @@
 
     <script src="{% static 'js/eventos.js' %}"></script>
     <script src="{% static 'js/popups.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script>
-        
+        const swiper = new Swiper('.eventos-destaque-swiper', {
+            loop: true,
+            spaceBetween: 20,
+            centeredSlides: true,
+            slidesPerView: 1,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                320: {
+                    slidesPerView: 1,
+                },
+                480: {
+                    slidesPerView: 1.5,
+                },
+                768: {
+                    slidesPerView: 2,
+                },
+                1024: {
+                    slidesPerView: 3,
+                }
+            }
+        });
     </script>
+    <style>
+        
+    </style>
+    
 </body>
 </html>

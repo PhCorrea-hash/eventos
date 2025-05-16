@@ -1,0 +1,132 @@
+{% load static %}
+
+{% include 'base.html' %}
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'styles/sobre/sobre.css' %}">
+{% endblock %}
+
+<body>
+    
+    {% include 'partials/header.html' %}
+
+    {% include 'mensagens.html' %}
+
+    {% include 'popups.html' %}
+
+    <main>
+        <section class="boas-vindas">
+            <h1 class="boas-vindas-titulo">
+                Bem vindo(a) ao <strong class="fonte-logo">Sonart</strong>
+            </h1>
+            <div class="boas-vindas-links">
+                <a href="#" class="boas-vindas-links-item">Seja um colaborador</a>
+                <a href="#interesse" class="boas-vindas-links-item">Entre em contato</a>
+            </div>
+        </section>
+
+        <hr class="linha-divisoria">
+
+        <section class="sobre-sonart">
+            <h2 class="sobre-sonart-titulo">O que é o <strong class="fonte-logo">Sonart</strong>?</h2>
+            <p class="sobre-sonart-texto">
+                Sonart é um site desenvolvido por mim onde é possível encontrar vários eventos de diferentes estilos em diferentes cidades.
+                O intuito do site é demonstrar minhas habilidades de design e programação, mas também para passar uma mensagem que eu acredito ser de vital importância: como o som e a arte (Sonart) podem influenciar nossa vidas. Tendo esse ideal em mente, resolvi desenvolver um site onde as pessoas poderiam achar o evento que mais se enquadra so seu estilo e também onde poderiam compartilhar esses eventos com mais pessoas.
+            </p>
+        </section>
+
+        <section class="desenvolvimento">
+            <hr>
+            <h2 class="desenvolvimento-titulo">Desenvolvimento do site</h2>
+            <p class="desenvolvimento-texto">
+                Para o desenvolvimento do site foi necessário a utilização de diversas linguagens de programação e ferramentas de design
+            </p>
+            <div class="desenvolvimento-habilidades">
+                <ul class="habilidades-programacao">
+                    <hr>
+                    <p class="habilidades-programacao-titulo">Programação</p>
+                    <li class="habilidades-programacao-item">HTML</li>
+                    <li class="habilidades-programacao-item">CSS</li>
+                    <li class="habilidades-programacao-item">JavaScript</li>
+                    <li class="habilidades-programacao-item">Python</li>
+                    <li class="habilidades-programacao-item">Django</li>
+                    <li class="habilidades-programacao-item">PostgreSQL</li>
+                </ul>
+
+                <ul class="habilidades-design">
+                    <hr>
+                    <p class="habilidades-programacao-titulo">Design</p>
+                    <li class="habilidades-design-item">Photoshop</li>
+                    <li class="habilidades-design-item">Canva</li>
+                    <li class="habilidades-design-item">Figma</li>
+                </ul>
+            </div>
+            <p class="desenvolvimento-render">
+                Para renderizar o site utilizei o site Render, que permite a utilização de um domínio gratuito e também disponibiliza um banco de dados, o qual usei para armazenar as informações de eventos, grupos, mensagens e usuários.
+                Por ser um serviço gratuito, o site demora a carregar e fica fora do ar depois de um certo tempo sem acessos. Além disso o banco de dados é limitado, porém o Render serviu muito bem a este projeto, que tem como principal objetivo demonstrar minhas habilidades.
+            </p>
+        </section>
+
+        <section class="objetivos">
+            <hr>
+            <h2 class="objetivos-titulo">Objetivos do <strong class="fonte-logo">Sonart</strong></h2>
+            <ul class="objetivos-lista">
+                <li class="objetivos-lista-item">
+                    Desempenho e Escabilidade
+                </li>
+                <li class="objetivos-lista-item">
+                    Segurança e Privacidade
+                </li>
+                <li class="objetivos-lista-item">
+                    Interface intuitiva e responsiva
+                </li>
+                <li class="objetivos-lista-item">
+                    Automatização de Processos
+                </li>
+                <li class="objetivos-lista-item">
+                    Integração com APIs externas
+                </li>
+                <li class="objetivos-lista-item">
+                    Desenvolvimento Modular e Escalável
+                </li>
+                <li class="objetivos-lista-item">
+                    Real-time Communication
+                </li>
+                <li class="objetivos-lista-item">
+                    Testes e Qualidade de Código
+                </li>
+                <li class="objetivos-lista-item">
+                    Design Clean e Funcional
+                </li>
+            </ul>
+        </section>
+
+        <section id="interesse" class="interesse">
+            <h2 class="interesse-titulo">Ficou interessado(a) no que viu aqui? Entre em contato comigo.</h2>
+            <div class="contatar-btns">
+                <a href="mailto:pedrohenriquemartinscorrea@gmail.com.com" class="contatar-btns-item">E-mail</a>
+                <a href="https://wa.me/17997121851" class="contatar-btns-item">WhatsApp</a>
+            </div>
+            <div class="minhas-redes">
+                <hr>
+                <h3 class="minhas-redes-titulo">Acesse minhas redes:</h3>
+                <div class="minhas-redes-links">
+                    <a href="https://github.com/PhCorrea-hash/eventos" class="minhas-redes-links-item">GitHub</a>
+                    <a href="https://www.linkedin.com/in/pedro-henrique-martins-alves-corrêa-464484317/" class="minhas-redes-links-item">LinkedIn</a>
+                    <a href="https://www.figma.com/design/pk7vUSTOqy3TUqjILK1SoK/Site-Eventos?m=auto&t=VQSgdb6TmToD9iWR-1" class="minhas-redes-links-item">Projeto do site no Figma</a>
+                </div>
+                <div class="curriculo">
+                    <p class="curriculo-texto">Ou faça o download em pdf do meu currículo atualizado:</p>
+                    <a href="{% static 'assets/arquivos/PedroHenriqueCorrea-Curriculo[2].pdf' %}" download="PedroHenriqueCorrea-Curriculo[2].pdf" class="baixar-curriculo">Fazer o download do meu currículo</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- <iframe class="figma" style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/design/pk7vUSTOqy3TUqjILK1SoK/Site-Eventos?embed-host=share" allowfullscreen></iframe> -->
+    </main>
+
+    {% include 'partials/footer.html' %}
+
+    <script src="{% static 'js/eventos.js' %}"></script>
+    <script src="{% static 'js/popups.js' %}"></script>
+
+</body>

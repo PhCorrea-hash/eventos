@@ -53,6 +53,9 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'usuarios',
     'minhaArea',
+    'perfil',
+    'administracao',
+    'nested_admin',
 ]
 
 AUTHENTICATION_BACKENDS = [

@@ -1,6 +1,6 @@
 :root {
     --corDeFundo: #000;
-    --fonte: "Winky Rough", sans-serif;
+    --fonte: "DM Serif Display", serif;
     --corDoTextoPrincipal: #fff;
 }
 
@@ -8,7 +8,17 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
 
 body {
     background: #020024;
@@ -16,26 +26,6 @@ body {
     padding: 0;
     margin: 0;
     font-family: var(--fonte);
-}
-
-.cabecalho {
-    display: flex;
-    color: var(--corDoTextoPrincipal);
-    width: 100%;
-    margin-top: 1rem;
-}
-
-.logo-nome {
-    display: flex;
-    align-items: center;
-}
-
-.logo {
-    width: 100px;
-}
-
-.titulo {
-    font-size: 2.5rem;
 }
 
 .busca__input {
@@ -51,12 +41,22 @@ body {
     text-align: center;
 }
 
+/* section main */
+
 .main {
-    margin: 4rem 0 0 0;
+    flex: 1;
+    display: flex; 
+}
+
+.main {
+    margin: 5rem 0 0 0;
     display: flex;
     justify-content: space-between;
     width: 100%;
+    align-items: center;
 }
+
+/* div menu-lateral */
 
 .lista-botoes {
     display: flex;
@@ -79,13 +79,19 @@ body {
 
 .link {
     font-family: var(--fonte);
-    font-size: 2.5rem;
+    font-size: 1.75rem;
     text-decoration: none;
     color: var(--corDoTextoPrincipal);
     padding: 1rem;
 }
 
-.login {
+.link:hover {
+    color: #585555;;
+}
+
+/* div login-form */
+
+.login-form {
     display: flex;
     flex-direction: column;
     width: 75%;
@@ -131,6 +137,7 @@ label {
 
 .enviar:hover {
     background: rgb(19, 19, 236);
+    cursor: pointer;
 }
 
 .forms-login {
@@ -165,12 +172,4 @@ label {
     border-radius: 16px;
     padding: 1rem;
     color: var(--corDoTextoPrincipal);
-}
-
-.rodape {
-    background: var(--corDoTextoPrincipal);
-    height: 100px;
-    width: 100%;
-    max-width: 100%;
-    margin-top: 2rem;
 }

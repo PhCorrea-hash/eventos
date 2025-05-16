@@ -1,8 +1,10 @@
 {% load static %}
 
 <header>
-    <a href="{% url 'index' %}" class="titulo">EVENTIA</a>
-    <a href="" class="info-item">SOBRE</a>
+    <a href="{% url 'index' %}" class="titulo">
+        <img src="{% static 'assets/icons/Sonart-logo-principal.png' %}" alt="" class="header-logo">
+    </a>
+    <a href="{% url 'sobre' %}" class="info-item">SOBRE</a>
     <div class="btn-menu-container">
         <button class="menu-perfil"
             type="button"
@@ -14,6 +16,7 @@
         <div class="menu-lateral-perfil">
             {% if user.is_authenticated %}
                 <a href="{% url 'area' %}" class="menu-lateral-perfil-item">Minha área</a>
+                <a href="{% url 'perfil' %}" class="menu-lateral-perfil-item">Meu perfil</a>
                 <a href="{% url 'logout' %}" class="menu-lateral-perfil-item">Logout</a>
             {% else %}
                 <button class="menu-lateral-perfil-item" id="popUpLogin-btn">Login</button>

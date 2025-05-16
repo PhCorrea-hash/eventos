@@ -1,0 +1,198 @@
+:root {
+    --corDeFundo: #000;
+    --Background: #1B1A1A;
+    --itensFundo: #302C2C;
+    --fonte: "DM Serif Display", serif;
+    --corDoTextoPrincipal: #fff;
+    --fonteRoxa: #AC00FF;
+    --fonteCinza: #B7ADAD;
+    --gradientePrinci: linear-gradient(90deg, #2D21F3 0%, #AD00B6 100%);
+    --cinzaRodape: #8D8888;
+}
+
+body {
+    background: var(--Background);
+    margin: 0;
+}
+
+main {
+    display: flex;
+    width: 100%;
+}
+
+nav {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--itensFundo);
+    padding: 0.5rem;
+    margin: 0.5rem 0.5rem 0 0.5rem;
+    border-width: 4px;
+    border-style: solid;
+    border-image: var(--gradientePrinci) 1;
+}
+
+.text-area {
+    margin-bottom: 0.75rem;
+}
+
+.foto-perfil {
+    display: flex;
+    flex-direction: column;
+}
+
+.editar-foto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+}
+
+.editar-foto img {
+    width: 20px;
+    height: 20px;
+}
+
+.editar-foto p {
+    color: #1064FF;
+    font-size: 12px;
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.nav-links-container {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    text-decoration: none;
+}
+
+.nav-links-container img {
+    width: 15px;
+    height: 15px;
+}
+.nav-links-container p {
+    margin: 0;
+    color: var(--corDoTextoPrincipal);
+}
+
+.excluir-conta {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: none;
+}
+
+.excluir-conta img {
+    width: 20px;
+    height: 20px;
+}
+
+.excluir-conta p {
+    margin: 0;
+    font-size: 10px;
+    color: #D91616;
+}
+
+.principal {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+}
+
+.form-perfil {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-perfil input {
+    width: 95%;
+}
+
+.info-pessoal {
+    display: flex;
+    flex-direction: column;
+    background: var(--itensFundo);
+    padding: 0.5rem;
+    margin: 0.5rem 0.5rem 0.25rem 0;
+    border-width: 4px;
+    border-style: solid;
+    border-image: var(--gradientePrinci) 1;
+}
+
+.info-pessoal label {
+    color: var(--corDoTextoPrincipal);
+}
+
+.info-pessoal h2 {
+    margin: 0;
+    color: var(--corDoTextoPrincipal);
+    margin-bottom: 0.5rem;
+}
+
+.info-pessoal form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.info-pessoal form h3 {
+    color: var(--corDoTextoPrincipal);
+    margin: 0;
+}
+
+.alterar-senha {
+    display: flex;
+    flex-direction: column;
+    background: var(--itensFundo);
+    padding: 0.5rem;
+    margin: 0.5rem 0.5rem 0.25rem 0;
+    border-width: 4px;
+    border-style: solid;
+    border-image: var(--gradientePrinci) 1;
+}
+
+.alterar-senha label {
+    color: var(--corDoTextoPrincipal);
+}
+
+.alterar-senha h2 {
+    color: var(--corDoTextoPrincipal);
+    margin: 0;
+    margin-bottom: 0.5rem;
+}
+
+.alterar-senha form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.salvar-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--itensFundo);
+    padding: 0.5rem;
+    margin: 0.5rem 0.5rem 0 0;
+    border-width: 4px;
+    border-style: solid;
+    border-image: var(--gradientePrinci) 1;
+    color: var(--corDoTextoPrincipal);
+}
+
+.salvar-info img {
+    width: 25px;
+    height: 25px;
+}
+
+.salvar-info p {
+    margin: 0;
+}

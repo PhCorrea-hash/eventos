@@ -1,0 +1,68 @@
+:root {
+    --corDeFundo: #000;
+    --Background: #1B1A1A;
+    --itensFundo: #302C2C;
+    --fonte: "DM Serif Display", serif;
+    --corDoTextoPrincipal: #fff;
+    --fonteRoxa: #AC00FF;
+    --fonteCinza: #B7ADAD;
+    --gradientePrinci: linear-gradient(90deg, #2D21F3 0%, #AD00B6 100%);
+    --cinzaRodape: #8D8888;
+}
+
+body {
+    background: var(--Background);
+    margin: 0;
+}
+
+ul {
+    padding: 0;
+}
+
+h3 {
+    margin: 1rem 0;
+    color: var(--corDoTextoPrincipal);
+    font-size: 24px;
+    font-weight: 600;
+}
+
+hr {
+    background: var(--gradientePrinci);
+    height: 4px;
+    border: none;
+    width: 100%;
+}
+
+.termos {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0.75rem;
+}
+
+.termos-titulo {
+    margin: 0.5rem 0;
+    color: var(--corDoTextoPrincipal);
+    font-size: 38px;
+    font-weight: 700;
+}
+
+.lista-de-termos {
+    list-style-type: none;
+}
+
+.termo-conteudo-lista {
+    margin: 0 2rem;
+}
+
+.termo-conteudo {
+    color: var(--corDoTextoPrincipal);
+    margin: 0.75rem 0;
+    font-size: 20px;
+}
+
+.ultima-atualizacao {
+    color: var(--cinzaRodape);
+    font-size: 20px;
+    font-style: italic;
+    margin-bottom: 0;
+}

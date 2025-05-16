@@ -1,0 +1,71 @@
+:root {
+    --corDeFundo: #000;
+    --Background: #1B1A1A;
+    --itensFundo: #302C2C;
+    --fonte: "DM Serif Display", serif;
+    --corDoTextoPrincipal: #fff;
+    --fonteRoxa: #AC00FF;
+    --fonteCinza: #B7ADAD;
+    --gradientePrinci: linear-gradient(90deg, #2D21F3 0%, #AD00B6 100%);
+    --cinzaRodape: #8D8888;
+}
+
+body {
+    background: var(--Background);
+}
+
+.carrinho-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.titulo-carrinho {
+    color: var(--corDoTextoPrincipal);
+}
+
+.lista-itens {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    gap: 1rem;
+}
+
+.item-carrinho {
+    display: flex;
+    flex-direction: column;
+    background: var(--gradientePrinci);
+    color: var(--corDoTextoPrincipal);
+    border-radius: 16px;
+    padding: 1rem;
+}
+
+.item-carrinho h3 {
+    margin-top: 0;
+}
+
+.acoes-item {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.acoes-item button {
+    background: var(--corDoTextoPrincipal);
+    border-radius: 16px;
+    border: none;
+}
+
+.titulo-total {
+    color: var(--corDoTextoPrincipal);
+}
+
+.btn-comprar {
+    padding: 1rem;
+    width: 100%;
+    background: var(--gradientePrinci);
+    color: var(--corDoTextoPrincipal);
+    border-radius: 16px;
+    border: none;
+}

@@ -1,7 +1,8 @@
 // busca dinâmica
 const inputBusca = document.getElementById('busca');
 const container = document.getElementById('eventos-container');
-
+const body = document.getElementById('body'); 
+   
 // Buscar e mostrar evento
 if (inputBusca) {
     inputBusca.addEventListener('input', function () {
@@ -76,36 +77,40 @@ if (inputBusca) {
 // botão de favoritar
 document.querySelectorAll('.favorito-btn').forEach(button => {
     button.addEventListener('click', () => {
-        const eventoId = button.dataset.eventoId;  
+        if (body.classList.contains('user-logged-in')) {
+            const eventoId = button.dataset.eventoId;  
 
-        fetch(`/favoritar/${eventoId}/`, {
-            method: 'GET',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => {
-            if (response.status === 401) {
-                // Se não estiver logado, redireciona para a página de login
-                window.location.href = '/login/';
-                return;  // Interrompe a execução para não prosseguir com o código abaixo
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (!data) return;  // Se não houver dados, retorna
-
-            const icone = button.querySelector('.favoritar-icone');
-            if (data.favorited) {
-                // Caso o evento seja favoritado, altera o ícone e a classe
-                icone.src = '/static/assets/icons/favoritado-icon.png';
-                button.classList.add('ativo');
-            } else {
-                // Caso contrário, volta o ícone para o estado inicial e remove a classe
-                icone.src = '/static/assets/icons/favoritar-icon.png';
-                button.classList.remove('ativo');
-            }
-        });
+            fetch(`/favoritar/${eventoId}/`, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (response.status === 401) {
+                    // Se não estiver logado, redireciona para a página de login
+                    window.location.href = '/login/';
+                    return;  // Interrompe a execução para não prosseguir com o código abaixo
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (!data) return;  // Se não houver dados, retorna
+    
+                const icone = button.querySelector('.favoritar-icone');
+                if (data.favorited) {
+                    // Caso o evento seja favoritado, altera o ícone e a classe
+                    icone.src = '/static/assets/icons/favoritado-icon.png';
+                    button.classList.add('ativo');
+                } else {
+                    // Caso contrário, volta o ícone para o estado inicial e remove a classe
+                    icone.src = '/static/assets/icons/favoritar-icon.png';
+                    button.classList.remove('ativo');
+                }
+            });
+        } else {
+            alert("Faça login para continuar");
+        }
     });
 });
 
@@ -132,20 +137,24 @@ document.querySelectorAll('.adicionar-agenda-btn').forEach(button => {
 
 // Opções de adicionar à agenda
 function toggleOpcoesAgenda(id) {
-    const dropdown = document.getElementById(`opcoes-agenda-${id}`);
-    if (!dropdown) return;
+    if (body.classList.contains('user-logged-in')) {
+        const dropdown = document.getElementById(`opcoes-agenda-${id}`);
+        if (!dropdown) return;
 
-    const isVisible = dropdown.classList.contains('visivel');
+        const isVisible = dropdown.classList.contains('visivel');
 
-    // Fecha todos e remove inline styles
-    document.querySelectorAll('.opcoes-agenda').forEach(div => {
-        div.classList.remove('visivel');
-        div.style.display = '';  
-    });
+        // Fecha todos e remove inline styles
+        document.querySelectorAll('.opcoes-agenda').forEach(div => {
+            div.classList.remove('visivel');
+            div.style.display = '';  
+        });
 
-    if (!isVisible) {
-        dropdown.style.display = ''; 
-        dropdown.classList.add('visivel');
+        if (!isVisible) {
+            dropdown.style.display = ''; 
+            dropdown.classList.add('visivel');
+        }
+    } else {
+        alert("Faça login para continuar");
     }
 }
 
@@ -242,3 +251,4 @@ modal.addEventListener('click', function (e) {
         modal.classList.add('hidden');
     }
 });
+

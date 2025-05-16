@@ -1,7 +1,13 @@
 :root {
     --corDeFundo: #000;
-    --fonte: "Winky Rough", sans-serif;
+    --Background: #1B1A1A;
+    --itensFundo: #302C2C;
+    --fonte: "DM Serif Display", serif;
     --corDoTextoPrincipal: #fff;
+    --fonteRoxa: #AC00FF;
+    --fonteCinza: #B7ADAD;
+    --gradientePrinci: linear-gradient(90deg, #2D21F3 0%, #AD00B6 100%);
+    --cinzaRodape: #8D8888;
 }
 
 * {
@@ -11,17 +17,22 @@
 }
 
 body {
-    background: #020024;
-    background: linear-gradient(164deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+    background: var(--Background);
     padding: 0;
     margin: 0;
     font-family: var(--fonte);
 }
 
 main {
-    margin-top: 2rem;
     display: flex;
     flex-direction: column;
+}
+
+main hr {
+    width: 100%;
+    background: var(--gradientePrinci);
+    height: 4px;
+    border: none;
 }
 
 /* section favoritos */
@@ -29,7 +40,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    margin: 0.5rem 1rem;
+    margin: 0 1rem 0.5rem 1rem;
 }
 
 .favoritos-texto {
@@ -64,9 +75,13 @@ main {
 
 .favoritos-lista-item {
     width: 33%;
-    background: #D9D9D9;
+    background: var(--itensFundo);
     display: flex;
     flex-direction: column;
+    border-width: 2px;
+    border-style: solid;
+    border-image: var(--gradientePrinci) 1;
+    padding: 0.25rem;
 }
 
 .imagem-container {
@@ -80,13 +95,13 @@ main {
 
 .favorito-btn {
     position: absolute;
-    top: 5px;
-    right: 5px;
-    background: #D9D9D9;
-    width: 20px;
-    height: 20px;
+    top: 2.5px;
+    right: 2.5px;
+    background: var(--fonteRoxa);
+    width: 30px;
+    height: 30px;
     border-radius: 25px;
-    opacity: 50%;
+    opacity: 90%;
     border: none;
     display: flex;
     align-items: center;
@@ -101,6 +116,7 @@ main {
 .favoritos-item-descricao {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 0.25rem;
     padding: 0.35rem;
 }
@@ -108,19 +124,41 @@ main {
 .favoritos-item-descricao h4 {
     font-size: 0.625rem;
     margin: 0;
+    text-align: center;
 }
 
 .favoritos-item-descricao p {
-    font-size: 0.625rem;
+    font-size: 8px;
     margin: 0;
+    text-align: center;
+}
+
+.favoritos-item-descricao-nome {
+    white-space: nowrap;   
+    overflow: hidden;      
+    text-overflow: ellipsis;  
+    max-width: 80px;          
+    display: block;
+    color: var(--corDoTextoPrincipal);  
+}
+
+.favoritos-item-descricao-data {
+    color: var(--cinzaRodape);
+}
+
+.favoritos-item-descricao-local {
+    color: var(--fonteRoxa);
 }
 
 /* section grupos */
 .grupos {
     display: flex;
     flex-direction: column;
-    margin: 0.5rem 1rem;
+    margin: 1.5rem 1rem 0.5rem 1rem;
     gap: 0.5rem;
+    padding: 1rem;
+    border-radius: 16px;
+    background: var(--itensFundo)
 }
 
 .grupos-texto {
@@ -148,13 +186,13 @@ main {
 }
 
 .grupos-lista-item {
-    width: 100px;
-    height: 100px;
+    width: 27.5%;
+    aspect-ratio: 1 / 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #D9D9D9;
+    background: var(--gradientePrinci);
     border-radius: 16px;
     padding: 0.75rem;
 }
@@ -172,11 +210,20 @@ main {
     justify-content: center;
 }
 
+.botao-imagem {
+    width: 95%;
+    height: 95%;
+}
+
 .grupos-lista-item a {
     width: 100%;
     height: 100%;
     text-decoration: none;
     color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .grupo-info {
@@ -187,11 +234,18 @@ main {
 }
 
 .grupo-info p {
-    font-size: 0.625rem;
+    font-size: 14px;
+    color: var(--corDoTextoPrincipal);
 }
 
 .grupo-img {
     width: 50%;
+}
+
+#mostrar-todos-grupos {
+    text-align: end;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 /* section mural */
@@ -242,28 +296,25 @@ main {
 
 /* section agenda */
 .agenda {
-    margin-top: 1rem;
+    margin: 1.5rem 1rem 0.5rem 1rem;
 }
 
 .agenda-titulo {
-    text-align: center;
-    background: #f9f9f9;
-    padding-top: 1rem;
-    font-size: 2rem;
+    font-size: 18px;
+    margin: 0.5rem 0;
+    color: var(--corDoTextoPrincipal);
 } 
 
 .calendario {
     display: flex;
     flex-direction: column;
-    padding: 1rem;
     gap: 1rem;
-    background-color: #f9f9f9;
     overflow-y: scroll;
     max-height: 400px;
 }
 
 .mes {
-    background: #ffffff;
+    background: var(--itensFundo);
     border-radius: 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 1rem;
@@ -275,7 +326,7 @@ main {
 .mes h3 {
     text-align: center;
     font-size: 1.2rem;
-    color: #2c3e50;
+    color: var(--cinzaRodape);
     margin-bottom: 1rem;
 }
 
@@ -286,7 +337,7 @@ main {
 }
 
 .dia {
-    background-color: #ecf0f1;
+    background-color: var(--cinzaRodape);
     border-radius: 8px;
     padding: 0.3rem;
     text-align: left;
@@ -299,7 +350,7 @@ main {
 
 .dia strong {
     display: block;
-    color: #34495e;
+    color: var(--corDoTextoPrincipal);
     font-weight: 600;
     margin-bottom: 0.3rem;
 }
@@ -311,7 +362,7 @@ main {
 }
 
 .eventos-do-dia li {
-    background-color: #3498db;
+    background-color: var(--fonteRoxa);
     color: white;
     padding: 2px 4px;
     border-radius: 4px;
@@ -350,7 +401,7 @@ main {
 }
 
 .modal-content {
-    background: #fff;
+    background: var(--itensFundo);
     padding: 2rem;
     border-radius: 12px;
     width: 75%;
@@ -363,7 +414,7 @@ main {
     margin-top: 0;
     text-align: center;
     font-size: 1.5rem;
-    color: #2c3e50;
+    color: var(--corDoTextoPrincipal)
 }
 
 #lista-eventos-dia {
@@ -373,7 +424,7 @@ main {
 }
 
 #lista-eventos-dia li {
-    background-color: #3498db;
+    background-color: var(--fonteRoxa);
     color: white;
     padding: 10px;
     border-radius: 8px;
@@ -397,12 +448,16 @@ main {
     right: 15px;
     font-size: 1.8rem;
     font-weight: bold;
-    color: #333;
+    color: var(--corDoTextoPrincipal);
     cursor: pointer;
 }
 
 /* Ocultar botão remover no mobile */
 .remover-evento {
     display: none;
+}
+
+.footer-linha {
+    margin: 0.5rem 0;
 }
 

@@ -1,76 +1,161 @@
 :root {
     --corDeFundo: #000;
-    --fonte: "Winky Rough", sans-serif;
+    --Background: #1B1A1A;
+    --itensFundo: #302C2C;
+    --fonte: "DM Serif Display", serif;
     --corDoTextoPrincipal: #fff;
+    --fonteRoxa: #AC00FF;
+    --fonteCinza: #B7ADAD;
+    --gradientePrinci: linear-gradient(90deg, #2D21F3 0%, #AD00B6 100%);
+    --cinzaRodape: #8D8888;
 }
 
 body {
-    background: #020024;
-    background: linear-gradient(164deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+    background: var(--Background);
     padding: 0;
     margin: 0;
     font-family: var(--fonte);
 }
 
-header {
-    width: 100%;
-    height: 50px;
-    background: var(--corDoTextoPrincipal);
-}
-
-main {
+.chat-cabecalho {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--itensFundo);
+    padding: 0.5rem;
 }
 
-.menu-lateral {
-    background: var(--corDoTextoPrincipal);
-    padding: 1rem;
+.chat-cabecalho-container {
     display: flex;
-    flex-direction: column;
+    gap: 0.75rem;
 }
 
-.grupos-lista {
+.voltar {
+    width: 40px;
+    height: 45px;
+}
+
+.chat-info {
     display: flex;
-    flex-direction: column;
-    list-style-type: none;
-    padding: 0;
-}
-
-.conversa {
-    width: 100%;
-}
-
-.grupo-info {
-    display: flex;
-    background: #888686;
-    padding: 0.75rem;
-    gap: 1rem;
     align-items: center;
 }
 
-.grupo-imagem {
-    max-width: 50px;
-    max-height: 50px;
+.chat-img {
+    width: 50px;
+    height: 50px;
+}
+
+.chat-info-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-info-container p {
+    margin: 0
+}
+
+.chat-info-container-titulo {
+    color: var(--corDoTextoPrincipal);
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.chat-info-container-texto {
+    color: var(--fonteRoxa);
+    font-weight: 500;
+    font-size: 0.75rem;
+}
+
+.chat-perfil {
+    width: 55px;
+    height: 55px;
+}
+
+.btn-menu-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    right: 0;
+    gap: 1rem;
+}
+  
+.menu-perfil {
+    background: transparent;
+    border: none;
+    padding: 0;
+    position: relative;
+    z-index: 10;
+}
+
+.menu-perfil-img {
+    width: 40px;
+    height: 40px;
+}
+
+.menu-lateral-perfil {
+    position: absolute;
+    top: 90%;
+    right: 0;
+    background: #d9d9d9;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: none;
+    z-index: 9;
+    width: max-content;
+}
+
+.menu-lateral-perfil.ativo {
+    display: block;
+}
+
+.menu-lateral-perfil button {
+    width: 100%;
+}
+
+.ativo {
+    border: 2px solid #B4AEAE;
+    border-bottom: none;
+}
+
+.menu-lateral-perfil-item {
+    display: block;
+    color: #333;
+    padding: 0.25rem 0.5rem;
+    text-decoration: none;
+    border: 2px solid #B4AEAE;
+    background: none;
+}
+
+.menu-lateral-perfil-item:hover {
+    background: #333;
+}
+
+.icone-fechar {
+    display: none;
+    background: #d9d9d9;
+}
+
+.conversa {
+    display: flex;
+    flex-direction: column;
 }
 
 .mensagens {
-    margin: 2rem 2rem 0 2rem;
-    color: var(--corDeFundo);
-    min-height: 650px;
-    max-height: 700px;
-    overflow-y: scroll;
-    padding-right: 2rem;
+    min-height: 550px;
+    max-height: 100%;
+    padding: 1rem 0.5rem;
+    overflow: scroll;
+    background-image: url("/setup/static/assets/images/sonart-back.png");
 }
 
 .mensagem {
     display: flex;
     flex-direction: column;
-    background: var(--corDoTextoPrincipal);
+    background: var(--itensFundo);
     margin-bottom: 1rem;
     padding: 0.75rem;
-    /* width: 35%; */
     border-radius: 16px;
     max-width: 35%;
+    color: var(--corDoTextoPrincipal);
 }
 
 .mensagem p {
@@ -81,6 +166,7 @@ main {
 .usuario {
     font-size: 1rem;
     font-weight: 600;
+    color: var(--corDoTextoPrincipal);
 }
 
 .evento-anexado {
@@ -98,6 +184,11 @@ main {
 
 .evento-anexado img {
     max-width: 100%;
+}
+
+.evento-anexado a {
+    text-decoration: none;
+    color: var(--fonteRoxa);
 }
 
 .conteudo-data {
@@ -123,21 +214,87 @@ main {
 
 .enviar-mensagem {
     display: flex;
-    background: #888686;
-    padding: 1rem;
+    background: var(--itensFundo);
+    padding: 0.75rem;
 }
 
 .form-mensagem {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 1rem;
+    width: 100%;
 }
 
 #conteudo {
-    min-width: 1000px;
+    border: none;
+    border-radius: 16px;
+    width: 75%;
+    padding: 0.25rem;
 }
 
-.rodape {
-    height: 100px;
+.enviar-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Contêiner do select */
+.custom-select-container {
+    position: relative;
+    width: 30px;
+    height: 30px;
     background: var(--corDoTextoPrincipal);
+}
+
+/* Ícone do select */
+.select-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    object-fit: cover;
+}
+
+/* Select invisível mas clicável */
+.custom-select {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+/* Placeholder */
+.select-placeholder {
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* Esconde o placeholder quando o select não está no estado padrão */
+.custom-select:focus + .select-placeholder,
+.custom-select:not([value=""]) + .select-placeholder {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.btn-mensagem {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: var(--fonteRoxa);
+}
+
+.enviar-msg {
+    width: 25px;
+    height: 25px;
 }

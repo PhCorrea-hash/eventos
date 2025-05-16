@@ -1,0 +1,86 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0.25rem;
+}
+  
+.titulo {
+    color: var(--corDoTextoPrincipal);
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+.header-logo {
+    width: 110px;
+    height: 54px;
+}
+  
+.info-item {
+    text-decoration: none;
+    color: var(--corDoTextoPrincipal);
+    font-size: 1rem;
+}
+
+.btn-menu-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    right: 0;
+    gap: 1rem;
+}
+  
+.menu-perfil {
+    background: transparent;
+    border: none;
+    padding: 0;
+    position: relative;
+    z-index: 10;
+}
+
+.menu-perfil-img {
+    width: 40px;
+    height: 40px;
+}
+
+.menu-lateral-perfil {
+    position: absolute;
+    top: 90%;
+    right: 0;
+    background: #d9d9d9;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: none;
+    z-index: 9;
+    width: max-content;
+}
+
+.menu-lateral-perfil.ativo {
+    display: block;
+}
+
+.menu-lateral-perfil button {
+    width: 100%;
+}
+
+.ativo {
+    border: 2px solid #B4AEAE;
+    border-bottom: none;
+}
+
+.menu-lateral-perfil-item {
+    display: block;
+    color: #333;
+    padding: 0.25rem 0.5rem;
+    text-decoration: none;
+    border: 2px solid #B4AEAE;
+    background: none;
+}
+
+.menu-lateral-perfil-item:hover {
+    background: #333;
+}
+
+.icone-fechar {
+    display: none;
+    background: #d9d9d9;
+}

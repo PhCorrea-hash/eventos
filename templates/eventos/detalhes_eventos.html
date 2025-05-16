@@ -1,4 +1,5 @@
 {% load static %}
+{% load extras %}
 {% include 'base.html' %}
 
 {% block custom_css %}
@@ -9,30 +10,105 @@
     {% include 'partials/header.html' %}
 
     <main class="principal">
-        <img src="{{ evento.imagem.url }}" alt="Fundo do evento" class="fundo-main">
+
         <section class="imagem-container">
-            <div class="imagem-titulo">
-                <h1 class="evento-nome">{{ evento.nome }}</h1>
-                <p class="evento-data">{{ evento.data|date:"d/m/Y H:i" }}</p>
-            </div>
-            <div class="evento-container">
-                <img src="{{ evento.imagem.url }}" alt="{{ evento.nome }}" class="evento-imagem">
-                <a href="{{ evento.link }}" class="evento-link">Compre aqui</a>
-            </div>
+            <h1 class="evento-nome">{{ evento.nome }}</h1>
+            <img src="{{ evento.imagem.url }}" alt="{{ evento.nome }}" class="evento-imagem">
         </section>
-        <section class="descricao">
-            <div class="local">
-                <img src="{% static 'assets/icons/local-icon.png' %}" alt="" class="local-icone">
-                <p class="evento-local">{{ evento.legenda }}</p>
-            </div>
-            <div class="descricao-texto">
-                <p class="paragrafo">{{ evento.descricao }}</p>
-            </div>
+
+        <section class="informacoes-do-evento">
+            <h2 class="informacoes-titulo">Informações do evento</h2>
+            <p class="local-evento">{{ evento.legenda }}</p>
+            <p class="data-evento">{{ evento.data }}</p>
         </section>
+
+        <section class="ingressos">
+            <h2 class="ingressos-titulo">Ingressos</h2>
+            {% if evento.promovido_no_site %}
+            <ul style="padding: 0;">
+                {% for ingresso in ingressos %}
+                    <li class="ingresso-1">
+                        <div class="ingresso-container-1">
+                            <h3 class="ingresso-subtitulo">{{ ingresso.tipo }}</h3>
+                            <p class="ingresso-descricao">Descrição</p>
+                            <p class="ingresso-preco">R${{ ingresso.preco|floatformat:2 }}</p>
+                        </div>
+                        <div class="ingresso-btns-1">
+                            <button class="sub-1" onclick="removerIngresso({{ ingresso.id }})">-</button>
+                            <p id="quantidade-{{ ingresso.id }}" class="ingressos-qtd-1">{{ quantidades_carrinho|get_item:ingresso.id|default:"0" }}</p>
+                            <button class="add-1" onclick="adicionarIngresso({{ ingresso.id }})">+</button>
+                        </div>
+                    </li>
+                {% empty %}
+                    <li>Sem ingressos disponíveis no momento.</li>
+                {% endfor %}
+            </ul>
+            <div class="carrinho-total">
+                <p>Total: <span id="total-carrinho">R$ {{ total_carrinho }}</span></p>
+                <a href="{% url 'visualizar_carrinho' %}" class="comprar-ingressos">COMPRAR</a>
+            </div>
+            {% else %}
+                <a href="{{ evento.link }}" target="_blank">Compre ingressos no site oficial</a>
+            {% endif %}
+        </section>
+
+        <section class="evento-descricao">
+            <hr>
+            <h2 class="descricao-titulo">Descrição do evento</h2>
+            <p class="evento-descricao">{{ evento.descricao }}</p>
+        </section>
+
     </main>
 
     {% include 'partials/footer.html' %}
 
     <script src="{% static 'js/eventos.js' %}"></script>
+
+    <script>
+        function adicionarIngresso(ingressoId) {
+            const quantidadeElement = document.getElementById(`quantidade-${ingressoId}`);
+            let quantidadeAtual = parseInt(quantidadeElement.textContent) || 0;
+            
+            fetch(`/adicionar_ao_carrinho/${ingressoId}/`, {
+                method: "GET",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.sucesso) {
+                    quantidadeElement.textContent = data.quantidade;
+                    document.getElementById("total-carrinho").textContent = `R$ ${data.total}`;
+                } else {
+                    alert(data.erro);
+                }
+            })
+            .catch(() => alert("Erro ao adicionar ingresso"));
+        }
+        
+        function removerIngresso(ingressoId) {
+            fetch(`/remover_do_carrinho/${ingressoId}/`, {
+                method: "GET",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            })
+            .then(res => {
+            if (!res.ok) throw new Error(`HTTP status ${res.status}`);
+            return res.json();
+            })
+            .then(data => {
+                if (data.sucesso) {
+                    document.getElementById(`quantidade-${ingressoId}`).textContent = data.quantidade;
+                    document.getElementById("total-carrinho").textContent = `R$ ${data.total}`;
+                } else {
+                    alert(data.erro);
+                }
+            })
+            .catch(() => alert("Erro ao remover ingresso"));
+        }
+        </script>
+
 </body>
 </html>

@@ -20,12 +20,24 @@
                 {% endfor %}
             </div>
             <div class="check">
-                <input type="checkbox" name="termos" class="termos">
-                <p>Concordo com os termos de serviço</p>
+                <div class="check-container">
+                    <input type="checkbox" name="termos" class="termos">
+                    <p>Concordo com os termos de serviço</p>
+                </div>
+                <div class="check-container">
+                    <input type="checkbox" name="termos" class="termos">
+                    <p>Quero recebr os eventos mais recentes</p>
+                </div>
             </div>
             <div class="btns-cadastro">
-                <button type="submit" class="btns-cadastro-cadastrar-popup">Cadastrar</button>
-                <button type="button" class="btns-cadastro-login" id=".,popUpLoginDentroCadastro">Login</button>
+                <div class="btns-cadastro-container">
+                    <button type="submit" class="btns-cadastro-cadastrar-popup">Cadastrar</button>
+                    <p>ou entre com uma conta social</p>
+                </div>
+                <div class="btns-cadastro-container">
+                    <button type="button" class="btns-cadastro-login" id=".,popUpLoginDentroCadastro">Login</button>
+                    <p>Já tem conta? Faça login</p>
+                </div>
             </div>
         </form>
     </div>
@@ -68,9 +80,9 @@
                                 </button>
                             </div>
                             <div class="favoritos-item-descricao">
-                                <h4>{{ evento.nome }}</h4>
-                                <p>{{  evento.data }}</p>
-                                <p>{{ evento.legenda }}</p>
+                                <h4 class="favoritos-item-descricao-nome">{{ evento.nome }}</h4>
+                                <p class="favoritos-item-descricao-data">{{ evento.data|date:"d M Y" }}</p>
+                                <p class="favoritos-item-descricao-local">{{ evento.legenda }}</p>
                             </div>
                         </li>
                     {% endfor %}
@@ -86,16 +98,19 @@
         <ul class="grupos-popup-lista">
             <li class="grupos-lista-item adicionar">
                 <button class="grupos-botao" type="button" id="abrirPopupCriarGrupo">
-                    <img class="botao-imagem" src="{% static 'assets/icons/adicionar-icon.png' %}" alt="">
+                    <img class="botao-imagem-grupo-popup" src="{% static 'assets/icons/adicionar-branco-icon.png' %}" alt="">
                 </button>
             </li>
             {% for grupo in grupos %}
                     <li class="grupos-lista-item">
                         <a href="{% url 'pagina_grupo' grupo.id %}">
                             <div class="grupo-info">
-                                <img src="{% static 'assets/icons/grupo-icon.png' %}" alt="" class="grupo-img">
-                                <p class="grupo-nome">{{ grupo.nome }}</p>
-                                <p class="grupo-descricao">{{ grupo.descricao }}</p>
+                                {% if grupo.imagem %}
+                                    <img src="{{ grupo.imagem.url }}" alt="" class="grupo-img">
+                                {% else %}
+                                    <img src="{% static 'assets/icons/grupo-padrao-branco-icon.png' %}" alt="" class="grupo-img">
+                                {% endif %}
+                                <p class="grupo-nome-popup">{{ grupo.nome }}</p>
                             </div>
                             <form id="formulario-{{ grupo.id }}" action="{% url 'adicionar_membro' grupo.id %}" method="post" style="display:none;">
                                 {% csrf_token %}
@@ -110,7 +125,7 @@
 
     <!-- Popup Login -->
     <div id="popup-login" class="popup">
-        <h2>Fazer login</h2>
+        <h2>Entrar</h2>
         <form method="POST" action="{% url 'login' %}">
             {% csrf_token %}
             <div class="form-login">
@@ -119,10 +134,17 @@
                         {{field}}
                     </div>
                 {% endfor %}
+                <p>Esqueci minha senha</p>
             </div>
             <div class="btns-login">
-                <button class="btns-login-cadastrar-popup" type="button" id="popUpCadastroDentroLogin">Cadastrar</button>
-                <button class="btns-login-login" type="submit">Login</button>
+                <div class="btns-login-container">
+                    <button class="btns-login-cadastrar-popup" type="button" id="popUpCadastroDentroLogin">Cadastrar</button>
+                    <p>Não tem conta? Cadastre-se agora</p>
+                </div>
+                <div class="btns-login-container">
+                    <button class="btns-login-login" type="submit">Login</button>
+                    <p>ou faça login com uma conta social</p>
+                </div>
             </div>
         </form>
     </div>
@@ -135,6 +157,19 @@
         </ul>
     </div>
 
-    
+    <!-- Popup Imagem-perfil -->
+
+    <div id="popup-imagem-perfil" class="popup">
+        <h2>Atualizar Foto de Perfil</h2>
+        <form method="POST" enctype="multipart/form-data" action="{% url 'editar_foto_perfil' %}">
+            {% csrf_token %}
+            <div class="upload-container">
+                <input type="file" name="foto_perfil" id="id_foto" accept="image/*" class="file-input">
+                <label for="id_foto" class="upload-btn">Escolher Foto</label>
+                <span id="file-name" class="file-name">Nenhum arquivo selecionado</span>
+            </div>
+            <button id="atualizar-img" type="submit">Atualizar Foto</button>
+        </form>
+    </div>
 
 </section>

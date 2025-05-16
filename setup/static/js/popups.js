@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
         grupos: get("#popup-grupos"),
         login: get("#popup-login"),
         sugestoes: get("#popup-sugestoes"),
+        editarImagemPerfil: get("#popup-imagem-perfil"),
     };
 
     // Função principal para abrir os popups
@@ -134,7 +135,16 @@ document.addEventListener("DOMContentLoaded", () => {
             abrirPopup(popups.criarGrupo);
         })
     }
-});
 
+    // Mostrar o popup dos grupos
+    const btnEditarImagemPerfil = document.getElementById("abrirPopupImagemPerfil");
+    if (btnEditarImagemPerfil) {
+        btnEditarImagemPerfil.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            abrirPopup(popups.editarImagemPerfil);
+        });
+    }
+});
 
 

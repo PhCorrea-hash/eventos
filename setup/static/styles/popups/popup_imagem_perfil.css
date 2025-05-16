@@ -1,0 +1,84 @@
+:root {
+    --corDeFundo: #000;
+    --Background: #1B1A1A;
+    --itensFundo: #302C2C;
+    --fonte: "DM Serif Display", serif;
+    --corDoTextoPrincipal: #fff;
+    --fonteRoxa: #AC00FF;
+    --fonteCinza: #B7ADAD;
+    --gradientePrinci: linear-gradient(90deg, #2D21F3 0%, #AD00B6 100%);
+    --cinzaRodape: #8D8888;
+}
+
+#popup-imagem-perfil form {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    align-items: center;
+}
+
+#popup-imagem-perfil div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+#id_foto {
+    display: flex;
+    flex-direction: column;
+}
+
+.foto_id-label {
+    color: var(--corDoTextoPrincipal);
+    margin: 0.75rem 0;
+    font-size: 16px;
+}
+
+#file-upload-button {
+    background: var(--gradientePrinci);
+    border-radius: 16px;
+    border: none;
+}
+
+.upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Esconde completamente o input padrão */
+.file-input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    z-index: -1;
+}
+
+.upload-btn {
+    background: var(--gradientePrinci);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.file-name {
+    font-size: 14px;
+    color: var(--cinzaRodape);
+    margin: 0.5rem 0;
+    font-style: italic;
+}
+#atualizar-img {
+    background: var(--gradientePrinci);
+    border-radius: 16px;
+    padding: 0.75rem;
+    border: none;
+    color: var(--corDoTextoPrincipal);
+}
