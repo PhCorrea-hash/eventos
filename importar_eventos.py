@@ -9,7 +9,7 @@ load_dotenv()
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'setup.settings')
 django.setup()
 
-from eventos.models import Evento
+from eventos.models import Eventos
 
 API_KEY = os.getenv('TICKETMASTER_API_KEY')
 BASE_URL = 'https://app.ticketmaster.com/discovery/v2/events.json'
@@ -37,7 +37,7 @@ def importar_eventos():
         legenda = evento.get('info', 'Sem descrição')
 
         # Criar ou atualizar o evento no banco de dados
-        Evento.objects.update_or_create(
+        Eventos.objects.update_or_create(
             nome=nome,
             defaults={
                 'data': timezone.make_aware(timezone.datetime.fromisoformat(data_hora)) if data_hora else None,
