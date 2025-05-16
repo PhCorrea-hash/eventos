@@ -15,7 +15,7 @@ def index(request):
     # Exclui eventos que passaram mais de 4 horas
     Eventos.objects.filter(data__lt=limite).delete()
 
-    eventos = Eventos.objects.order_by("data").filter(publicada=True)
+    eventos = Eventos.objects.filter(publicada=True).order_by('-promovido_no_site', 'data')
     eventos_destaque = Eventos.objects.filter(publicada=True, destaque=True).order_by('data')[:3]
 
     favoritos_ids = []

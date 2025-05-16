@@ -19,22 +19,27 @@
         </div>
     
         <div class="checkout-pagamento">
-            <h2>Forma de Pagamento</h2>
-            <label>
-                <input type="radio" name="metodo_pagamento" value="debito"> Débito
-            </label><br>
-            <label>
-                <input type="radio" name="metodo_pagamento" value="credito"> Crédito
-            </label><br>
-            <label>
-                <input type="radio" name="metodo_pagamento" value="pix"> Pix
-            </label><br>
-            <button id="finalizarCompraBtn">Finalizar Compra</button>
-            <input type="hidden" name="csrfmiddlewaretoken" value="{% csrf_token %}">
+            <div class="formas-de-pagamento">
+                <h2>Forma de Pagamento</h2>
+                <label>
+                    <input type="radio" name="metodo_pagamento" value="debito"> Débito
+                </label><br>
+                <label>
+                    <input type="radio" name="metodo_pagamento" value="credito"> Crédito
+                </label><br>
+                <label>
+                    <input type="radio" name="metodo_pagamento" value="pix"> Pix
+                </label><br>
+                <button id="finalizarCompraBtn">Finalizar Compra</button>
+            </div>
+            {% csrf_token %}
+            <input id="crsfToken" type="hidden" name="csrfmiddlewaretoken">
             <div class="dados-para-pagamento">
-                <div id="qrCodeContainer"></div>
-                <div id="payloadContainer"></div>
                 <div id="mensagemPagamento"></div>
+                <div id="qrCodeContainer"></div>
+                <p id="mensagemPayload"></p>
+                <div id="payloadContainer"></div>
+                <button id="copiarPayloadBtn" onclick="copiarPayload()">Copiar chave pix</button>
             </div>
         </div>
     
@@ -103,7 +108,13 @@
                     img.alt = 'QR code para pagamento via PIX';
                     container.appendChild(img);
 
+                    const msgPayload = document.getElementById('mensagemPayload');
+                    msgPayload.textContent = 'Ou use o código copia e cola do pix:';
+
                     payloadContainer.textContent = data.payload || 'Código PIX não disponível.';
+
+                    const btnCopiarPix = document.getElementById('copiarPayloadBtn');
+                    btnCopiarPix.style.display = 'block';
                 }
                 msg.textContent = data.mensagem || 'Pagamento iniciado com sucesso.';
             } else {
@@ -130,6 +141,21 @@
             }
         }
         return cookieValue;
+    }
+
+    function copiarPayload() {
+        const payload = document.getElementById("payloadContainer").textContent.trim();
+
+        if (payload) {
+            navigator.clipboard.writeText(payload).then(() => {
+                alert("Chave copia e cola copiada para a área de transferência!");
+            }).catch(err => {
+                console.error("Erro ao copiar o payload:", err);
+                alert("Não foi possível copiar a chave. Tente novamente.");
+            });
+        } else {
+            alert("Não há payload para copiar.");
+        }
     }
     </script>
 

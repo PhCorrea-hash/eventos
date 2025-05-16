@@ -2,6 +2,7 @@
     --corDeFundo: #000;
     --Background: #1B1A1A;
     --itensFundo: #302C2C;
+    --itensFundoSec: #464242;
     --fonte: "DM Serif Display", serif;
     --corDoTextoPrincipal: #fff;
     --fonteRoxa: #AC00FF;
@@ -18,7 +19,7 @@ body {
     max-width: 800px;
     margin: 40px auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: var(--itensFundo);
     border-radius: 12px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
@@ -27,14 +28,16 @@ body {
     text-align: center;
     font-size: 2.5em;
     margin-bottom: 20px;
+    color: var(--corDoTextoPrincipal);
 }
 
 .checkout-resumo {
     margin-bottom: 30px;
     padding: 20px;
-    background-color: #ffffff;
+    background-color: var(--itensFundoSec);
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    color: var(--corDoTextoPrincipal);
 }
 
 .checkout-resumo h2 {
@@ -53,9 +56,17 @@ body {
 
 .checkout-pagamento {
     padding: 20px;
-    background-color: #ffffff;
+    background-color: var(--itensFundoSec);
+    color: var(--corDoTextoPrincipal);
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.formas-de-pagamento {
+    width: 100%;
 }
 
 .checkout-pagamento h2 {
@@ -87,10 +98,16 @@ body {
 
 .dados-para-pagamento {
     display: flex;
+    gap: 0.5rem;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 90%;
+    margin-top: 1rem;
+}
+
+#mensagemPagamento {
+    font-size: 20px;
 }
 
 #qrCodeContainer {
@@ -104,7 +121,35 @@ body {
     height: 90%;
 }
 
+#mensagemPayload {
+    margin: 0;
+    font-size: 20px;
+}
+
 #payloadContainer {
     width: 90%;
     word-wrap: break-word;
+}
+
+#copiarPayloadBtn {
+    display: none;
+    background: var(--gradientePrinci);
+    color: var(--corDoTextoPrincipal);
+    padding: 0.5rem;
+    border-radius: 16px;
+    border: none;
+}
+
+#finalizarCompraBtn {
+    width: 100%;
+    text-align: center;
+    background: var(--gradientePrinci);
+    color: var(--corDoTextoPrincipal);
+    padding: 0.75rem;
+    border-radius: 16px;
+    border: none;
+}
+
+#crsfToken {
+    display: none;
 }

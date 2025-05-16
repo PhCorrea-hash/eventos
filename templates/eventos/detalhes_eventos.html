@@ -48,7 +48,7 @@
                 <a href="{% url 'visualizar_carrinho' %}" class="comprar-ingressos">COMPRAR</a>
             </div>
             {% else %}
-                <a href="{{ evento.link }}" target="_blank">Compre ingressos no site oficial</a>
+                <a class="evento-link" href="{{ evento.link }}" target="_blank">Compre ingressos no site oficial</a>
             {% endif %}
         </section>
 
